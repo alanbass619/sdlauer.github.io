@@ -1,0 +1,102 @@
+html * {
+   font-size: 14px;
+   line-height: 1.25;
+   font-family: Arial, Helvetica, sans-serif;
+}
+/* The sidenav */
+.sidenav {
+   height: 100%;
+   width: 200px;
+   position: fixed;
+   z-index: 1;
+   top: 0;
+   left: 0;
+   background-color: rgb(208, 136, 3);
+   overflow-x: hidden;
+   padding-top: 20px;
+   padding-left: 15px;
+ }
+ #sidenav {
+   list-style-type: "\2013  ";
+   background-color: rgb(208, 136, 3);
+   padding-left: 15px;
+ }
+
+ /* Page content */
+ .main {
+   margin-left: 200px; /* Same as the width of the sidenav */
+ }
+h1 {
+   font-size: 24px;
+}
+h2 {
+    font-size: 18px
+}
+ul {
+   list-style-type: none;
+   margin: 0;
+   background: rgb(154, 155, 157);
+   padding: 0px;
+   min-width: 200px;
+   float: left;
+}
+img {
+   width: 400px;
+   padding: 2px
+}
+#Axiom {
+   list-style-type: none;
+   counter-reset: elementcounter;
+   padding-left: 0;
+ }
+#axiom:before {
+   content: "Axiom " counter(elementcounter) ":  ";
+   counter-increment: elementcounter;
+   font-weight: bold;
+ }
+.shuffled {
+   background: lightblue;
+   border: 2px solid black;
+   color: black;
+   margin: 0 5px 5px 5px;
+   padding: 5px;
+}
+#statement_opt, #justification_opt {
+   background: #AFAFAF;
+   border: 2px solid black;
+   color: white;
+}
+#statement, #justification {
+   background: white;
+   border: 2px solid black;
+   color: black;
+}
+
+div {
+   padding-left: 10px;
+   padding-bottom: 10px;
+   width: 800px;
+   float: left;
+}
+td {
+   vertical-align: top;
+}
+#statement>li, #justification>li {
+   background-color: #5780DC;
+   border: 2px solid black;
+   color: white;
+}
+#statement>li:hover, #justification>li:hover, li:hover{
+   /* background-color: orange; */
+   color: gray;
+   font: bold;
+}
+#reset {
+   border: 0px;
+   background-color: orange;
+   color: white;
+   font-size: 24px;
+}
+#reset:hover {
+  color: black;
+}

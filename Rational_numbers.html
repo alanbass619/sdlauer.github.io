@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- https://www.w3schools.blog/jqueryui-sortable -->
+<head>
+   <title>Proof: Geometry example</title>
+   <!-- <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet"> -->
+   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+   <!-- <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script> -->
+   <!-- <script type="text/javascript"
+      src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+      </script> -->
+   <link rel="stylesheet" href="css/statement-justification.css">
+</head>
+<body onload="shuffleNodes('statement_opt');shuffleNodes('justification_opt')">
+   <div id="nav-placeholder" class="sidenav">
+      <p>
+      <h1>Proof examples: sortable, draggable, checkable </h1>
+      <h2>Make a selection</h2>
+      <p><a href="index.html">General information</a></p>
+      <p>Geometry</p>
+      <ol id="sidenav">
+         <li><a href="Perpen_bisect_thm.html">Perpendicular bisector theorem</a></li>
+         <li><a href="BranchPlay.html">General example</a></li>
+      </ol>
+      <p>Discrete Math</p>
+      <ol id="sidenav">
+         <li><a href="Rational_numbers.html">The square of any rational number is also rational.</a></li>
+      </ol>
+      <p>Linear Algebra</p>
+      <ol id="sidenav">
+         <li></li>
+      </ol>
+      </p>
+   </div>
+       
+   <div class="main">
+    <div>
+      <h2>Rational numbers</h2>
+      <p>From:  <a href="https://learn.zybooks.com/zybook/DiscreteMathDev/chapter/2/section/4?content_resource_id=68904435" target="_blank">DiscreteMathDev</a></p>
+      <p><b>Theorem: </b> The square of any rational number is also rational.</p>
+      <p><b>Proof:</b> Match each statement with the appropriate justification in the correct order.</p>
+      <p><button id="check" type="button2" onclick="checker()">Check order</button></p>
+      <p><span id="chkOrder"></span></p>
+   </div>
+   <div>
+      <!--id here is number of rows in completed proof-->
+      <table class="proofRows" data-compare="5">
+         <tr>
+            <th>Statement options</th>
+            <th>Statement</th>
+            <th>Justification</th>
+            <th>Justification options</th>
+         </tr>
+         <tr>
+            <td>
+               <!-- data-compare xxyy corresponds to 
+                  the id number xx of the li that must come before this row
+                  the id number yy of the li that must come after this row
+               include no data-compare for distractors and include all distractors last -->
+               <ul id="statement_opt" class="shuffler">
+                  <li data-compare="0002" id="01" class="shuffled">Let r be a rational number.</li>
+                  <li data-compare="0103" id="02" class="shuffled">There exists integers <br/>x and y such that <br/>r = x/y and y &ne; 0.</li>
+                  <li data-compare="0205" id="03" class="shuffled">r<sup>2</sup> = (x/y)<sup>2</sup> = x<sup>2</sup>/y<sup>2</sup>.</li>
+                  <li data-compare="0205" id="04" class="shuffled"> x<sup>2</sup> and  y<sup>2</sup> are integers, <br/>y<sup>2</sup> &ne; 0.</li>
+                  <li data-compare="0300" id="05" class="shuffled"> r<sup>2</sup> is a rational number.</li>
+                  <!-- <li data-compare="5" id="05" class="shuffled">\(\bigtriangledown\)</li>
+                  <li id="6" class="shuffled">\(\bigcirc\)</li> -->
+               </ul>
+            </td>
+            <td>
+               <ul id="statement" class="shuffler">
+               </ul>
+            </td>
+            <td>
+               <ul id="justification" class="shuffler">
+               </ul>
+            </td>
+            <td>
+               <ul id="justification_opt" class="shuffler">
+                  <li id="01" class="shuffled">Assumption.</li>
+                  <li id="02" class="shuffled">Definition of rational</li>
+                  <li id="03" class="shuffled">Algebra.</li>
+                  <li id="04" class="shuffled">x and y are integers, y &ne; 0.</li>
+                  <li id="05" class="shuffled">r<sup>2</sup> =x<sup>2</sup>/y<sup>2</sup>,<br/> x<sup>2</sup> and y<sup>2</sup> are both <br/>integers, and y<sup>2</sup> &ne; 0.</li>
+                  <!-- <li id="07" class="shuffled">\(\boxplus\)</li> -->
+               </ul>
+            </td>
+         </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button></td>
+         </tr>
+      </table>
+   </div>
+</div>
+   <script src="js/statement-justification.js"></script>
+</body>
+</html>
