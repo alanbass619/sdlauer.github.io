@@ -4,6 +4,7 @@ Website
 <link rel="stylesheet" href="css/statement-justification.css">
 <head>
    <title>TOC: proof examples</title>
+</head>
 <body>
     <div id="nav-placeholder" class="sidenav">
         <p>
