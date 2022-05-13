@@ -1,6 +1,5 @@
 # sdlauer.github.io
 Website
-<!DOCTYPE html>
 <link rel="stylesheet" href="css/statement-justification.css">
 <head>
    <title>TOC: proof examples</title>
