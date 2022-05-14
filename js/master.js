@@ -1,23 +1,30 @@
 
 
-function include(file, type, defer) {
-  
-    var script  = document.createElement('script');
-    script.src  = file;
-    script.type = type;
-    script.defer = defer;
-    
-    document.getElementsByTagName('head').item(0).appendChild(script);
-    
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }      
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
   }
-include("https://code.jquery.com/jquery-1.10.2.js",'',false);
-include("https://code.jquery.com/ui/1.10.4/jquery-ui.js",'',false);
-include("js/statement-justification.js",'text/javascript',true);
-include("http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML",'text/javascript',false);
+};
 
-// https://www.mackenziesoftware.com/2020/06/reuse-navigation-bar-on-multiple-pages.html
-$.get("navigation.html", function(data){
-    $("#nav-placeholder").replaceWith(data);
-});
- 
- 

@@ -11,17 +11,12 @@ html * {
    z-index: 1;
    top: 0;
    left: 0;
-   background-color: rgb(208, 136, 3);
+   background-color: rgb(237, 225, 202);
    overflow-x: hidden;
    padding-top: 20px;
    padding-left: 15px;
  }
- #sidenav {
-   list-style-type: "\2013  ";
-   background-color: rgb(208, 136, 3);
-   padding-left: 15px;
- }
-
+ 
  /* Page content */
  .main {
    margin-left: 200px; /* Same as the width of the sidenav */
