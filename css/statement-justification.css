@@ -44,7 +44,8 @@ ul {
 img {
    width: 50%;
    margin-left: 20%;
-   padding: 2px
+   padding: 2px;
+   max-width: 100%;
 }
 #Axiom {
    list-style-type: none;
