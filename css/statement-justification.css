@@ -6,20 +6,20 @@ html * {
 /* The sidenav */
 .sidenav {
    height: 100%;
-   width: 200px;
+   width: 15%;
    position: fixed;
    z-index: 1;
    top: 0;
    left: 0;
    background-color: rgb(227, 224, 224);
    overflow-x: hidden;
-   padding-top: 20px;
-   padding-left: 15px;
+   padding: 15px;
  }
  
  /* Page content */
  .main {
-   margin-left: 200px; /* Same as the width of the sidenav */
+   margin-left: 17%; /* Same as the width of the sidenav */
+   width: 83%;
  }
 h1 {
    font-size: 24px;
@@ -32,17 +32,18 @@ ul {
    margin: 0;
    background: rgb(154, 155, 157);
    padding: 0px;
-   /* min-width: 200px; */
+   width: 100%;
    float: left;
 }
-.shuffler1 {
-   min-width: 400px;
+/* .shuffler1 {
+   width: 100%;
 }
 .shuffler2 {
-   min-width: 200px;
-}
+   min-width: 100%;
+} */
 img {
-   width: 400px;
+   width: 50%;
+   margin-left: 20%;
    padding: 2px
 }
 #Axiom {
@@ -72,12 +73,16 @@ img {
    background: white;
    border: 2px solid black;
    color: black;
+   width: 100%;
 }
-
+table {
+   table-layout: fixed;
+   width: 100%;
+}
 div {
    padding-left: 10px;
    padding-bottom: 10px;
-   width: 800px;
+   width: 80%;
    float: left;
 }
 td {
