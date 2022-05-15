@@ -2,16 +2,23 @@
 <!-- https://www.w3schools.blog/jqueryui-sortable -->
 
 <head>
-   <title>Proof: General example</title>
+   <title>1-column proof example</title>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
    <script>
       MathJax = {
-         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+         tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+         },
+         svg: {
+            fontCache: 'global'
+         }
       };
    </script>
-   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+   <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+   </script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
    <link rel="stylesheet" href="css/statement-justification.css">
 </head>
 
@@ -23,8 +30,9 @@
    </div>
       <div class="main">
             <div>
-               <h2>Obvious ordering and pairing</h2>
-               <p><b>Proof:</b> Match each statement with the appropriate justification in the correct order.</p>
+               <h2>General 1-column proof example</h2>
+               
+         <p><b>Proof: </b>The steps for the proof of the theorem are listed below. Put the steps in order.</p>
                <p><button id="check" type="button2" onclick="checker()">Check order</button></p>
                <p><span id="chkOrder"></span></p>
             </div>
@@ -34,8 +42,8 @@
                <tr>
                   <th>Statement options</th>
                   <th>Statement</th>
-                  <th>Justification</th>
-                  <th>Justification options</th>
+                  <!-- <th>Justification</th>
+                  <th>Justification options</th> -->
                </tr>
                <tr>
                   <td>
@@ -43,30 +51,17 @@
                   the id number xx of the li that must come before this row
                   the id number yy of the li that must come after this row
                include no data-compare for distractors and include all distractors last -->
-                     <ul id="statement_opt" class="shuffler">
+                     <ul id="statement_opt" class="shuffler1">
                         <li data-compare="0004" id="01" class="shuffled">1 🦉</li>
                         <li data-compare="0004" id="02" class="shuffled">1 🦜</li>
                         <li data-compare="0004" id="03" class="shuffled">1 🦆</li>
                         <li data-compare="0005" id="04" class="shuffled">2</li>
                         <li data-compare="0406" id="05" class="shuffled">3</li>
-                        <li id="07" class="shuffled">distractors</li>
+                        <li id="07" class="shuffled">distractor</li>
                      </ul>
                   </td>
                   <td>
-                     <ul id="statement" class="shuffler">
-                     </ul>
-                  </td>
-                  <td>
-                     <ul id="justification" class="shuffler">
-                     </ul>
-                  </td>
-                  <td>
-                     <ul id="justification_opt" class="shuffler">
-                        <li id="01" class="shuffled">1 🦉</li>
-                        <li id="02" class="shuffled">1 🦜</li>
-                        <li id="03" class="shuffled">1 🦆</li>
-                        <li id="04" class="shuffled">2 </li>
-                        <li id="05" class="shuffled">3</li>
+                     <ul id="statement" class="shuffler1">
                      </ul>
                   </td>
                </tr>
@@ -81,7 +76,7 @@
          </div>
       </div>
 
-   <script src="js/statement-justification.js"></script>
+   <script src="js/statement.js"></script>
 </body>
 
 </html>

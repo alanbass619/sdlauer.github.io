@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!-- https://www.w3schools.blog/jqueryui-sortable -->
+
+<head>
+   <title>General example</title>
+   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script>
+      MathJax = {
+         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+      };
+   </script>
+   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+   <link rel="stylesheet" href="css/statement-justification.css">
+</head>
+
+<body onload="shuffleNodes('statement_opt');shuffleNodes('justification_opt')">
+   
+   <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
+      <iframe src="sidenav.html" scrolling="no"
+         style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;" title="Side navigation"></iframe>
+   </div>
+      <div class="main">
+            <div>
+               <h2>General 2-column proof example</h2>
+               <p><b>Proof:</b> Match each statement with the appropriate justification in the correct order.</p>
+               <p><button id="check" type="button2" onclick="checker()">Check order</button></p>
+               <p><span id="chkOrder"></span></p>
+            </div>
+         <div>
+            <!--id here is number of rows in completed proof-->
+            <table class="proofRows" data-compare="5">
+               <tr>
+                  <th>Statement options</th>
+                  <th>Statement</th>
+                  <th>Justification</th>
+                  <th>Justification options</th>
+               </tr>
+               <tr>
+                  <td>
+                     <!-- data-compare xxyy corresponds to 
+                  the id number xx of the li that must come before this row
+                  the id number yy of the li that must come after this row
+               include no data-compare for distractors and include all distractors last -->
+                     <ul id="statement_opt" class="shuffler2">
+                        <li data-compare="0004" id="01" class="shuffled">1 🦉</li>
+                        <li data-compare="0004" id="02" class="shuffled">1 🦜</li>
+                        <li data-compare="0004" id="03" class="shuffled">1 🦆</li>
+                        <li data-compare="0005" id="04" class="shuffled">2</li>
+                        <li data-compare="0406" id="05" class="shuffled">3</li>
+                        <li id="07" class="shuffled">distractor</li>
+                     </ul>
+                  </td>
+                  <td>
+                     <ul id="statement" class="shuffler2">
+                     </ul>
+                  </td>
+                  <td>
+                     <ul id="justification" class="shuffler2">
+                     </ul>
+                  </td>
+                  <td>
+                     <ul id="justification_opt" class="shuffler2">
+                        <li id="01" class="shuffled">1 🦉</li>
+                        <li id="02" class="shuffled">1 🦜</li>
+                        <li id="03" class="shuffled">1 🦆</li>
+                        <li id="04" class="shuffled">2 </li>
+                        <li id="05" class="shuffled">3</li>
+                        <li id="08" class="shuffled">distractor</li>
+                     </ul>
+                  </td>
+               </tr>
+               <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button>
+                  </td>
+               </tr>
+            </table>
+         </div>
+      </div>
+
+   <script src="js/statement-justification.js"></script>
+</body>
+
+</html>

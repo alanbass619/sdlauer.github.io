@@ -13,18 +13,18 @@ $(function () {
 	});
 	$("#statement_opt,#statement").disableSelection();
 });
-$(function () {
-	$("#justification_opt,#justification").sortable({
-		connectWith: "#justification_opt,#justification",
-        start: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		},
-		stop: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		}
-	});
-	$("#justification_opt,#justification").disableSelection();
-});
+// $(function () {
+// 	$("#justification_opt,#justification").sortable({
+// 		connectWith: "#justification_opt,#justification",
+//         start: function (event, ui) {
+// 			ui.item.toggleClass("highlight");
+// 		},
+// 		stop: function (event, ui) {
+// 			ui.item.toggleClass("highlight");
+// 		}
+// 	});
+// 	$("#justification_opt,#justification").disableSelection();
+// });
 
 // shuffle li elements in ul -- needs shuffleNodes(e) function call
 // https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
@@ -64,9 +64,9 @@ $(".shuffled").each(function () {
 
 // set height of 4 ul elements 
 let l1set = document.getElementById("statement_opt").childElementCount;
-let l1aset = document.getElementById("justification_opt").childElementCount;
+// let l1aset = document.getElementById("justification_opt").childElementCount;
 
-let ht = Math.max(l1set, l1aset) * (max + 19);
+let ht = Math.max(l1set/*, l1aset*/) * (max + 19);
 $(".shuffler2,.shuffler1").each(function () {
     $(this).css("height", ht);
 });
@@ -102,7 +102,6 @@ function checkOrder(l1) {
         if (valBefore < 0) {
             for (let t=0; t < checkRow; t++) {
                 if (l1dep[t].slice(0,2) == l1[key]) {
-                    // alert(l1dep[t][1]);
                     valBefore = checkRow;
                     countBefore++;
                 }
@@ -112,32 +111,32 @@ function checkOrder(l1) {
     return { countAfter, valAfter, countBefore, valBefore };
 }
 // Check for correct pairing -- return first row number incorrectly paired
-function checkPairs(l1a, l2a) {
-    let len = Math.min(l1a.length, l2a.length);
-    for (let i = 0; i < len; i++) {
-        if (l1a[i] != l2a[i]) {
-            return i + 1;
-        }
-    }
-    return len + 1;
-}
+// function checkPairs(l1a, l2a) {
+//     let len = Math.min(l1a.length, l2a.length);
+//     for (let i = 0; i < len; i++) {
+//         if (l1a[i] != l2a[i]) {
+//             return i + 1;
+//         }
+//     }
+//     return len + 1;
+// }
 let proofRows = $(".proofRows").attr('data-compare');
 function checker() {
     let l1 = getData($("#statement > li"));
     let l1len = l1.length;
-    let l2 = getData($("#justification > li"));
-    let l2len = l2.length;
+    // let l2 = getData($("#justification > li"));
+    // let l2len = l2.length;
     let str = "";
-    let maxRows = Math.max(l2len, l1len);
+    let maxRows = /*Math.max(l2len,*/ l1len/*)*/;
     if (maxRows < proofRows) {
         str += " -- At least one step is missing from the proof.<br/>";
     }
     else if (maxRows > proofRows) {
         str += " -- The solution has fewer than " + maxRows + " rows.<br/>";
     }
-    if (!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) {
-        str += " -- Statements require correct pairing with justifications. First incorrect pairing at step " + checkPairs(l1, l2) + ".<br/>";
-    }
+    // if (!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) {
+    //     str += " -- Statements require correct pairing with justifications. First incorrect pairing at step " + checkPairs(l1, l2) + ".<br/>";
+    // }
 
     if (str.length == 0) {
         let c = checkOrder(l1);

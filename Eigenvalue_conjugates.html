@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!-- https://www.w3schools.blog/jqueryui-sortable -->
+
+<head>
+   <title>Proof: Geometry example</title>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+   <script>
+      MathJax = {
+         tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+         },
+         svg: {
+            fontCache: 'global'
+         }
+      };
+   </script>
+   <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+   </script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <link rel="stylesheet" href="css/statement-justification.css">
+</head>
+
+<body onload="shuffleNodes('statement_opt');shuffleNodes('justification_opt')">
+   
+   <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
+      <iframe src="sidenav.html" scrolling="no"
+         style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;" title="Side navigation"></iframe>
+   </div>
+      <div class="main">
+            <div>
+               <h2>Proof for the conjugate of an eigenpair</h2>
+               <p>From:  <a href="https://learn.zybooks.com/zybook/LinearAlgebraDev/chapter/8/section/4?content_resource_id=67780181" target="_blank">LinearAlgebraDev</a></p>
+      
+         <p><b>Theorem:</b> Let \(A\) be an \(n \times n\) real matrix. If \(\lambda = a+bi\) and \(\textbf{v}\) form an eigenpair of \(A\), then \(\lambda = a-bi\) and \(\overline{\textbf{v}}\) also form an eigenpair of \(A\).
+         
+         <p><b>Proof: </b>The steps for the proof of the theorem are listed below. Put the steps in order.</p>
+               <p><button id="check" type="button2" onclick="checker()">Check order</button></p>
+               <p><span id="chkOrder"></span></p>
+            </div>
+         <div>
+            <!--id here is number of rows in completed proof-->
+            <table class="proofRows" data-compare="8">
+               <tr>
+                  <th>Statement options</th>
+                  <th>Statement</th>
+                  <!-- <th>Justification</th>
+                  <th>Justification options</th> -->
+               </tr>
+               <tr>
+                  <td>
+                     <!-- data-compare xxyy corresponds to 
+                  the id number xx of the li that must come before this row
+                  the id number yy of the li that must come after this row
+               include no data-compare for distractors and include all distractors last -->
+                     <ul id="statement_opt" class="shuffler1">
+                        <li data-compare="0008" id="01" class="shuffled"> If a complex number \(a+bi\) is a solution to a polynomial
+                           equation with real coefficients, then \(a-bi\) is also
+                           a solution.</li>
+                        <li data-compare="0003" id="02" class="shuffled">Suppose \( ( \lambda, \textbf{v})\) is an eigenpair of \(A\).</li>
+                        <li data-compare="0204" id="03" class="shuffled">By the definition of an eigenpair, \(A\textbf{v} = \lambda \textbf{v}\).</li>
+                        <li data-compare="0305" id="04" class="shuffled">Taking the conjugate of both sides gives \(\overline{A\textbf{v}} = \overline{\lambda \textbf{v}}\).</li>
+                        <li data-compare="0407" id="05" class="shuffled">By theorems of conjugate matrices and vectors,
+                           \(\overline{A} \overline{\textbf{v}} = \overline{\lambda}\overline{\textbf{v}}\).</li>
+                        <li data-compare="0007" id="06" class="shuffled">Since \(A\) is a real matrix, \(\overline{A}=A\).</li>
+                        <li data-compare="0608" id="07" class="shuffled">\(A \overline{\textbf{v}} = \overline{\lambda}\overline{\textbf{v}}\)</li>
+                        <li data-compare="0700" id="08" class="shuffled">By definition, \( ( \overline{\lambda}, \overline{\textbf{v}} )\) is an eigenpair of \(A\).</li>
+                        <li id="09" class="shuffled">Distractor</li>
+                     </ul>
+                  </td>
+                  <td>
+                     <ul id="statement" class="shuffler1">
+                     </ul>
+                  </td>
+               </tr>
+               <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button>
+                  </td>
+               </tr>
+            </table>
+         </div>
+      </div>
+
+   <script src="js/statement.js"></script>
+</body>
+
+</html>

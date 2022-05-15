@@ -6,31 +6,17 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-   <!-- <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-    </script> -->
-   <!-- <script type="text/javascript"
-      src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-      </script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
- <script>
-   MathJax = {
-      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
-   };
-</script> -->
-<!-- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script> -->
-<script>
-   MathJax = {
-     tex: {
-       inlineMath: [['$', '$'], ['\\(', '\\)']]
-     },
-     svg: {
-       fontCache: 'global'
-     }
-   };
+   <script>
+      MathJax = {
+         tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+         },
+         svg: {
+            fontCache: 'global'
+         }
+      };
    </script>
-   <script type="text/javascript" id="MathJax-script" async
-     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+   <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
    </script>
    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
    <link rel="stylesheet" href="css/statement-justification.css">
@@ -45,6 +31,7 @@
    <div class="main">
       <div>
          <h2>Proving the perpendicular bisector theorem</h2>
+         <p>From:  <a href="https://learn.zybooks.com/zybook/GeometryFundamentalsDev/chapter/2/section/6?content_resource_id=65937084" target="_blank">GeometryFundamentalsDev</a></p>
          <p><b>Perpendicular bisector theorem:</b> Any given point on the perpendicular bisector of a line segment is
             the
             same distance from either endpoint of the line segment.</p>
@@ -73,7 +60,7 @@
                   the id number xx of the li that must come before this row
                   the id number yy of the li that must come after this row
                include no data-compare for distractors and include all distractors last -->
-                  <ul id="statement_opt" class="shuffler">
+                  <ul id="statement_opt" class="shuffler2">
                      <li data-compare="0004" id="01" class="shuffled">\(AC=CB\)</li>
                      <li data-compare="0004" id="02" class="shuffled">\(m\angle DCA = m\angle DCB = 90^\circ\)</li>
                      <li data-compare="0004" id="03" class="shuffled">\(CD=CD\)</li>
@@ -83,15 +70,15 @@
                   </ul>
                </td>
                <td>
-                  <ul id="statement" class="shuffler">
+                  <ul id="statement" class="shuffler2">
                   </ul>
                </td>
                <td>
-                  <ul id="justification" class="shuffler">
+                  <ul id="justification" class="shuffler2">
                   </ul>
                </td>
                <td>
-                  <ul id="justification_opt" class="shuffler">
+                  <ul id="justification_opt" class="shuffler2">
                      <li id="01" class="shuffled">Definition of bisector</li>
                      <!--Since \(\overleftrightarrow{CD}\) is the perpendicular bisector
           for \(\overline{AB}\), \(\overline{AC}\) and \(\overline{CB}\) are the same length.-->
