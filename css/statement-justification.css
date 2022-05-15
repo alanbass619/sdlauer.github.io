@@ -50,8 +50,9 @@ img {
    font-weight: bold;
  }
 .shuffled {
-   background: lightblue;
+   background: white;
    border: 2px solid black;
+   border-radius: 10px;
    color: black;
    margin: 0 5px 5px 5px;
    padding: 5px;
@@ -77,13 +78,14 @@ td {
    vertical-align: top;
 }
 #statement>li, #justification>li {
-   background-color: #5780DC;
+   background-color: #B1D6FC;
    border: 2px solid black;
-   color: white;
+   border-radius: 10px;
+   color: #8424AC;
 }
 #statement>li:hover, #justification>li:hover, li:hover{
-   /* background-color: orange; */
-   color: gray;
+   background-color: #dad9d9;
+   color: #8424AC;
    font: bold;
 }
 #reset {
