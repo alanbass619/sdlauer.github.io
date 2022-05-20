@@ -16,7 +16,12 @@ html * {
    padding-left: .5vw;
 
  }
- 
+ .shufflerstep{
+
+   display: flex;
+   align-items: center;
+ }
+
  /* Page content */
  .main {
    margin-left: 17%; /* Same as the width of the sidenav */
