@@ -13,7 +13,7 @@ html * {
    left: 0;
    background-color: rgb(227, 224, 224);
    overflow-x: hidden;
-   padding-left: 5px;
+   padding-left: .5vw;
 
  }
  
@@ -32,20 +32,14 @@ ul {
    list-style-type: none;
    margin: 0;
    background: rgb(154, 155, 157);
-   padding: 0px;
+   padding: 0vw;
    width: 100%;
    float: left;
 }
-/* .shuffler1 {
-   width: 100%;
-}
-.shuffler2 {
-   min-width: 100%;
-} */
 img {
    width: 50%;
    margin-left: 20%;
-   padding: 2px;
+   padding: .2vw;
    max-width: 100%;
 }
 #Axiom {
@@ -58,32 +52,47 @@ img {
    counter-increment: elementcounter;
    font-weight: bold;
  }
-.shuffled {
+.shuffled, .shufflerstep {
    background: white;
-   border: 2px solid black;
-   border-radius: 10px;
+   border: .2vw solid black;
+   border-radius: 1vw;
    color: black;
-   margin: 0 5px 5px 5px;
-   padding: 5px;
+   margin: .25vw .5vw .25vw .5vw;
+   padding: .5vw;
+   /* display: table-column; */
+   vertical-align: middle;
 }
 #statement_opt, #justification_opt {
    background: #AFAFAF;
-   border: 2px solid black;
+   border: .2vw solid black;
    color: white;
 }
-#statement, #justification {
+#statement, #justification, #step {
    background: white;
-   border: 2px solid black;
+   border: .2vw solid black;
    color: black;
    width: 100%;
+   /* display: table-column;  */
+}
+#step>li{
+   background-color: lightgray;
+   border: .2vw solid black;
+   border-radius: 1vw;
+   color: black;
+   padding: .5vw;
 }
 table {
    table-layout: fixed;
    width: 100%;
 }
+.auto {
+   width:5%;
+   /* white-space: nowrap;  */
+   /* background: white; */
+ }
 div {
-   padding-left: 10px;
-   padding-bottom: 10px;
+   padding-left: 1vw;
+   padding-bottom: 1vw;
    width: 90%;
    float: left;
 }
@@ -92,8 +101,8 @@ td {
 }
 #statement>li, #justification>li {
    background-color: #B1D6FC;
-   border: 2px solid black;
-   border-radius: 10px;
+   border: .2vw solid black;
+   border-radius: 1vw;
    color: #8424AC;
 }
 #statement>li:hover, #justification>li:hover, li:hover{
@@ -102,7 +111,7 @@ td {
    font: bold;
 }
 #reset {
-   border: 0px;
+   border: 0vw;
    background-color: #E68143;
    color: white;
    font-size: 5vw;

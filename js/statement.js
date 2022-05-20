@@ -58,16 +58,16 @@ $(".shuffled").each(function () {
     var h = $(this).height();
     max = h > max ? h : max;
 });
-$(".shuffled").each(function () {
-    $(this).css("height", max);
+$(".shuffled,.shufflerstep").each(function () {
+    $(this).css("height", max/10+'vw');
 });
 
 // set height of 4 ul elements 
 let l1set = document.getElementById("statement_opt").childElementCount;
 // let l1aset = document.getElementById("justification_opt").childElementCount;
 
-let ht = Math.max(l1set/*, l1aset*/) * (max + 19);
-$(".shuffler2,.shuffler1").each(function () {
+let ht = l1set * (max + 17)/10 +'vw';
+$(".shuffler1,#step").each(function () {
     $(this).css("height", ht);
 });
 
@@ -142,8 +142,8 @@ function checker() {
         let c = checkOrder(l1);
         pluralAfter = (c.countAfter == 1) ? " is" : "s are";
         pluralBefore = (c.countBefore == 1) ? " is" : "s are";
-        str += (c.valAfter < 0) ? "Correct!" : " -- Statements are out of order. At least " + c.countAfter + " more step" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
-        str += (c.valBefore < 0) ? "" : " -- Statements are out of order. At least " + c.countBefore + " more step" + pluralBefore + " needed after step " + c.valBefore + ".<br/>";
+        str += (c.valAfter < 0) ? "Correct!" : " -- Statements are out of order. At least " + c.countAfter + " more statement" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
+        str += (c.valBefore < 0) ? "" : " -- Statements are out of order. At least " + c.countBefore + " more statement" + pluralBefore + " needed after step " + c.valBefore + ".<br/>";
 
     }
     $("#chkOrder").html(str);

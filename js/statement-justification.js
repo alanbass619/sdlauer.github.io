@@ -58,16 +58,16 @@ $(".shuffled").each(function () {
     var h = $(this).height();
     max = h > max ? h : max;
 });
-$(".shuffled").each(function () {
-    $(this).css("height", max);
+$(".shuffled,.shufflerstep").each(function () {
+    $(this).css("height", max/10+'vw');
 });
 
 // set height of 4 ul elements 
 let l1set = document.getElementById("statement_opt").childElementCount;
 let l1aset = document.getElementById("justification_opt").childElementCount;
 
-let ht = Math.max(l1set, l1aset) * (max + 19);
-$(".shuffler2,.shuffler1").each(function () {
+let ht = Math.max(l1set, l1aset) * (max + 17)/10 +'vw';
+$(".shuffler2,.shuffler1,#step").each(function () {
     $(this).css("height", ht);
 });
 
@@ -133,12 +133,14 @@ function checker() {
         str += " -- At least one step is missing from the proof.<br/>";
     }
     else if (maxRows > proofRows) {
-        str += " -- The solution has fewer than " + maxRows + " rows.<br/>";
+        str += " -- The solution has fewer than " + maxRows + " steps.<br/>";
     }
     if (!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) {
-        str += " -- Statements require correct pairing with justifications. First incorrect pairing at step " + checkPairs(l1, l2) + ".<br/>";
+        str += " -- Statements require correct pairing with justifications. First incorrect justification at step " + checkPairs(l1, l2) + ".<br/>";
     }
 
+
+    // if (l1len == proofRows){
     if (str.length == 0) {
         let c = checkOrder(l1);
         pluralAfter = (c.countAfter == 1) ? " is" : "s are";
