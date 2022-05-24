@@ -13,8 +13,7 @@ $(function () {
 			ui.item.toggleClass("highlight");
 		}
 	});
-	$("#statement_opt,#statement").disableSelection();
-   
+	$("#statement_opt,#statement").disableSelection(); 
 });
 
 // Set ul box heights
