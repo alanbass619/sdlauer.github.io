@@ -1,6 +1,8 @@
 // https://www.pureexample.com/ExampleTesterII-81.html
 // li items draggable
-
+// Number of statements in proof
+let proofRows = $(".proofRows").attr('data-compare'); 
+var max = 0;
 $(function () {
 	$("#statement_opt,#statement").sortable({
 		connectWith: "#statement_opt,#statement",
@@ -12,40 +14,17 @@ $(function () {
 		}
 	});
 	$("#statement_opt,#statement").disableSelection();
-    var max = 0;
-    $(".shuffled").each(function () {
-        var h = $(this).height();
-        // var w = $(this).width()
-        max += h;
-    });
-    // $(".shuffled,.shufflerstep").each(function () {
-    //     $(this).css("height", max/10+'vw');
-    // });
-
-    // set height of 2 ul elements 
-    // let l1set = document.getElementById("statement_opt").childElementCount;
-    // let l1aset = document.getElementById("justification_opt").childElementCount;
-
-    let ht = max+'vh';
-    $(".shuffler1,#step").each(function () {
-        $(this).css("height", ht/$(this).width());
-    });
+   
 });
-// $(function () {
-// 	$("#justification_opt,#justification").sortable({
-// 		connectWith: "#justification_opt,#justification",
-//         start: function (event, ui) {
-// 			ui.item.toggleClass("highlight");
-// 		},
-// 		stop: function (event, ui) {
-// 			ui.item.toggleClass("highlight");
-// 		}
-// 	});
-// 	$("#justification_opt,#justification").disableSelection();
-// });
 
-// shuffle li elements in ul -- needs shuffleNodes(e) function call
-// https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
+// Set ul box heights
+function setHeight(){
+    let h = document.getElementById('statement_opt');
+    let ht = h.clientHeight;
+    $(".shuffler1,#step").each(function () {
+        $(this).css("height",ht);
+    });
+}
 
 function shuffle(items) {
     var cached = items.slice(0), temp, i = cached.length, rand;
@@ -67,36 +46,6 @@ function shuffleNodes(e) {
         ++i;
     }
 }
-// based on: https://stackoverflow.com/questions/68965082/how-do-i-move-item-from-1-list-to-another-list-in-html-->
-// allow option lists to be moved to Statement and Justification
-
-// set equal heights  all li elements
-// var max = -1;
-// $(".shuffled").each(function () {
-//     var h = $(this).height();
-//     max = h > max ? h : max;
-// });
-// $(".shuffled,.shufflerstep").each(function () {
-//     $(this).css("height", max/10+'vw');
-// });
-// get heights  all li elements
-// var max = 0;
-// $(".shuffled").each(function () {
-//     var h = $(this).height();
-//     max += h;
-// });
-// // $(".shuffled,.shufflerstep").each(function () {
-// //     $(this).css("height", max/10+'vw');
-// // });
-
-// // set height of 2 ul elements 
-// let l1set = document.getElementById("statement_opt").childElementCount;
-// // let l1aset = document.getElementById("justification_opt").childElementCount;
-
-// let ht = (max+17)/10+'vw';
-// $(".shuffler1,#step").each(function () {
-//     $(this).css("height", ht);
-// });
 
 let getData = arr => {
     return arr.map(function () {
@@ -137,22 +86,11 @@ function checkOrder(l1) {
     });
     return { countAfter, valAfter, countBefore, valBefore };
 }
-// Check for correct pairing -- return first row number incorrectly paired
-// function checkPairs(l1a, l2a) {
-//     let len = Math.min(l1a.length, l2a.length);
-//     for (let i = 0; i < len; i++) {
-//         if (l1a[i] != l2a[i]) {
-//             return i + 1;
-//         }
-//     }
-//     return len + 1;
-// }
-let proofRows = $(".proofRows").attr('data-compare');
+
+
 function checker() {
     let l1 = getData($("#statement > li"));
     let l1len = l1.length;
-    // let l2 = getData($("#justification > li"));
-    // let l2len = l2.length;
     let str = "";
     let maxRows = /*Math.max(l2len,*/ l1len/*)*/;
     if (maxRows < proofRows) {
@@ -161,9 +99,6 @@ function checker() {
     else if (maxRows > proofRows) {
         str += " -- The solution has fewer than " + maxRows + " rows.<br/>";
     }
-    // if (!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) {
-    //     str += " -- Statements require correct pairing with justifications. First incorrect pairing at step " + checkPairs(l1, l2) + ".<br/>";
-    // }
 
     if (str.length == 0) {
         let c = checkOrder(l1);
