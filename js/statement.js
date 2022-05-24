@@ -12,6 +12,24 @@ $(function () {
 		}
 	});
 	$("#statement_opt,#statement").disableSelection();
+    var max = 0;
+    $(".shuffled").each(function () {
+        var h = $(this).height();
+        // var w = $(this).width()
+        max += h;
+    });
+    // $(".shuffled,.shufflerstep").each(function () {
+    //     $(this).css("height", max/10+'vw');
+    // });
+
+    // set height of 2 ul elements 
+    // let l1set = document.getElementById("statement_opt").childElementCount;
+    // let l1aset = document.getElementById("justification_opt").childElementCount;
+
+    let ht = max+'vh';
+    $(".shuffler1,#step").each(function () {
+        $(this).css("height", ht/$(this).width());
+    });
 });
 // $(function () {
 // 	$("#justification_opt,#justification").sortable({
@@ -53,23 +71,32 @@ function shuffleNodes(e) {
 // allow option lists to be moved to Statement and Justification
 
 // set equal heights  all li elements
-var max = -1;
-$(".shuffled").each(function () {
-    var h = $(this).height();
-    max = h > max ? h : max;
-});
-$(".shuffled,.shufflerstep").each(function () {
-    $(this).css("height", max/10+'vw');
-});
+// var max = -1;
+// $(".shuffled").each(function () {
+//     var h = $(this).height();
+//     max = h > max ? h : max;
+// });
+// $(".shuffled,.shufflerstep").each(function () {
+//     $(this).css("height", max/10+'vw');
+// });
+// get heights  all li elements
+// var max = 0;
+// $(".shuffled").each(function () {
+//     var h = $(this).height();
+//     max += h;
+// });
+// // $(".shuffled,.shufflerstep").each(function () {
+// //     $(this).css("height", max/10+'vw');
+// // });
 
-// set height of 4 ul elements 
-let l1set = document.getElementById("statement_opt").childElementCount;
-// let l1aset = document.getElementById("justification_opt").childElementCount;
+// // set height of 2 ul elements 
+// let l1set = document.getElementById("statement_opt").childElementCount;
+// // let l1aset = document.getElementById("justification_opt").childElementCount;
 
-let ht = l1set * (max + 17)/10 +'vw';
-$(".shuffler1,#step").each(function () {
-    $(this).css("height", ht);
-});
+// let ht = (max+17)/10+'vw';
+// $(".shuffler1,#step").each(function () {
+//     $(this).css("height", ht);
+// });
 
 let getData = arr => {
     return arr.map(function () {
