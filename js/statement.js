@@ -1,8 +1,12 @@
-// https://www.pureexample.com/ExampleTesterII-81.html
-// li items draggable
+
 // Number of statements in proof
 let proofRows = $(".proofRows").attr('data-compare');
+//initial height of step li
+let stepHtInit = $("#step li").eq(0).height();
 var max = 0;
+
+// https://www.pureexample.com/ExampleTesterII-81.html
+// li items draggable/sortable
 $(function () {
     $("#statement_opt,#statement").sortable({
         connectWith: "#statement_opt,#statement",
@@ -15,44 +19,26 @@ $(function () {
             var children = $(this)
                 .sortable('refreshPositions')
                 .children();
-            // alert('Positions: ');
-            // $.each(children, function () {
-            //     alert($(this).index());
-            // });
-        }
+            liHt();
+        },
     });
-    $("#justification_opt,#justification").disableSelection();
 });
 
-// Update height of li
+// Update height and color of li
 function liHt() {
-    
-    let len = Math.max(a.height, b.height);
-    for (let i = 0; i < len; i++) {
-        if (l1a[i] != l2a[i]) {
-            return i + 1;
+    for (let i = 0; i < $("#step li").length; i++) {
+        if (i < $("#statement li").length) {
+            $("#step li").eq(i).height($("#statement li").eq(i).height());
+            $("#step li").eq(i).css('background-color', '#3193F5');
+        }
+        else {
+            $("#step li").eq(i).height(stepHtInit);
+            $("#step li").eq(i).css('background-color', 'rgb(232, 232, 232)');
         }
     }
-    return len + 1;
 }
 
-// const ulList = document.getElementById("statement_opt");
-// const li = document.getElementsByTagName('li');
-// var nodes = Array.from(ulList.children);
-// let selected = -1;
-// document.getElementById("statement_opt").addEventListener("click", function (e) {
-//     if (selected !== nodes.indexOf(e.target)) {
-//         selected = nodes.indexOf(e.target);
-//         alert(selected);
-
-//     } else {
-//         alert("Already selected");
-//     }
-
-// });
-
-
-// Set ul box heights
+// Set initial ul box heights
 function setHeight() {
     let h = document.getElementById('statement_opt');
     let ht = h.clientHeight;

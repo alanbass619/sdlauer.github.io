@@ -25,9 +25,9 @@ $(function () {
             var children = $(this)
                 .sortable('refreshPositions')
                 .children();
+            liHt();
         }
     });
-    $("#justification_opt,#justification").disableSelection();
 });
 
 // shuffle li elements in ul -- needs shuffleNodes(e) function call
