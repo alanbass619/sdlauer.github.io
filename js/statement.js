@@ -26,6 +26,7 @@ $(function () {
 
 // Update height of li
 function liHt() {
+    
     let len = Math.max(a.height, b.height);
     for (let i = 0; i < len; i++) {
         if (l1a[i] != l2a[i]) {
