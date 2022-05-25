@@ -2,28 +2,32 @@
 // li items draggable
 
 $(function () {
-	$("#statement_opt,#statement").sortable({
-		connectWith: "#statement_opt,#statement",
+    $("#statement_opt,#statement").sortable({
+        connectWith: "#statement_opt,#statement",
         start: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		},
-		stop: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		}
-	});
-	$("#statement_opt,#statement").disableSelection();
+            ui.item.toggleClass("highlight");
+        },
+        stop: function (event, ui) {
+            ui.item.toggleClass("highlight");
+        }
+    });
+    $("#statement_opt,#statement").disableSelection();
 });
 $(function () {
-	$("#justification_opt,#justification").sortable({
-		connectWith: "#justification_opt,#justification",
+    $("#justification_opt,#justification").sortable({
+        connectWith: "#justification_opt,#justification",
         start: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		},
-		stop: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		}
-	});
-	$("#justification_opt,#justification").disableSelection();
+            ui.item.toggleClass("highlight");
+        },
+        stop: function (event, ui) {
+            ui.item.toggleClass("highlight");
+            // https://www.geeksforgeeks.org/jquery-ui-sortable-refreshpositions-method/
+            var children = $(this)
+                .sortable('refreshPositions')
+                .children();
+        }
+    });
+    $("#justification_opt,#justification").disableSelection();
 });
 
 // shuffle li elements in ul -- needs shuffleNodes(e) function call
@@ -49,27 +53,35 @@ function shuffleNodes(e) {
         ++i;
     }
 }
+
+function setHeight() {
+    let h = document.getElementById('statement_opt');
+    let ht = h.clientHeight;
+    $(".shuffler1,#step,.shuffler2").each(function () {
+        $(this).css("height", ht);
+    });
+}
 // based on: https://stackoverflow.com/questions/68965082/how-do-i-move-item-from-1-list-to-another-list-in-html-->
 // allow option lists to be moved to Statement and Justification
 
 // set equal heights  all li elements
-var max = -1;
-$(".shuffled").each(function () {
-    var h = $(this).height();
-    max = h > max ? h : max;
-});
-$(".shuffled,.shufflerstep").each(function () {
-    $(this).css("height", max/10+'vw');
-});
+// var max = -1;
+// $(".shuffled").each(function () {
+//     var h = $(this).height();
+//     max = h > max ? h : max;
+// });
+// $(".shuffled,.shufflerstep").each(function () {
+//     $(this).css("height", max / 10 + 'vw');
+// });
 
 // set height of 4 ul elements 
-let l1set = document.getElementById("statement_opt").childElementCount;
-let l1aset = document.getElementById("justification_opt").childElementCount;
+// let l1set = document.getElementById("statement_opt").childElementCount;
+// let l1aset = document.getElementById("justification_opt").childElementCount;
 
-let ht = Math.max(l1set, l1aset) * (max + 17)/10 +'vw';
-$(".shuffler2,.shuffler1,#step").each(function () {
-    $(this).css("height", ht);
-});
+// let ht = Math.max(l1set, l1aset) * (max + 17) / 10 + 'vw';
+// $(".shuffler2,.shuffler1,#step").each(function () {
+//     $(this).css("height", ht);
+// });
 
 let getData = arr => {
     return arr.map(function () {
@@ -92,7 +104,7 @@ function checkOrder(l1) {
         checkRow = parseInt(key) + 1;
         if (valAfter < 0) {
             for (let t = checkRow; t < l1.length; t++) {
-                if (l1dep[t].slice(2,5) == l1[key]) {
+                if (l1dep[t].slice(2, 5) == l1[key]) {
                     // alert(l1dep[t][1]);
                     valAfter = checkRow;
                     countAfter++;
@@ -100,8 +112,8 @@ function checkOrder(l1) {
             }
         }
         if (valBefore < 0) {
-            for (let t=0; t < checkRow; t++) {
-                if (l1dep[t].slice(0,2) == l1[key]) {
+            for (let t = 0; t < checkRow; t++) {
+                if (l1dep[t].slice(0, 2) == l1[key]) {
                     // alert(l1dep[t][1]);
                     valBefore = checkRow;
                     countBefore++;

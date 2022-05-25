@@ -1,27 +1,62 @@
 // https://www.pureexample.com/ExampleTesterII-81.html
 // li items draggable
 // Number of statements in proof
-let proofRows = $(".proofRows").attr('data-compare'); 
+let proofRows = $(".proofRows").attr('data-compare');
 var max = 0;
 $(function () {
-	$("#statement_opt,#statement").sortable({
-		connectWith: "#statement_opt,#statement",
+    $("#statement_opt,#statement").sortable({
+        connectWith: "#statement_opt,#statement",
         start: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		},
-		stop: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		}
-	});
-	$("#statement_opt,#statement").disableSelection(); 
+            ui.item.toggleClass("highlight");
+        },
+        stop: function (event, ui) {
+            ui.item.toggleClass("highlight");
+            // https://www.geeksforgeeks.org/jquery-ui-sortable-refreshpositions-method/
+            var children = $(this)
+                .sortable('refreshPositions')
+                .children();
+            // alert('Positions: ');
+            // $.each(children, function () {
+            //     alert($(this).index());
+            // });
+        }
+    });
+    $("#justification_opt,#justification").disableSelection();
 });
 
+// Update height of li
+function liHt() {
+    let len = Math.max(a.height, b.height);
+    for (let i = 0; i < len; i++) {
+        if (l1a[i] != l2a[i]) {
+            return i + 1;
+        }
+    }
+    return len + 1;
+}
+
+// const ulList = document.getElementById("statement_opt");
+// const li = document.getElementsByTagName('li');
+// var nodes = Array.from(ulList.children);
+// let selected = -1;
+// document.getElementById("statement_opt").addEventListener("click", function (e) {
+//     if (selected !== nodes.indexOf(e.target)) {
+//         selected = nodes.indexOf(e.target);
+//         alert(selected);
+
+//     } else {
+//         alert("Already selected");
+//     }
+
+// });
+
+
 // Set ul box heights
-function setHeight(){
+function setHeight() {
     let h = document.getElementById('statement_opt');
     let ht = h.clientHeight;
     $(".shuffler1,#step").each(function () {
-        $(this).css("height",ht);
+        $(this).css("height", ht);
     });
 }
 
@@ -67,7 +102,7 @@ function checkOrder(l1) {
         checkRow = parseInt(key) + 1;
         if (valAfter < 0) {
             for (let t = checkRow; t < l1.length; t++) {
-                if (l1dep[t].slice(2,5) == l1[key]) {
+                if (l1dep[t].slice(2, 5) == l1[key]) {
                     // alert(l1dep[t][1]);
                     valAfter = checkRow;
                     countAfter++;
@@ -75,8 +110,8 @@ function checkOrder(l1) {
             }
         }
         if (valBefore < 0) {
-            for (let t=0; t < checkRow; t++) {
-                if (l1dep[t].slice(0,2) == l1[key]) {
+            for (let t = 0; t < checkRow; t++) {
+                if (l1dep[t].slice(0, 2) == l1[key]) {
                     valBefore = checkRow;
                     countBefore++;
                 }
