@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <link rel="stylesheet" href="css/statement-justification.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -19,16 +19,18 @@
         <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
             title="Side navigation"></iframe>
     </div>
-
     <div class="main">
         <div>
-            TODO:  Add check button, update styles as recommended by team.  <br/>
-            Consider making answers draggable back to choices 
+            TODO: Add check button, update styles as recommended by team. <br />
+            Consider making answers draggable back to choices
         </div>
         <div>
             <p>Drag answers to the correct location, then check.</p>
-
-            <ul id="optionsFiB", class="shuffled">
+            <p>All <span data-max="1"></span> are <span data-max="1"></span>, but <span data-max="1"></span>
+                all rectangles are <span data-max="1"></span>.</p>
+        </div>
+        <div>
+            <ul id="optionsFiB" , class="shuffled">
                 <li>squares</li>
                 <li>rectangles</li>
                 <li>not</li>
@@ -36,9 +38,7 @@
                 <li>almost</li>
                 <li>always</li>
             </ul>
-           
         </div>
-        <div> <p>All <span></span> are <span></span>, but <span></span> all rectangles are <span></span>.</p></div>
     </div>
     <button id="reset" onClick="window.location.reload();">Reset</button>
     <script src="js/fill_in_blanks.js"></script>

@@ -15,37 +15,26 @@ html * {
     overflow-x: hidden;
     padding-left: .5vw;
   }
-  .ui-state-highlight{
+  /* .ui-state-highlight{
       color: white;
       background-color: #F9D8BC;
       border: none;
       padding: .5vw;
-  }
-  span {
-    min-width: 5vw;
-    width: auto;
-    border-bottom: 2vh;
-    border-color: black;
-    background-color: #F9D8BC;
-    display: inline-block;
-    height: 3vh;
-    text-align: center;
-    color: white;
-    padding: .5vw;
-  }
+  } */
+ 
   li {
     list-style-type : none;
 
   }
   li{
     /* background-color: rgb(232, 232, 232); */
-    color: black;
+    /* color: black; */
     /* padding: .5vw; */
  }
  li:hover{
     background-color: #a4a3a36a;
     color: #8424AC;
-    font: bold;
+    /* font: bold; */
  }
   i.fa.fa-times {
       cursor: pointer;
@@ -63,11 +52,23 @@ html * {
   ul li {
     display: inline-block;
     /* margin: 0 10px; */
-    padding: .5vw;
+    padding-right: 1vw;
+    padding-left: 1vw;
     text-align: center;
     /* background: rgb(0, 255, 213); */
   }
   p {
-    /* padding: 10px; */
-    /* background: rgb(255, 145, 0); */
+    position: relative;
+  }
+  span {
+    min-width: 8vw;
+    width: auto;
+    border-bottom: .2vw solid black;
+    /* background-color: tan; */
+    display:inline-block;
+    min-height: 3vh;
+    text-align: center;
+    color: blue;
+    /* position: inherit; */
+    /* padding-bottom: 2vw; */
   }
