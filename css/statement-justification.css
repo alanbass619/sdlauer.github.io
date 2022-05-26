@@ -119,7 +119,8 @@ td {
    border: 0vw;
    background-color: #E68143;
    color: white;
-   font-size: 5vw;
+   font-size: 2vw;
+   float: right;
 }
 #reset:hover {
   color: black;
