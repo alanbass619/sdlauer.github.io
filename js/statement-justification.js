@@ -1,5 +1,11 @@
+// Number of statements in proof
+let proofRows = $(".proofRows").attr('data-compare');
+//initial height of step li
+let stepHtInit = $("#step li").eq(0).height();
+var max = 0;
+
 // https://www.pureexample.com/ExampleTesterII-81.html
-// li items draggable
+// li items draggable/sortable
 
 $(function () {
     $("#statement_opt,#statement").sortable({
@@ -9,9 +15,12 @@ $(function () {
         },
         stop: function (event, ui) {
             ui.item.toggleClass("highlight");
+            var children = $(this)
+                .sortable('refreshPositions')
+                .children();
+            liHt();
         }
     });
-    $("#statement_opt,#statement").disableSelection();
 });
 $(function () {
     $("#justification_opt,#justification").sortable({
@@ -29,7 +38,36 @@ $(function () {
         }
     });
 });
-
+// Update height and color of li
+function liHt() {
+    $("li").css('height', '');
+    let h = 0;
+    for (let i = 0; i < $("#step li").length; i++) {
+        m = Math.max($("#statement li").length, $("#justification li").length);
+        if (i < m) {
+            if ($("#statement li").length > i && $("#justification li").length > i) {
+                h = Math.max($("#statement li").eq(i).height(), $("#justification li").eq(i).height());
+                $("#statement li").eq(i).height(h);
+                $("#justification li").eq(i).height(h);
+            }
+            else if ($("#justification li").length < m) {
+                h = $("#statement li").eq(i).height();
+                $("#statement li").eq(i).height(h);
+            }
+            else {
+                h = $("#justification li").eq(i).height();
+                $("#justification li").eq(i).height(h);
+            }
+            $("#step li").eq(i).height(h);
+            $("#step li").eq(i).css('background-color', '#3193F5');
+        }
+        else {
+            $("#step li").eq(i).height(stepHtInit);
+            $("#step li").eq(i).css('background-color', 'rgb(232, 232, 232)');
+        }
+    }
+    setHeight();
+}
 // shuffle li elements in ul -- needs shuffleNodes(e) function call
 // https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
 
@@ -55,10 +93,16 @@ function shuffleNodes(e) {
 }
 
 function setHeight() {
-    let h = document.getElementById('statement_opt');
-    let ht = h.clientHeight;
     $(".shuffler1,#step,.shuffler2").each(function () {
-        $(this).css("height", ht);
+        $(this).css("height", '');
+    });
+    let h = [document.getElementById('statement_opt'),document.getElementById('justification_opt'),document.getElementById('step'),document.getElementById('statement'),document.getElementById('justification').clientHeight];
+    let maxht = h[0].clientHeight;
+    for (let i = 0; i < 5; i++){
+        if (h[i].clientHeight>maxht) maxht =h[i].clientHeight; 
+    }
+    $(".shuffler1,#step,.shuffler2").each(function () {
+        $(this).css("height", maxht);
     });
 }
 // based on: https://stackoverflow.com/questions/68965082/how-do-i-move-item-from-1-list-to-another-list-in-html-->
@@ -133,7 +177,7 @@ function checkPairs(l1a, l2a) {
     }
     return len + 1;
 }
-let proofRows = $(".proofRows").attr('data-compare');
+
 function checker() {
     let l1 = getData($("#statement > li"));
     let l1len = l1.length;
