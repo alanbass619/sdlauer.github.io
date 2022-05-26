@@ -1,0 +1,73 @@
+html * {
+    font-size: 1.5vw;
+    line-height: 1.25;
+    font-family: Arial, Helvetica, sans-serif;
+ }
+ /* The sidenav */
+ .sidenav {
+    height: 100%;
+    width: 15%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(227, 224, 224);
+    overflow-x: hidden;
+    padding-left: .5vw;
+  }
+  .ui-state-highlight{
+      color: white;
+      background-color: #F9D8BC;
+      border: none;
+      padding: .5vw;
+  }
+  span {
+    min-width: 5vw;
+    width: auto;
+    border-bottom: 2vh;
+    border-color: black;
+    background-color: #F9D8BC;
+    display: inline-block;
+    height: 3vh;
+    text-align: center;
+    color: white;
+    padding: .5vw;
+  }
+  li {
+    list-style-type : none;
+
+  }
+  li{
+    /* background-color: rgb(232, 232, 232); */
+    color: black;
+    /* padding: .5vw; */
+ }
+ li:hover{
+    background-color: #a4a3a36a;
+    color: #8424AC;
+    font: bold;
+ }
+  i.fa.fa-times {
+      cursor: pointer;
+      padding-left: 10px;
+  }
+
+  /* body {
+    font: 13px Verdana;
+  } */
+  ul {
+    list-style: none;
+    /* padding: 10px; */
+    background: rgb(232, 232, 232);
+  }
+  ul li {
+    display: inline-block;
+    /* margin: 0 10px; */
+    padding: .5vw;
+    text-align: center;
+    /* background: rgb(0, 255, 213); */
+  }
+  p {
+    /* padding: 10px; */
+    /* background: rgb(255, 145, 0); */
+  }

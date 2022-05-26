@@ -1,0 +1,45 @@
+<html>
+<!-- from: https://www.demo2s.com/javascript/jquery-implement-fill-in-the-blanks-using-drag-drop-jquery-rvnx.html -->
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/statement-justification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="css/fill_in_blanks.css">
+
+
+    </style>
+</head>
+
+<body onload="shuffleNodes('optionsFiB')">
+    <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
+        <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
+            title="Side navigation"></iframe>
+    </div>
+
+    <div class="main">
+        <div>
+            TODO:  Add check button, shuffle answers, update styles as recommended by team.  <br/>
+            Consider making answers draggable back to choices 
+        </div>
+        <div>
+            <p>Drag answers to the correct location, then check.</p>
+            <ul id="optionsFiB", class="shuffled">
+                <li>squares</li>
+                <li>rectangles</li>
+                <li>not</li>
+                <li>square</li>
+                <li>almost</li>
+                <li>always</li>
+            </ul>
+           
+        </div>
+        <div> <p>All <span></span> are <span></span>, but <span></span> all rectangles are <span></span>.</p></div>
+    </div>
+    <script src="js/fill_in_blanks.js"></script>
+</body>
+
+</html>
