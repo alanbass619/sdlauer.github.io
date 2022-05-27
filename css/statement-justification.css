@@ -65,13 +65,13 @@ img {
    /* display: table-column; */
    vertical-align: middle;
 }
-#statement_opt, #justification_opt {
-   /* background: #AFAFAF; */
+/* #statement_opt, #justification_opt {
+   background: #AFAFAF;
    border-left: .1vw solid rgb(148, 147, 147);
    border-right: .1vw solid rgb(148, 147, 147);
    color: black;
-}
-#statement, #justification, #step {
+} */
+.shuffler1, .shuffler2, #step {
    /* background: white; */
    border-left: .1vw solid rgb(148, 147, 147);
    border-right: .1vw solid rgb(148, 147, 147);

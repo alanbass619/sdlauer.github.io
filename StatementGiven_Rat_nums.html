@@ -17,7 +17,7 @@
    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
    <link rel="stylesheet" href="css/statement-justification.css">
 </head>
-<body onload="shuffleNodes('statement_opt');setHeight();shuffleNodes('justification_opt')">
+<body onload="setHeight();shuffleNodes('justification_opt');disAbleSortable('#statement');disAbleSortable('#statement_opt')"><!-- shuffleNodes('statement_opt'); -->
    <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
       <iframe src="sidenav.html"
          style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;" title="Side navigation"></iframe>
@@ -36,30 +36,30 @@
       <!--id here is number of rows in completed proof-->
       <table class="proofRows" data-compare="5">
          <tr>
-            <th>Statement options</th>
-            <th>Statement</th>
+            <th>Statements</th>
+            <th hidden>Statement</th>
             <th class="auto">Step</th>
             <th>Justification</th>
             <th>Justification options</th>
          </tr>
          <tr>
-            <td>
+            <td hidden>
                <!-- data-compare xxyy corresponds to 
                   the id number xx of the li that must come before this row
                   the id number yy of the li that must come after this row
                include no data-compare for distractors and include all distractors last -->
-               <ul id="statement_opt" class="shuffler2">
+               <ul id="statement_opt" class="shuffler2" hidden>
+               </ul>
+            </td>
+            <td>
+               <ul id="statement" >
                   <li data-compare="0002" id="01" class="shuffled">Let r be a rational number.</li>
                   <li data-compare="0103" id="02" class="shuffled">There exists integers <br/>x and y such that <br/>r = x/y and y &ne; 0.</li>
                   <li data-compare="0205" id="03" class="shuffled">r<sup>2</sup> = (x/y)<sup>2</sup> = x<sup>2</sup>/y<sup>2</sup>.</li>
                   <li data-compare="0205" id="04" class="shuffled"> x<sup>2</sup> and  y<sup>2</sup> are integers, <br/>y<sup>2</sup> &ne; 0.</li>
                   <li data-compare="0300" id="05" class="shuffled"> r<sup>2</sup> is a rational number.</li>
-                  <!-- <li data-compare="5" id="05" class="shuffled">\(\bigtriangledown\)</li>
-                  <li id="6" class="shuffled">\(\bigcirc\)</li> -->
-               </ul>
-            </td>
-            <td>
-               <ul id="statement" class="shuffler2">
+                  <!-- <li data-compare="5" id="05" class="shuffled">\(\bigtriangledown\)</li> -->
+                  <!-- <li id="6" class="shuffled">\(\bigcirc\)</li> -->
                </ul>
             </td>
             <td class="auto">
@@ -88,7 +88,7 @@
          </tr>
          <tr>
             <td></td>
-            <td></td>
+            <td hidden></td>
             <td class="auto"></td>
             <td></td>
             <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button></td>

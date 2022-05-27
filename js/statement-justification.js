@@ -23,6 +23,10 @@ $(function () {
         }
     });
 });
+function disAbleSortable(item){
+    $(item).sortable('disable');
+    $(item+" li").css({'background': '#B1D6FC', 'color': 'black'});
+}
 $(function () {
     $("#justification_opt,#justification").sortable({
         connectWith: "#justification_opt,#justification",
@@ -98,7 +102,20 @@ function setHeight() {
     $(".shuffler1,#step,.shuffler2").each(function () {
         $(this).css("height", '');
     });
-    let h = [document.getElementById('statement_opt'),document.getElementById('justification_opt'),document.getElementById('step'),document.getElementById('statement'),document.getElementById('justification').clientHeight];
+    let h = [document.getElementById('statement_opt'),document.getElementById('justification_opt'),document.getElementById('step'),document.getElementById('statement'),document.getElementById('justification')];
+    let maxht = h[0].clientHeight;
+    for (let i = 0; i < 5; i++){
+        if (h[i].clientHeight>maxht) maxht =h[i].clientHeight; 
+    }
+    $(".shuffler1,#step,.shuffler2").each(function () {
+        $(this).css("height", maxht);
+    });
+}
+function setHeightStatementOnly() {
+    $(".shuffler1,#step,.shuffler2").each(function () {
+        $(this).css("height", '');
+    });
+    let h = [document.getElementById('statement_opt'),document.getElementById('justification_opt'),document.getElementById('step'),document.getElementById('statement'),document.getElementById('justification')];
     let maxht = h[0].clientHeight;
     for (let i = 0; i < 5; i++){
         if (h[i].clientHeight>maxht) maxht =h[i].clientHeight; 
@@ -160,8 +177,8 @@ function checker() {
     let l1 = getData($("#statement > li"));
     let l1len = l1.length;
     let l2 = getData($("#justification > li"));
-    alert("l1= "+l1);
-    alert("l2= "+ l2);
+    // alert("l1= "+l1);
+    // alert("l2= "+ l2);
     let l2len = l2.length;
     let str = "";
     let maxRows = Math.max(l2len, l1len);
