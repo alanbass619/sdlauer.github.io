@@ -2,26 +2,32 @@ $(function () {
     $("#optionsFiB,span").sortable({
         connectWith: "#optionsFiB,span",
         disabled: $("span").length == 1,
-        start: function (event, ui) {
-            ui.item.toggleClass("highlight");
-        },
-        receive: function(event, ui) {
+        // start: function (event, ui) {
+        //     ui.item.toggleClass("highlight");
+        // },
+        receive: function (event, ui) {
             var list = $(this);
             if (list.attr('id') != "optionsFiB" && list.children().length == 1) {
-                    list.sortable("disable");                
-        }},
+                list.sortable("disable");
+            }
+        },
+        stop: function (event, ui) {
+            // ui.item.toggleClass("highlight");
+            var children = $(this)
+                .sortable('refreshPositions')
+                .children();
+        }
     });
 });
-$("span").click(function(){
-        if ($(this).children().length == 1) {                
-            var tspanElem = $(this).find(":first-child").detach();
-            // tspanElem.removeAttr("style");
-            $("#optionsFiB").append(tspanElem);
-            // ui.css("color","purple");
-        }
-        $(this).sortable( "enable" );
-  });
-  function shuffle(items) {
+$("span").click(function () {
+    // send li back to list and set answer blank sortable
+    if ($(this).children().length == 1) {
+        var tspanElem = $(this).find(":first-child").detach();
+        $("#optionsFiB").append(tspanElem);
+    }
+    $(this).sortable("enable");
+});
+function shuffle(items) {
     var cached = items.slice(0), temp, i = cached.length, rand;
     while (--i) {
         rand = Math.floor(i * Math.random());
@@ -77,8 +83,12 @@ function checkOrder() {
 
 
 function checker() {
-    let l1 = getData($("#statement > li"));
+    let l1 = getData($("#optionsFiB > li"));
     let l1len = l1.length;
+    let l2 = getData($(".ans"));
+    let l2len = l1.length;
+    alert("opt= " + l1);
+    alert("ans= " + l2);
     let str = "";
     let maxRows = /*Math.max(l2len,*/ l1len/*)*/;
     if (maxRows < proofRows) {

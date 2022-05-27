@@ -105,27 +105,6 @@ function setHeight() {
         $(this).css("height", maxht);
     });
 }
-// based on: https://stackoverflow.com/questions/68965082/how-do-i-move-item-from-1-list-to-another-list-in-html-->
-// allow option lists to be moved to Statement and Justification
-
-// set equal heights  all li elements
-// var max = -1;
-// $(".shuffled").each(function () {
-//     var h = $(this).height();
-//     max = h > max ? h : max;
-// });
-// $(".shuffled,.shufflerstep").each(function () {
-//     $(this).css("height", max / 10 + 'vw');
-// });
-
-// set height of 4 ul elements 
-// let l1set = document.getElementById("statement_opt").childElementCount;
-// let l1aset = document.getElementById("justification_opt").childElementCount;
-
-// let ht = Math.max(l1set, l1aset) * (max + 17) / 10 + 'vw';
-// $(".shuffler2,.shuffler1,#step").each(function () {
-//     $(this).css("height", ht);
-// });
 
 let getData = arr => {
     return arr.map(function () {
@@ -141,7 +120,6 @@ let getDependency = arr => {
 // Check for correct order
 function checkOrder(l1) {
     let l1dep = getDependency($("#statement > li"));
-    // alert(parseInt(l1dep[0].slice(0,3)));
     let valAfter = -1, valBefore = -1;
     let countAfter = 0, countBefore = 0;
     l1dep.forEach(function (value, key) {
@@ -149,7 +127,6 @@ function checkOrder(l1) {
         if (valAfter < 0) {
             for (let t = checkRow; t < l1.length; t++) {
                 if (l1dep[t].slice(2, 5) == l1[key]) {
-                    // alert(l1dep[t][1]);
                     valAfter = checkRow;
                     countAfter++;
                 }
@@ -158,7 +135,6 @@ function checkOrder(l1) {
         if (valBefore < 0) {
             for (let t = 0; t < checkRow; t++) {
                 if (l1dep[t].slice(0, 2) == l1[key]) {
-                    // alert(l1dep[t][1]);
                     valBefore = checkRow;
                     countBefore++;
                 }
@@ -182,6 +158,8 @@ function checker() {
     let l1 = getData($("#statement > li"));
     let l1len = l1.length;
     let l2 = getData($("#justification > li"));
+    alert("l1= "+l1);
+    alert("l2= "+ l2);
     let l2len = l2.length;
     let str = "";
     let maxRows = Math.max(l2len, l1len);

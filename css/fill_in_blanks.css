@@ -62,7 +62,7 @@ ul li {
     position: relative;
 
   } */
-span {
+.ans {
   width: 10vw;
   margin: 0vw;
   border-bottom: .2vw solid black;
@@ -76,6 +76,6 @@ span {
   /* padding-bottom: 2vw; */
 }
 
-span:empty:before {
+.ans:empty:before {
   content: "\00a0";
 }
