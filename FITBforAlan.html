@@ -1,0 +1,80 @@
+<html>
+<!-- from: https://www.demo2s.com/javascript/jquery-implement-fill-in-the-blanks-using-drag-drop-jquery-rvnx.html -->
+
+<head>
+    <title>Fill in the blank example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex" />
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+        </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <link rel="stylesheet" href="css/statement-justification.css">
+    <link rel="stylesheet" href="css/fill_in_blanks.css">
+
+
+    </style>
+</head>
+
+<body onload="shuffleNodes('optionsFiB')">
+    <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
+        <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
+            title="Side navigation"></iframe>
+    </div>
+    <div class="main">
+        <div>
+            <h2>General fill in the blank example</h2>
+
+            <p>TODO: Add check button, update styles as recommended by team.</p>
+
+        </div>
+
+        <div>
+            <p>Drag answers to the correct location. Click an answer blank to remove the current answer.</p>
+            <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
+            <p><span id="chkOrder"></span></p>
+            <div>
+                <p>All
+                    <span class="ans" id="01" data-max="1"></span>
+                    are
+                    <span class="ans" id="02" data-max="1"></span>
+                    , but
+                    <span class="ans" id="03" data-max="1"></span>
+                    all rectangles are
+                    <span class="ans" id="04" data-max="1"></span>
+                    .
+                </p>
+            </div>
+        </div>
+        <div>
+            <ul id="optionsFiB" , class="shuffled">
+                <li id="01">squares</li>
+                <li id="02">rectangular</li>
+                <li id="03">not</li>
+                <li id="04">square</li>
+                <li id="00">almost</li>
+                <li id="00">always</li>
+            </ul>
+        </div>
+    </div>
+    <button id="reset" onClick="window.location.reload();">Reset</button>
+    <script src="js/fill_in_blanks.js"></script>
+</body>
+
+</html>
