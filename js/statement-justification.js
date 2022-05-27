@@ -13,6 +13,7 @@ $(function () {
         start: function (event, ui) {
             ui.item.toggleClass("highlight");
         },
+        // tolerance: 'intersection',
         stop: function (event, ui) {
             ui.item.toggleClass("highlight");
             var children = $(this)
@@ -28,6 +29,7 @@ $(function () {
         start: function (event, ui) {
             ui.item.toggleClass("highlight");
         },
+        // tolerance: 'intersection',
         stop: function (event, ui) {
             ui.item.toggleClass("highlight");
             // https://www.geeksforgeeks.org/jquery-ui-sortable-refreshpositions-method/
