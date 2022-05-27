@@ -113,7 +113,7 @@ td {
 #statement>li:hover, #justification>li:hover, li:hover{
    background-color: #a4a3a36a;
    color: #8424AC;
-   font: bold;
+   /* font: bold; */
 }
 #reset {
    border: 0vw;

@@ -1,32 +1,26 @@
 $(function () {
     $("#optionsFiB,span").sortable({
         connectWith: "#optionsFiB,span",
+        disabled: $("span").length == 1,
         start: function (event, ui) {
             ui.item.toggleClass("highlight");
         },
         receive: function(event, ui) {
             var list = $(this);
-            if (list.attr('id') != "optionsFiB") {
-                if (list.children().length > 1) {                
-                    var tspanElem = list.find(":first-child").detach();
-                    // tspanElem.removeAttr("style");
-                    $("#optionsFiB").append(tspanElem);
-                    ui.css("color","purple");
-                }
-            }
-            $this.css("color","purple");
-        },
-        stop: function (event, ui) {
-            // ui.item.toggleClass("highlight");
-            // https://www.geeksforgeeks.org/jquery-ui-sortable-refreshpositions-method/
-            var children = $(this)
-                .sortable('refreshPositions')
-                .children();
-            // liHt();
-        },
+            if (list.attr('id') != "optionsFiB" && list.children().length == 1) {
+                    list.sortable("disable");                
+        }},
     });
 });
-
+$("span").click(function(){
+        if ($(this).children().length == 1) {                
+            var tspanElem = $(this).find(":first-child").detach();
+            // tspanElem.removeAttr("style");
+            $("#optionsFiB").append(tspanElem);
+            // ui.css("color","purple");
+        }
+        $(this).sortable( "enable" );
+  });
   function shuffle(items) {
     var cached = items.slice(0), temp, i = cached.length, rand;
     while (--i) {
@@ -46,4 +40,61 @@ function shuffleNodes(e) {
         listli.appendChild(nodes[i]);
         ++i;
     }
+}
+
+
+let getData = arr => {
+    return arr.map(function () {
+        return $(this).attr('id');
+    }).get();
+}
+//  id < compare-data
+let getDependency = arr => {
+    return arr.map(function () {
+        return $(this).attr('data-compare');
+    }).get();
+}
+// Check for correct fill
+function checkOrder() {
+    let l1Dep = getDependency($("#optionsFiB > li"));
+    let scanDep = getDependency($("scan"));
+    // alert(parseInt(l1dep[0].slice(0,3)));
+    let valBefore = -1;
+    let count = 0;
+    l1dep.forEach(function (value, key) {
+        checkRow = parseInt(key) + 1;
+        if (valBefore < 0) {
+            for (let t = 0; t < checkRow; t++) {
+                if (l1Dep[t] != scanDep[key]) {
+                    valBefore = checkRow;
+                    countBefore++;
+                }
+            }
+        }
+    });
+    return { countAfter, valAfter, countBefore, valBefore };
+}
+
+
+function checker() {
+    let l1 = getData($("#statement > li"));
+    let l1len = l1.length;
+    let str = "";
+    let maxRows = /*Math.max(l2len,*/ l1len/*)*/;
+    if (maxRows < proofRows) {
+        str += " -- At least one step is missing from the proof.<br/>";
+    }
+    else if (maxRows > proofRows) {
+        str += " -- The solution has fewer than " + maxRows + " rows.<br/>";
+    }
+
+    if (str.length == 0) {
+        let c = checkOrder(l1);
+        pluralAfter = (c.countAfter == 1) ? " is" : "s are";
+        pluralBefore = (c.countBefore == 1) ? " is" : "s are";
+        str += (c.valAfter < 0) ? "Correct!" : " -- Statements are out of order. At least " + c.countAfter + " more statement" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
+        str += (c.valBefore < 0) ? "" : " -- Statements are out of order. At least " + c.countBefore + " more statement" + pluralBefore + " needed after step " + c.valBefore + ".<br/>";
+
+    }
+    $("#chkOrder").html(str);
 }

@@ -1,74 +1,81 @@
 html * {
-    font-size: 1.5vw;
-    line-height: 1.25;
-    font-family: Arial, Helvetica, sans-serif;
- }
- /* The sidenav */
- .sidenav {
-    height: 100%;
-    width: 15%;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: rgb(227, 224, 224);
-    overflow-x: hidden;
-    padding-left: .5vw;
-  }
-  /* .ui-state-highlight{
-      color: white;
-      background-color: #F9D8BC;
-      border: none;
-      padding: .5vw;
-  } */
- 
-  li {
-    list-style-type : none;
+  font-size: 1.5vw;
+  line-height: 1.25;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-  }
-  li{
-    /* background-color: rgb(232, 232, 232); */
-    /* color: black; */
-    /* padding: .5vw; */
- }
- li:hover{
-    background-color: #a4a3a36a;
-    color: #8424AC;
-    /* font: bold; */
- }
-  i.fa.fa-times {
-      cursor: pointer;
-      padding-left: 10px;
-  }
+/* The sidenav */
+.sidenav {
+  height: 100%;
+  width: 15%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(227, 224, 224);
+  overflow-x: hidden;
+  padding-left: .5vw;
+}
 
-  /* body {
+h2 {
+  font-size: 3vw
+}
+
+li {
+  list-style-type: none;
+  margin: 0vw;
+}
+
+li:hover {
+  background-color: #a4a3a36a;
+  color: #8424AC;
+  margin: 0vw;
+  /* font: bold; */
+}
+
+i.fa.fa-times {
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+/* body {
     font: 13px Verdana;
   } */
-  ul {
-    list-style: none;
-    /* padding: 10px; */
-    background: rgb(232, 232, 232);
-  }
-  ul li {
-    display: inline-block;
-    /* margin: 0 10px; */
-    padding-right: 1vw;
-    padding-left: 1vw;
-    text-align: center;
-    /* background: rgb(0, 255, 213); */
-  }
-  p {
+ul {
+  list-style: none;
+  /* padding: 10px; */
+  background: rgb(232, 232, 232);
+}
+
+ul li {
+  list-style-type: none;
+  display: inline-block;
+  margin: 0vw;
+  /* margin: 0 10px; */
+  padding-right: 1vw;
+  padding-left: 1vw;
+  text-align: center;
+  /* background: rgb(0, 255, 213); */
+}
+
+/* p {
     position: relative;
-  }
-  span {
-    min-width: 8vw;
-    width: auto;
-    border-bottom: .2vw solid black;
-    /* background-color: tan; */
-    display:inline-block;
-    min-height: 3vh;
-    text-align: center;
-    color: blue;
-    /* position: inherit; */
-    /* padding-bottom: 2vw; */
-  }
+
+  } */
+span {
+  width: 10vw;
+  margin: 0vw;
+  border-bottom: .2vw solid black;
+  display: inline-block;
+  line-height: inherit;
+  /* width: 100% !important; */
+  text-align: center;
+  color: blue;
+  resize: none;
+  /* position: inherit; */
+  /* padding-bottom: 2vw; */
+}
+
+span:empty:before {
+  content: "\00a0";
+}
