@@ -21,13 +21,11 @@
             }
         };
     </script>
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-        </script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <link rel="stylesheet" href="css/statement-justification.css">
     <link rel="stylesheet" href="css/fill_in_blanks.css">
-
+    <script src="js/fill_in_blanks.js"></script>
 
     </style>
 
@@ -41,20 +39,14 @@
     <div class="main">
         <div>
             <h2>General fill in the blank example</h2>
-            <p>Drag answers to the correct location. Click an answer blank to remove the current answer.</p>
-            <div>
-                <p id="proof">
-                </p>
+            <p><b>Instructions:</b>  Drag answers to the correct location. Click an answer blank to remove the current answer. Check your work.</p>
+            <div id="proof">
+                <!-- <p id="proof">
+                </p> -->
             </div>
         </div>
         <div>
             <ul id="optionsFiB" , class="shuffled">
-                <!-- <li id="01">squares</li>
-                <li id="02">rectangular</li>
-                <li id="03">not</li>
-                <li id="01">squares</li>
-                <li id="00">almost</li>
-                <li id="00">always</li> -->
             </ul>
         </div>
         <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
@@ -62,12 +54,14 @@
     </div>
 
     <button id="reset" onClick="window.location.reload();">Reset</button>
-    <script src="js/fill_in_blanks.js"></script>
+    
 
     <script>
-        var pt = ['All','are',', but','all','are','.'];
-        var at = ['squares','rectangles','not','rectangles','squares','almost','always','never'];
-        var ansIndex = ['01','02','03','02','01'];
+        // ansblanks will show between array elements at the black commas.
+        var proofText = ['All','are',', but','all','are','.  Added another line here to see how if looks.',''];
+        var answerText = ['squares','rectangles','not','rectangles','squares','Fantastic!','almost','always','never'];
+        // repeated answers can share the same numbers
+        var answerIndex = ['01','02','03','02','01','06'];
     </script>
 </body>
 
