@@ -1,0 +1,84 @@
+html * {
+   font-size: 1vw;
+   line-height: 1.0;
+   font-family: Arial, Helvetica, sans-serif;
+}
+
+.right-div, .left-div
+{
+  display: inline-block;
+  /* width: 40%; */
+  text-align: left;
+  /* padding: 30px; */
+  /* background-color: rgb(230, 228, 228); */
+  border-bottom: 2px solid #E68143;
+  /* border-radius: 3px; */
+  /* margin: 15px; */
+  /* min-height: 50vh/vw; */
+}
+/* The sidenav */
+.sidenav {
+   height: 100%;
+   width: 15%;
+   position: fixed;
+   z-index: 1;
+   top: 0;
+   left: 0;
+   background-color: rgb(227, 224, 224);
+   overflow-x: hidden;
+   padding-left: .5vw;
+ }
+ /* Page content */
+ .main {
+   margin-left: 17%; /* Same as the width of the sidenav */
+   width: 83%;
+ }
+h1 {
+   font-size: 4vw;
+}
+h2 {
+    font-size: 3vw
+}
+ul ol{
+   list-style-type: none;
+   margin: 0;
+   padding: 0vw;
+   width: 100%;
+   float: left;
+}
+img {
+   width: 50%;
+   margin-left: 20%;
+   padding: .2vw;
+   max-width: 100%;
+}
+
+.auto {
+   width:5%;
+   /* white-space: nowrap;  */
+   /* background: white; */
+ }
+div {
+   padding: .5vmin;
+   margin: .5vmin;
+   width: 80%;
+   float: left;
+}
+td {
+   vertical-align: top;
+}
+
+#background{
+   position:absolute;
+   z-index:0;
+   background:white;
+   display:block;
+   min-height:50%; 
+   min-width:50%;
+   color:lightgray;
+}
+#content{
+   position:relative;
+   padding-right: 10%;
+   z-index:1;
+}

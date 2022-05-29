@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="css/statement-justification.css">
+<link rel="stylesheet" href="css/index.css">
 
 <head>
-   <title>TOC: proof examples</title>
+   <title>TOC: proof blocks</title>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="robots" content="noindex" />
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
@@ -31,90 +31,111 @@
          title="Side navigation"></iframe>
    </div>
    <div class="main">
-      <div id="background">
+      <!-- <div id="background">
          <p id="bg-text">DRAFT</p>
-      </div>
+      </div> -->
 
       <div id="content">
-         <h1>Proof checking: <br/>a modification of Parson's coding problem</h1>
-         <p>HISTORY: zyBooks has an Authoring Tool for Parson's Problems. Lines of code are given in random order and students drag them into the
-            correct order and run to check.</p>
-       
-         
-         <p>GOAL: Adapt this Authoring Tool (or use it to create another) that can be used for common problems in Math, 
-            particulary proofs.</p>
-         
-          <p>PROS:
-         <ol style="list-style: '- '">
-            <li>Current approach to proofs in PAs is easy to cheat. Parson's problems are checked as a whole.</li>
-            <li>Proof assessments have had to be carefully manicured to aoivd dependencies.</li>
-            <li>Can be PAs or CAs.</li>
-            <li>Research papers suggest this is a good approach.</li>
-            <li>Cutting edge.</li>
-         </ol>
-         </p>
-        
-         
-         <p>MATH TOOL NEEDS:
-         <ol style="list-style: '- '">
-            <li>Everything in the tool is recognized as code, when building and running.</li>
-            <li>Checking: Check gives spinning wheel since it's trying to run code.</li>
-            <li>1-column and 2-column options</li>
-            <li>Support \(\LaTeX\): In tool, Latex can be enetered but does not render at Run Player. Prompt does not current support Latex at all.</li>
-            <li>Prompt: Prompt in Tool should support images to be effective for proofs.</li>
-            <li>Dependencies: Math proof steps often do not have a strict order.</li>
-            <li>Hints for errors</li>
-            <li>Distract or not distract?</li>
-            <li>Distractor drawer</li>
-         </ol>
-         </p>
-     
-      <p>IDEAS/ISSUES:
-      <ol style="list-style: '- '">
-         <li>Other problem types: 
-            <p><a href="https://learn.zybooks.com/zybook/DiscreteMathDev/chapter/1/section/5?content_resource_id=77385477" 
-               target="_blank">DiscreteMathDev: Label the steps in a proof of logical equivalence.</a></p>
-            <p><a href="https://learn.zybooks.com/zybook/GeometryFundamentalsDev/chapter/8/section/1?content_resource_id=65937406" 
-               target="_blank">GeometryFundamentalDev: Finite geometries, fill in blank columns. Can "proof" be in prompt somehow?</a></p>
-         </li>
-         <li>Ordering psuedocode?</li>
-         <li>Data Science: Could just rely on correct tool?</li>
-      </ol>
-      </p>
-   
-   <p>RESEARCH PAPERS and WEBSITES:
-   <ol style="list-style: '- '">
-      <li><a href="https://sethpoulsen.github.io/papers/poulsen2021evaluating.pdf" 
-               target="_blank">Paper: Approach and research on efficacy</a></li>
-      <li><a href="https://kharms.infosci.cornell.edu/downloads/harmsk-icer-2016.pdf" 
-               target="_blank">Paper: Research on efficacy of distractors</a></li>
-    <li><a href="https://dl.acm.org/doi/fullHtml/10.1145/3446871.3469741" 
-               target="_blank">Website: Good overall info on approach and studies</a></li>
-<li><a href="https://arxiv.org/pdf/2106.11032.pdf" 
-               target="_blank">Paper: Approach and research on efficacy</a></li>
-   </ol>
-   </p>
+         <h2>Proof blocks: <br />a modification of Parson's coding problem</h2>
+         <div class="left-div">
+            <p>
+               <b>HISTORY:</b> zyBooks has an Authoring Tool for Parson's Problems. Lines of code are given in random
+               order and students drag them into the
+               correct order and run to check.
+            </p>
+         </div>
+         <div class="left-div">
+            <p>
+               <b>GOAL:</b> Adapt this Authoring Tool (or use it to create another) that can be used for common problems
+               in Math,
+               particulary proofs.
+            </p>
+         </div>
+         <div class="right-div">
 
-<p>FEEDBACK:
-<ol style="list-style: '- '">
-   <li>Feedback: Does current Tool have feedback at all? How to keep feedback in line with guidelines and verbage from texts. 
-            How much feedback to give.</li>
-   <li>Box size may create scrolling issue. Can box size be flexible?</li>
-</ol>
-</p>
 
-<p>TO-DO:
-<ol style="list-style: '- '">
-   <li>Is exhaustive list of samples in this prototype worth it?</li>
-   <li>Read through research papers again for ideas/issues.</li>
-   <li>Follow up on meeting with Alex/Erin end of May.</li>
-   <li>Work on feedback issue. Develop one with mas feedback?</li>
-   <li>Incoporate dependency graph somewhere into general info.</li>
-</ol>
-</p>
 
+            <p><b>PROS:</b>
+            <ol style="list-style: '- '">
+               <li>Current approach to proofs in PAs is easy to cheat. Parson's problems are checked as a whole.</li>
+               <li>Proof assessments have had to be carefully manicured to avoid dependencies.</li>
+               <li>Can be PAs or CAs.</li>
+               <li>Research papers suggest this is a good approach.</li>
+               <li>Cutting edge.</li>
+            </ol>
+            </p>
+         </div>
+         <div class="left-div">
+            <p><b>MATH TOOL NEEDS:</b>
+            <ol style="list-style: '- '">
+               <li>Everything in the tool is recognized as code, when building and running.</li>
+               <li>Checking: Check gives spinning wheel since it's trying to run code.</li>
+               <li>1-column and 2-column options</li>
+               <li>Support \(\LaTeX\): In tool, Latex can be enetered but does not render at Run Player. Prompt does not
+                  current support Latex at all.</li>
+               <li>Prompt: Prompt in Tool should support images to be effective for proofs.</li>
+               <li>Dependencies: Math proof steps often do not have a strict order.</li>
+               <li>Hints for errors</li>
+               <li>Distract or not distract?</li>
+               <li>Distractor drawer</li>
+            </ol>
+            </p>
+         </div>
+         <div class="left-div">
+            <p><b>IDEAS/ISSUES:</b>
+            <ol style="list-style: '- '">
+               <li>Other problem types:
+                  <p><a href="https://learn.zybooks.com/zybook/DiscreteMathDev/chapter/1/section/5?content_resource_id=77385477"
+                        target="_blank">DiscreteMathDev: Label the steps in a proof of logical equivalence.</a></p>
+                  <p><a href="https://learn.zybooks.com/zybook/GeometryFundamentalsDev/chapter/8/section/1?content_resource_id=65937406"
+                        target="_blank">GeometryFundamentalDev: Finite geometries, fill in blank columns. Can "proof" be
+                        in
+                        prompt somehow?</a></p>
+               </li>
+               <li>Ordering psuedocode?</li>
+               <li>Data Science: Could just rely on correct tool?</li>
+            </ol>
+            </p>
+         </div>
+         <div class="left-div">
+            <p><b>RESEARCH PAPERS and WEBSITES:</b>
+            <ol style="list-style: '- '">
+               <li><a href="https://sethpoulsen.github.io/papers/poulsen2021evaluating.pdf" target="_blank">Paper:
+                     Approach
+                     and research on efficacy</a></li>
+               <li><a href="https://kharms.infosci.cornell.edu/downloads/harmsk-icer-2016.pdf" target="_blank">Paper:
+                     Research on efficacy of distractors</a></li>
+               <li><a href="https://dl.acm.org/doi/fullHtml/10.1145/3446871.3469741" target="_blank">Website: Good
+                     overall
+                     info on approach and studies</a></li>
+               <li><a href="https://arxiv.org/pdf/2106.11032.pdf" target="_blank">Paper: Approach and research on
+                     efficacy</a></li>
+            </ol>
+            </p>
+         </div>
+         <div class="left-div">
+            <p><b>FEEDBACK:</b>
+            <ol style="list-style: '- '">
+               <li>Feedback: Does current Tool have feedback at all? How to keep feedback in line with guidelines and
+                  verbage from texts.
+                  How much feedback to give.</li>
+               <!-- <li>Box size may create scrolling issue. Can box size be flexible?</li> -->
+            </ol>
+            </p>
+         </div>
+         <div class="left-div">
+            <p><b>TO-DO:</b>
+            <ol style="list-style: '- '">
+               <li>Is exhaustive list of samples in this prototype worth it?</li>
+               <li>Read through research papers again for ideas/issues.</li>
+               <li>Follow up on meeting with Alex/Erin in June.</li>
+               <li>Work on feedback issue. Develop one with mas feedback?</li>
+               <li>Incoporate dependency graph somewhere into general info.</li>
+            </ol>
+            </p>
+         </div>
       </div>
-   </div>
+
 
 </body>
 

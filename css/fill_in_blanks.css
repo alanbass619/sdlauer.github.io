@@ -21,59 +21,35 @@ h2 {
   font-size: 3vw
 }
 
-li {
-  list-style-type: none;
-  margin: 0vw;
+ul {
+  background: rgb(232, 232, 232);
 }
 
 li:hover {
   background-color: #a4a3a36a;
   color: #8424AC;
   margin: 0vw;
-  /* font: bold; */
 }
 
-i.fa.fa-times {
-  cursor: pointer;
-  padding-left: 10px;
-}
-
-/* body {
-    font: 13px Verdana;
-  } */
-ul {
-  list-style: none;
-  /* padding: 10px; */
-  background: rgb(232, 232, 232);
-}
-
-ul li {
+li {
+  /* stops text from jumping!! */
+  vertical-align: top;
   list-style-type: none;
   display: inline-block;
   margin: 0vw;
-  /* margin: 0 10px; */
   padding-right: 1vw;
   padding-left: 1vw;
   text-align: center;
-  /* background: rgb(0, 255, 213); */
 }
 
-/* p {
-    position: relative;
-
-  } */
 .ans {
+  /* stops text from jumping */
+  vertical-align: top;
   width: 10vw;
-  margin: 0vw;
   border-bottom: .2vw solid black;
   display: inline-block;
-  line-height: inherit;
-  /* width: 100% !important; */
   text-align: center;
   color: blue;
-  resize: none;
-  /* position: inherit; */
-  /* padding-bottom: 2vw; */
 }
 
 .ans:empty:before {
