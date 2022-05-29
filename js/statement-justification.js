@@ -13,7 +13,6 @@ $(function () {
         start: function (event, ui) {
             ui.item.toggleClass("highlight");
         },
-        // tolerance: 'intersection',
         stop: function (event, ui) {
             ui.item.toggleClass("highlight");
             var children = $(this)

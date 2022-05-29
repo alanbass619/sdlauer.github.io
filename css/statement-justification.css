@@ -106,8 +106,6 @@ td {
 }
 #statement>li, #justification>li {
    background-color: #3193F5;
-   /* border-bottom: .2vw solid black; */
-   /* border-radius: 1vw; */
    color: white;
 }
 #statement>li:hover, #justification>li:hover, li:hover{

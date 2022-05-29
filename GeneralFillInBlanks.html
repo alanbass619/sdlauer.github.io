@@ -30,6 +30,7 @@
 
 
     </style>
+
 </head>
 
 <body onload="shuffleNodes('optionsFiB')">
@@ -40,42 +41,34 @@
     <div class="main">
         <div>
             <h2>General fill in the blank example</h2>
-
-            <p>TODO: Add check button, update styles as recommended by team.</p>
-
-        </div>
-
-        <div>
             <p>Drag answers to the correct location. Click an answer blank to remove the current answer.</p>
-            <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
-            <p><span id="chkOrder"></span></p>
             <div>
-                <p>All
-                    <span class="ans" id="01" data-max="1"></span>
-                    are
-                    <span class="ans" id="02" data-max="1"></span>
-                    , but
-                    <span class="ans" id="03" data-max="1"></span>
-                    all rectangles are
-                    <span class="ans" id="04" data-max="1"></span>
-                    .
+                <p id="proof">
                 </p>
             </div>
         </div>
         <div>
             <ul id="optionsFiB" , class="shuffled">
-                <li id="01">squares</li>
+                <!-- <li id="01">squares</li>
                 <li id="02">rectangular</li>
                 <li id="03">not</li>
-                <li id="04">square</li>
+                <li id="01">squares</li>
                 <li id="00">almost</li>
-                <li id="00">always</li>
+                <li id="00">always</li> -->
             </ul>
         </div>
+        <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
+        <p><span id="chkOrder"></span></p>
     </div>
+
     <button id="reset" onClick="window.location.reload();">Reset</button>
     <script src="js/fill_in_blanks.js"></script>
-  
+
+    <script>
+        var pt = ['All','are',', but','all','are','.'];
+        var at = ['squares','rectangles','not','rectangles','squares','almost','always','never'];
+        var ansIndex = ['01','02','03','02','01'];
+    </script>
 </body>
 
 </html>

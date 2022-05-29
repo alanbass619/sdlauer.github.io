@@ -1,31 +1,46 @@
 $(function () {
+    let i = 0;
+    for (i = 0; i < pt.length; i++) {
+        $("#proof").append(pt[i]);
+        if (i < pt.length - 1) {
+            $("#proof").append('<span class="ans" id="' + ansIndex[i] + '" data-max="1"></span>');
+        }
+        $("#optionsFiB").append('<li id="' + ansIndex[i] + '">' + at[i] + '</li>');
+    }
+    for (j = i - 1; j < at.length; j++) {
+        $("#optionsFiB").append('<li id="00">' + at[j] + '</li>');
+    }
+
+    $(".ans").click(function () {
+        // send li back to list and set answer blank sortable
+        if ($(this).children().length == 1) {
+            var tspanElem = $(this).find(":first-child").detach();
+            $("#optionsFiB").append(tspanElem);
+
+        }
+        $(this).css({ 'background-color': 'white', 'color': 'black' });
+        $(this).sortable("enable");
+    });
+});
+$(function () {
     $("#optionsFiB,span").sortable({
         connectWith: "#optionsFiB,span",
         disabled: $("span").length == 1,
-        // start: function (event, ui) {
-        //     ui.item.toggleClass("highlight");
-        // },
         receive: function (event, ui) {
             var list = $(this);
-            if (list.attr('id') != "optionsFiB" && list.children().length == 1) {
-                list.sortable("disable");
+            if (list.attr('id') != "optionsFiB" && list.children().length == 2) {
+                var tspanElem = $(this).find(":nth-child(2)").detach();
+            $("#optionsFiB").append(tspanElem);
+                // list.sortable("disable");
+                $(this).css({ 'background-color': 'white', 'color': 'blue' });
             }
         },
         stop: function (event, ui) {
-            // ui.item.toggleClass("highlight");
             var children = $(this)
                 .sortable('refreshPositions')
                 .children();
         }
     });
-});
-$("span").click(function () {
-    // send li back to list and set answer blank sortable
-    if ($(this).children().length == 1) {
-        var tspanElem = $(this).find(":first-child").detach();
-        $("#optionsFiB").append(tspanElem);
-    }
-    $(this).sortable("enable");
 });
 function shuffle(items) {
     var cached = items.slice(0), temp, i = cached.length, rand;
@@ -48,63 +63,26 @@ function shuffleNodes(e) {
     }
 }
 
+function checker() {
+    let str = 'All correct!';
+    let count = $('.ans').length;
+    let inc = 0;
+    $(".ans").each(function () {
+        if ($(this).attr('id') == $(this).html().slice(8, 10)) {
+            $(this).css({ 'background-color': '#3193F5', 'color': 'white' });
+        }
+        else {
+            $(this).css({ 'background-color': '#FFD364', 'color': 'red' });
+            inc++;
 
-let getData = arr => {
-    return arr.map(function () {
-        return $(this).attr('id');
-    }).get();
-}
-//  id < compare-data
-let getDependency = arr => {
-    return arr.map(function () {
-        return $(this).attr('data-compare');
-    }).get();
-}
-// Check for correct fill
-function checkOrder() {
-    let l1Dep = getDependency($("#optionsFiB > li"));
-    let scanDep = getDependency($("scan"));
-    // alert(parseInt(l1dep[0].slice(0,3)));
-    let valBefore = -1;
-    let count = 0;
-    l1dep.forEach(function (value, key) {
-        checkRow = parseInt(key) + 1;
-        if (valBefore < 0) {
-            for (let t = 0; t < checkRow; t++) {
-                if (l1Dep[t] != scanDep[key]) {
-                    valBefore = checkRow;
-                    countBefore++;
-                }
-            }
         }
     });
-    return { countAfter, valAfter, countBefore, valBefore };
-}
-
-
-function checker() {
-    let l1 = getData($("#optionsFiB > li"));
-    let l1len = l1.length;
-    let l2 = getData($(".ans"));
-    let l2len = l1.length;
-    alert("opt= " + l1);
-    alert("ans= " + l2);
-    let str = "";
-    let maxRows = /*Math.max(l2len,*/ l1len/*)*/;
-    if (maxRows < proofRows) {
-        str += " -- At least one step is missing from the proof.<br/>";
+    if (inc == 1) {
+        str = '' + inc + ' answer out of the ' + count + ' required answers is incorrect.'
     }
-    else if (maxRows > proofRows) {
-        str += " -- The solution has fewer than " + maxRows + " rows.<br/>";
+    else if (inc > 0) {
+        str = '' + inc + ' answers out of the ' + count + ' required answers are incorrect.'
     }
 
-    if (str.length == 0) {
-        let c = checkOrder(l1);
-        pluralAfter = (c.countAfter == 1) ? " is" : "s are";
-        pluralBefore = (c.countBefore == 1) ? " is" : "s are";
-        str += (c.valAfter < 0) ? "Correct!" : " -- Statements are out of order. At least " + c.countAfter + " more statement" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
-        str += (c.valBefore < 0) ? "" : " -- Statements are out of order. At least " + c.countBefore + " more statement" + pluralBefore + " needed after step " + c.valBefore + ".<br/>";
-
-    }
     $("#chkOrder").html(str);
 }
