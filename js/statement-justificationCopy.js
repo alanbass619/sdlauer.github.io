@@ -1,4 +1,32 @@
 // Number of statements in proof
+// let proofRows = $(".proofRows").attr('data-compare');
+//initial height of step li
+let stepHtInit = $("#step > li").eq(0).height();
+var max = 0;
+
+// populate text and answers with arrays from script in html file
+$(function () {
+    let i = 0;
+    for (i = 0; i < statement_opt.length; i++) {
+        if (i < 10) { row = "0" + i; }
+        else { row = "" + i; }
+        // $("#statement_opt").append(statement_opt[i]);
+        $("#statement_opt").append('<li data-compare="' + reqBefore[i] + reqAfter[i] + '" value="' + row + '" class="shuffled">' + statement_opt[i] + '</li>');
+        // $("#optionsFiB").append('<li value="' + answerIndex[i] + '">' + answerText[i] + '</li>');
+        // $("#step").append('<li class="shufflerstep">' + (i+1) + '</li>')
+    }
+    // for (i = 0; i < justification_opt.length; i++) {
+    //     if (i < 10) { row = "0" + i; }
+    //     else { row = "" + i; }
+    //     // $("#statement_opt").append(statement_opt[i]);
+    //     $("#justification_opt").append('<li value="' + row + '" class="shuffled">' + justification_opt[i] + '</li>');
+    //     // $("#optionsFiB").append('<li value="' + answerIndex[i] + '">' + answerText[i] + '</li>');
+    // }
+    shuffleNodes('statement_opt');setHeight();shuffleNodes('justification_opt');
+});
+// https://www.pureexample.com/ExampleTesterII-81.html
+// li items draggable/sortable
+// Number of statements in proof
 let proofRows = $(".proofRows").attr('data-compare');
 //initial height of step li
 let stepHtInit = $("#step li").eq(0).height();

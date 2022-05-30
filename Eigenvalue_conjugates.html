@@ -5,23 +5,23 @@
    <title>Proof: Geometry example</title>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="robots" content="noindex" />
-   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
    <script>
       MathJax = {
-         tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-         },
-         svg: {
-            fontCache: 'global'
-         }
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        svg: {
+          fontCache: 'global'
+        }
       };
-   </script>
-   <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-   </script>
-   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      </script>
+      <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+      </script>
    <link rel="stylesheet" href="css/statement-justification.css">
 </head>
 
@@ -62,22 +62,22 @@
                   the id number yy of the li that must come after this row
                include no data-compare for distractors and include all distractors last -->
                   <ul id="statement_opt" class="shuffler1">
-                     <li data-compare="0008" id="01" class="shuffled"> If a complex number \(a+bi\) is a solution to a
+                     <li data-compare="0008" value="01" class="shuffled"> If a complex number \(a+bi\) is a solution to a
                         polynomial equation with real coefficients, then \(a-bi\) is also
                         a solution.</li>
-                     <li data-compare="0003" id="02" class="shuffled">Suppose \( ( \lambda, \textbf{v})\) is an
+                     <li data-compare="0003" value="02" class="shuffled">Suppose \( ( \lambda, \textbf{v})\) is an
                         eigenpair of \(A\).</li>
-                     <li data-compare="0204" id="03" class="shuffled">By the definition of an eigenpair, \(A\textbf{v} =
+                     <li data-compare="0204" value="03" class="shuffled">By the definition of an eigenpair, \(A\textbf{v} =
                         \lambda \textbf{v}\).</li>
-                     <li data-compare="0305" id="04" class="shuffled">Taking the conjugate of both sides gives
+                     <li data-compare="0305" value="04" class="shuffled">Taking the conjugate of both sides gives
                         \(\overline{A\textbf{v}} = \overline{\lambda \textbf{v}}\).</li>
-                     <li data-compare="0407" id="05" class="shuffled">By theorems of conjugate matrices and vectors,
+                     <li data-compare="0407" value="05" class="shuffled">By theorems of conjugate matrices and vectors,
                         \(\overline{A} \overline{\textbf{v}} = \overline{\lambda}\overline{\textbf{v}}\).</li>
-                     <li data-compare="0007" id="06" class="shuffled">Since \(A\) is a real matrix, \(\overline{A}=A\).
+                     <li data-compare="0007" value="06" class="shuffled">Since \(A\) is a real matrix, \(\overline{A}=A\).
                      </li>
-                     <li data-compare="0608" id="07" class="shuffled">\(A \overline{\textbf{v}} =
+                     <li data-compare="0608" value="07" class="shuffled">\(A \overline{\textbf{v}} =
                         \overline{\lambda}\overline{\textbf{v}}\)</li>
-                     <li data-compare="0700" id="08" class="shuffled">By definition, \( ( \overline{\lambda},
+                     <li data-compare="0700" value="08" class="shuffled">By definition, \( ( \overline{\lambda},
                         \overline{\textbf{v}} )\) is an eigenpair of \(A\).</li>
                      <li id="09" class="shuffled">Distractor</li>
                   </ul>

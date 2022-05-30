@@ -4,12 +4,12 @@ $(function () {
     for (i = 0; i < proofText.length; i++) {
         $("#proof").append(proofText[i]);
         if (i < proofText.length - 1) {
-            $("#proof").append('<span class="ans" id="' + answerIndex[i] + '" data-max="1"></span>');
+            $("#proof").append('<span class="ans" value="' + answerIndex[i] + '" data-max="1"></span>');
         }
-        $("#optionsFiB").append('<li id="' + answerIndex[i] + '">' + answerText[i] + '</li>');
+        $("#optionsFiB").append('<li value="' + answerIndex[i] + '">' + answerText[i] + ' </li>');
     }
     for (j = i; j < answerText.length; j++) {
-        $("#optionsFiB").append('<li id="00">' + answerText[j] + '</li>');
+        $("#optionsFiB").append('<li value="00">' + answerText[j] + ' </li>');
     }
     $(".ans").click(function () {
         // send li back to list and set answer blank sortable
@@ -19,31 +19,6 @@ $(function () {
         }
         $(this).css({ 'background-color': 'white', 'color': 'blue' });
     });
-
-    // $("#optionsFiB>li").click(function () {
-    //     var tliElem = $(this).text();
-    //     tliDet = $(this).detach();
-    //     // alert(tliElem);
-    //     let i;
-    //     let TF = true;
-    //     for ( i = 0; i < $(".ans").length; i++) {
-    //         if ($(".ans").eq(i).text() == "" && TF) {
-    //             $(".ans").eq(i).replaceWith(tliDet);
-    //             $(".ans").eq(i).css('border-bottom', '.2vw solid black');
-    //             $(".ans").eq(i).css({ 'background-color': 'white', 'color': 'blue' });
-    //             TF = false;
-    //         }
-            
-            
-    //         // $(this).css({ 'color': 'blue' });
-    //         // $(this).sortable("enable");
-    //     }
-    //     // if (!TF && $(".ans").eq($(".ans").length-1).text() != "") {
-    //     //     var tspanElem = $(".ans").eq(i).find(":first-child").detach();
-    //     //     $(".ans").eq(i).text(tliElem);
-    //     //     $('#optionsFiB').append(tspanElem);
-    //     // }
-    //     });
 });
 
 $(function () {
@@ -94,7 +69,7 @@ function checker() {
     let count = $('.ans').length;
     let inc = 0;
     $(".ans").each(function () {
-        if ($(this).attr('id') == $(this).html().slice(8, 10)) {
+        if ($(this).attr('value') == $(this).html().slice(11, 13)) {
             $(this).css({ 'background-color': '#3193F5', 'color': 'white' });
         }
         else {

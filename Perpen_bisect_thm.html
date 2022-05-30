@@ -6,18 +6,23 @@
    <title>Proof: Geometry example</title>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="robots" content="noindex" />
-   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
    <script>
       MathJax = {
-         tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        svg: {
+          fontCache: 'global'
+        }
       };
-   </script>
-   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-   <link rel="stylesheet" href="css/statement-justification.css">
+      </script>
+      <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+      </script>
    <link rel="stylesheet" href="css/statement-justification.css">
 </head>
 
@@ -62,12 +67,12 @@
                         the id number yy of the first li row that must come after this row (if several, any of them may be used)
                   include NO data-compare for distractors and include all distractors last -->
                   <ul id="statement_opt" class="shuffler2">
-                     <li data-compare="0004" id="01" class="shuffled">\(AC ~\)\(=CB\)</li>
-                     <li data-compare="0004" id="02" class="shuffled">\(m\angle DCA~\) \(= m\angle DCB~\) \(= 90^\circ\)</li>
-                     <li data-compare="0004" id="03" class="shuffled">\(CD~ \)\(=CD\)</li>
-                     <li data-compare="0105" id="04" class="shuffled">\(\triangle ACD~ \)\( \cong \triangle BCD\)</li>
-                     <li data-compare="0406" id="05" class="shuffled">\(AD ~\)\(=BD\)</li>
-                     <li id="7" class="shuffled">distractor</li>
+                     <li data-compare="0004" value="01" class="shuffled">\(AC ~\)\(=CB\)</li>
+                     <li data-compare="0004" value="02" class="shuffled">\(m\angle DCA~\) \(= m\angle DCB~\) \(= 90^\circ\)</li>
+                     <li data-compare="0004" value="03" class="shuffled">\(CD~ \)\(=CD\)</li>
+                     <li data-compare="0105" value="04" class="shuffled">\(\triangle ACD~ \)\( \cong \triangle BCD\)</li>
+                     <li data-compare="0406" value="05" class="shuffled">\(AD ~\)\(=BD\)</li>
+                     <li value="7" class="shuffled">distractor</li>
                   </ul>
                </td>
                <!-- table cells created to shuffle statement and justification -->
@@ -94,26 +99,26 @@
                   sample explanations are included in comments below -->
                   <!-- id must match the id from the corresponding statement above -->
                   <ul id="justification_opt" class="shuffler2">
-                     <li id="01" class="shuffled">Definition of bisector</li>
+                     <li value="01" class="shuffled">Definition of bisector</li>
                      <!--Since \(\overleftrightarrow{CD}\) is the perpendicular bisector
           for \(\overline{AB}\), \(\overline{AC}\) and \(\overline{CB}\) are the same length.-->
-                     <li id="02" class="shuffled">Definition of perpendicular lines
+                     <li value="02" class="shuffled">Definition of perpendicular lines
                         <!--Since \(\overleftrightarrow{CD}\) is the perpendicular bisector for 
                            \(\overline{AB}\), all four angles formed are right angles.-->
                      </li>
-                     <li id="03" class="shuffled">Reflexive property
+                     <li value="03" class="shuffled">Reflexive property
                         <!--The reflexive property is not always included in proofs, but can 
                            be used to help set up the next step.-->
                      </li>
-                     <li id="04" class="shuffled">SAS congruence theorem
+                     <li value="04" class="shuffled">SAS congruence theorem
                         <!--The two triangles have two sides congruent with the included angles also 
                            congruent, so the two triangles are congruent.-->
                      </li>
-                     <li id="05" class="shuffled">Property of congruent triangles
+                     <li value="05" class="shuffled">Property of congruent triangles
                         <!--\(\overline{AD}\) and \(\overline{BD}\) are corresponding parts of 
                            congruent triangles, so \(AD=BD\).-->
                      </li>
-                     <li id="06" class="shuffled">distractor</li>
+                     <li value="06" class="shuffled">distractor</li>
                   </ul>
                </td>
             </tr>

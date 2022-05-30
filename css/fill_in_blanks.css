@@ -30,7 +30,8 @@ li:hover {
   /* vertical-align: top; */
   background-color: #a4a3a36a;
   color: #8424AC;
-  margin: 0vw;
+  margin-left: .5vw;
+   margin-right: .5vw;
 }
 
 #proof{  line-height: 6vh;}
@@ -45,11 +46,15 @@ li:hover {
   list-style-type: none;
   display: inline-block;
   text-align: center;
+  margin-left: .5vw;
+  margin-right: .5vw;
   /* color: black; */
 }
 .ans{
   color: blue;
-  border-bottom: .2vw solid black;}
+  border-bottom: .2vw solid black;
+  margin-left: .5vw;
+  margin-right: .5vw;}
 .ans:empty:before {
   content: "\00a0";
 }

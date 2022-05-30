@@ -5,23 +5,23 @@
    <title>1-column proof example</title>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="robots" content="noindex" />
-   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
    <script>
       MathJax = {
-         tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-         },
-         svg: {
-            fontCache: 'global'
-         }
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        svg: {
+          fontCache: 'global'
+        }
       };
-   </script>
-   <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-   </script>
-   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      </script>
+      <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+      </script>
    <link rel="stylesheet" href="css/statement-justification.css">
 </head>
 
@@ -56,12 +56,12 @@
                   the id number yy of the li that must come after this row
                include no data-compare for distractors and include all distractors last -->
                      <ul id="statement_opt" class="shuffler1">
-                        <li data-compare="0004" id="01" class="shuffled">1 🦉</li>
-                        <li data-compare="0004" id="02" class="shuffled">1 🦜</li>
-                        <li data-compare="0004" id="03" class="shuffled">1 🦆</li>
-                        <li data-compare="0005" id="04" class="shuffled">2</li>
-                        <li data-compare="0406" id="05" class="shuffled">3</li>
-                        <li id="07" class="shuffled">distractor</li>
+                        <li data-compare="0004" value="01" class="shuffled">1 🦉</li>
+                        <li data-compare="0004" value="02" class="shuffled">1 🦜</li>
+                        <li data-compare="0004" value="03" class="shuffled">1 🦆</li>
+                        <li data-compare="0005" value="04" class="shuffled">2</li>
+                        <li data-compare="0406" value="05" class="shuffled">3</li>
+                        <li value="07" class="shuffled">distractor</li>
                      </ul>
                   </td>
                   <td class="auto">
