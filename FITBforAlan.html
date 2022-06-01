@@ -34,9 +34,27 @@
     </div>
     <div class="main">
         <div>
-            <h2>General fill in the blank example</h2>
-
             <p>TODO: Add check button, update styles as recommended by team.</p>
+            
+            <h2>A theorem for affine planes</h2>
+            
+            <p>An affine plane is a geometry system that follows four axioms given below. Like Fano's geometry, this 
+                axiomatic system uses the undefined objects "points" and "lines," and the undefined relation "contains".</p>
+            
+            <p>Axioms of an affine plane:</p>
+            
+            <ol>
+               <li>Given any two distinct points, a unique line contains the points.</li>
+               <li>Each line contains at least two points.</li>
+               <li>Given any line and any point not on that line, a unique line exists which contains the point and does not meet the given line.</li>
+               <li>At least three noncollinear points exist.</li>
+            </ol>
+            
+            <p>The Euclidean plane is an affine plane. However, finite affine planes are also popular systems of geometry.</p>
+            
+            <h3>Theorem:</h3>
+            
+            <p>A finite affine plane contains at least four points.</p>
 
         </div>
 
@@ -56,10 +74,24 @@
     <script src="js/fill_in_blanks.js"></script>
     <script>
         // ansblanks will show between array elements at the black commas.
-        var proofText = ['All','are',', but','all','are','.  Added another line here to see how it looks.'];
-        var answerText = ['squares','rectangles','not','rectangles','squares','Fantastic!','almost','always','never'];
+        var proofText = ['By',
+                         'a unique line exists that contains any two pairs of points. Let \(k\) be the line that contains \(A\) and \(B\), let \(l\) be the line that contains \(B\) and \(C\), and let \(m\) be the line that contains \(A\) and \(C\).',
+                         'By Axiom 3, a',
+                         'that contains point \(C\) that does not meet line \(k\), the line containing points \(A\) and \(B\).',
+                         'The unique line that contains \(C\) and does not meet \(k\) cannot be line \(l\) because lines \(l\) and \(k\) both',
+                         '.',
+                         'Similarly, the unique line that contains \(C\) and does not meet \(k\) cannot be line \(m\) because lines \(m\) and \(k\) both',
+                         'So, a fourth line must exist that contains \(C\) and does not meet \(k\), ',
+                        'By',
+                        ', every line contains two points.',
+                        'However, point \(C\) is already on line \(n\) and line \(n\) does not contain \(A\) and \(B\), so',
+                        'must exist that is on line \(n\).,
+                        'Therefore, an affine plane must contain',
+                        '.'];
+        var answerText = ['Axiom 4','Axiom 1','unique line exists','contain point \(B\)','contain point \(A\)',
+                          'call the line \(n\)','Axiom 2','a fourth distinct point','at least four points'];
         // repeated answers can share the same numbers
-        var answerIndex = ['01','02','03','02','01'];
+        var answerIndex = ['01','02','03','04','05','06', '07', '08', '09'];
     </script>
 </body>
 
