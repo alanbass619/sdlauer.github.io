@@ -1,16 +1,6 @@
+alert('first li length = '+$('#optionsFiB').children().eq(1).html());
 // populate text and answers with arrays from script in html file
 $(function () {
-    let i = 0;
-    for (i = 0; i < proofText.length; i++) {
-        $("#proof").append(proofText[i]);
-        if (i < proofText.length - 1) {
-            $("#proof").append('<span class="ans" value="' + answerIndex[i] + '" data-max="1"></span>');
-        }
-        $("#optionsFiB").append('<li value="' + answerIndex[i] + '">' + answerText[i] + ' </li>');
-    }
-    for (j = i; j < answerText.length; j++) {
-        $("#optionsFiB").append('<li value="00">' + answerText[j] + ' </li>');
-    }
     $(".ans").click(function () {
         // send li back to list and set answer blank sortable
         if ($(this).children().length == 1) {
@@ -19,6 +9,12 @@ $(function () {
         }
         $(this).css({ 'background-color': 'white', 'color': 'blue' });
     });
+    let max = 0;
+    $("#optionsFiB>li").each(function() {
+        // alert(max);
+        max = $(this).width() > max ? $(this).width() : max;
+      });
+      $(".ans, #optionsFiB>li, #optionsFiB>li:hover").css('width',''+(max/10)+'vw');
 });
 
 $(function () {
@@ -69,7 +65,8 @@ function checker() {
     let count = $('.ans').length;
     let inc = 0;
     $(".ans").each(function () {
-        if ($(this).attr('value') == $(this).html().slice(11, 13)) {
+        // alert($(this).html());
+        if ($(this).attr('value') == $(this).html().slice(12, 14)) {
             $(this).css({ 'background-color': '#3193F5', 'color': 'white' });
         }
         else {
