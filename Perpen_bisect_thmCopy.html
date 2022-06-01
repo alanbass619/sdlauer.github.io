@@ -60,20 +60,19 @@
                <label><input type="radio" name="selOpt" value="4">Full 2-column proof</label>
             </div>
             <div class="selGroup text-center">
-               <button class="selOptBtn" type="button">Change proof type</button>
+               <button class="selOptBtn" type="button">Submit</button>
             </div>
             <!-- </form> -->
-            <div>
-               <p><b>Proof:</b> Match each statement with the appropriate justification in the correct order.</p>
+            <div id="instructions">
+               <p id="instr"><b>Proof:</b> Match each statement with the appropriate justification in the correct order.</p>
                <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
                <p><span id="chkOrder"></span></p>
             </div>
-            <div>
-               <!--id here is number of rows in completed proof-->
+                <!--id here is number of rows in completed proof-->
                <table class="proofRows">
                   <tr>
-                     <th class="st" hidden>Statement options</th>
-                     <th class="stOpt" hidden>Statements</th>
+                     <th class="stOpt" hidden>Statement options</th>
+                     <th class="st" hidden>Statements</th>
                      <th class="auto">Step</th>
                      <th class="just" hidden>Justifications</th>
                      <th class="justOpt" hidden>Justification options</th>
@@ -131,16 +130,18 @@
                      </td>
                   </tr>
                   <tr>
+                  <td height="1vh"></td>
+                  </tr>
+                  <tr>
                      <td class="st"></td>
                      <td class="stOpt"></td>
-                     <td class="auto"></td>
+                     <td class="2Col" hidden></td>
                      <td class="justOpt"></td>
                      <td style="text-align: center;"><button id="reset"
                            onClick="window.location.reload();">Reset</button>
                      </td>
                   </tr>
                </table>
-            </div>
          </div>
          <script>
             var proofRows = 5;
@@ -158,7 +159,7 @@
                         = 3 if only justifications move (use no statement distractors)
                         = 4 if both statements and justifications move 
             */
-            var opts=2;
+            var opts;
          </script>
          <script src="js/statement-justificationCopy.js"></script>
 </body>

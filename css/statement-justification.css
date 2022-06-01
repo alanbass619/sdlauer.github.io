@@ -1,5 +1,5 @@
 html * {
-   font-size: 1.5vw;
+   font-size: 1.1vw;
    line-height: 1.25;
    font-family: Arial, Helvetica, sans-serif;
 }
@@ -90,19 +90,22 @@ table {
    table-layout: fixed;
    width: 100%;
 }
+td {
+   vertical-align: top;
+}
+td:empty::after{
+   content: "\00a0";
+ }
 .auto {
    width:5%;
    /* white-space: nowrap;  */
    /* background: white; */
- }
+}
 div {
    padding-left: 1vw;
    padding-bottom: 1vw;
    width: 90%;
    float: left;
-}
-td {
-   vertical-align: top;
 }
 #statement>li, #justification>li {
    background-color: #3193F5;

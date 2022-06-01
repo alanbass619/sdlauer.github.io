@@ -10,10 +10,9 @@ $(function () {
     });
     let max = 0;
     $("#optionsFiB>li").each(function() {
-        // alert(max);
         max = $(this).width() > max ? $(this).width() : max;
       });
-      $(".ans, #optionsFiB>li, #optionsFiB>li:hover").css('width',''+(max/10)+'vw');
+      $(".ans, #optionsFiB>li, #optionsFiB>li:hover").css('width',''+(max/12)+'vw');
 });
 
 $(function () {
@@ -64,7 +63,6 @@ function checker() {
     let count = $('.ans').length;
     let inc = 0;
     $(".ans").each(function () {
-        // alert($(this).html());
         if ($(this).attr('value') == $(this).html().slice(12, 14)) {
             $(this).css({ 'background-color': '#3193F5', 'color': 'white' });
         }

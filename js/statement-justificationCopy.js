@@ -1,85 +1,72 @@
-// https://www.pureexample.com/ExampleTesterII-81.html
-// li items draggable/sortable
-// Number of statements in proof
+// some from: https://www.pureexample.com/ExampleTesterII-81.html li items draggable/sortable
+
+// Number of statements in proof is required in html file
 //initial height of step li
 let stepHtInit = $("#step > li").eq(0).height();
 var max = 0;
-$(function(){
-    // setStatements("#statement_opt");
-    // setJustifications("#justification_opt");
-    $(".selOptBtn").click(function(){      
+$(function () {
+    $(".selOptBtn").click(function () {
         opts = parseInt($('input:radio:checked').val());
-        alert(opts);
-        // window.location.reload(true);
-        $('input[name="selOpt"]').val(opts);
-        
+        $(".selGroup").prop('hidden', true);
+        $("#instructions").prop('hidden', false);
         giddyup();
-        alert(opts);
+        setHeight();
     });
-    // window.location.reload();
- });
- function setStJust(){
+});
+function setStJust() {
     setStatements("#statement_opt");
     setJustifications("#justification_opt");
- }
-       
+    if (opts >0){
+        $(".selGroup").prop('hidden', true);
+    }
+    else {
+        $("#instructions").prop('hidden', true);
+    }
+}
+// select the type of proof wanted and display page
 function giddyup() {
-    // alert("huh?");
-    // $("#check").attr('onclick', 'checker()');
     switch (opts) {
-        case 1:  
-            // setStatements("#statement_opt");
-            setEmptyJust();
-            disAbleSortable('#justification');
-            disAbleSortable('#justification_opt');
+        case 1: // shuffled statements only
+            setHide([false, false, true, true]);
+            setSortable([true, true, false, false]);
             shuffleNodes('statement_opt');
-            $(".st").prop("hidden", false);
-            $(".stOpt").prop("hidden", false);
-            $(".justOpt").prop("hidden", true);
-            $(".just").prop("hidden", true);
+            $('#instr').html('<b>Proof:</b> Reorder the statements to correct the proof.');
             break;
-        case 2:
-            $(".st").prop("hidden", false);
-            $(".stOpt").prop("hidden", false);
-            $(".justOpt").prop("hidden", false);
-            $(".just").prop("hidden", true);
-            // setStatements("#statement_opt");
-            // setJustifications("#justification_opt");
-            disAbleSortable('#justification');
-            disAbleSortable('#justification_opt');
-            $("#justification_opt").attr('id', 'justification1');
-            $("#justification").attr('id', 'justification_opt');
-            $("#justification1").attr('id', 'justification');
-
+        case 2: // shuffled statements with static justifications
+            setHide([false, false, true, false]);
+            setSortable([true, true, false, false]);
+            rename("justification");
+            $("th .just").html("Justifications");
             shuffleNodes('statement_opt');
+            $('.instr').html('<b>Proof:</b> Match each statement with the appropriate justification in the correct order.');
             break;
-        case 3:
-            // setStatements("#statement_opt");
-            $(".st").prop("hidden", true);
-            $(".stOpt").prop("hidden", false);
-            $(".justOpt").prop("hidden", false);
-            $(".just").prop("hidden",false);
-            // setJustifications("#justification_opt");
-            disAbleSortable('#statement');
-            disAbleSortable('#statement_opt');
-            $("#statement_opt").attr('id', 'statement1');
-            $("#statement").attr('id', 'statement_opt');
-            $("#statement1").attr('id', 'statement');
+        case 3: // static statements with shuffled justifications
+            setHide([true, false, false, false]);
+            setSortable([false, false, true, true]);
+            rename("statement");
+            $("th .stOpt").html("Statements");
             shuffleNodes('justification_opt');
+            $('.instr').html('<b>Proof:</b> Reorder the justifications to pair with the statements.');
             break;
-        case 4:
-            $(".st").prop("hidden", false);
-            $(".stOpt").prop("hidden", false);
-            $(".justOpt").prop("hidden", false);
-            $(".just").prop("hidden",false);
+        case 4: // shuffled statements and justifications
+            setHide([false, false, false, false]);
+            setSortable([true, true, true, true]);
             shuffleNodes('justification_opt');
             shuffleNodes('statement_opt');
+            $(".2Col").prop('hidden', false);
+            $('.instr').html('<b>Proof:</b> Reorder each statement and justification to pair in the correct order.');
         default:
             break;
     }
-    stepHtInit = $("#step > li").eq(0).height();
-    setHeight();
 }
+function rename(item) {
+    $(`#${item}_opt`).attr('id', `${item}1`);
+    $(`#${item}`).attr('id', `${item}_opt`);
+    $(`#${item}1`).attr('id', `${item}`);
+    $()
+
+}
+// initialize statements
 function setStatements(idName) {
     for (i = 0; i < $(idName + " li").length; i++) {
         if (i < 10) { row = "0" + (i + 1); }
@@ -88,6 +75,7 @@ function setStatements(idName) {
         // $("#step").append(`<li class="shufflerstep">${i + 1}</li>`);
     }
 }
+// initialiaze justifications
 function setJustifications(idName) {
     for (i = 0; i < $(idName + " li").length; i++) {
         if (i < 10) { row = "0" + (i + 1); }
@@ -96,22 +84,13 @@ function setJustifications(idName) {
         // $(idName+" li").val(row); 
     }
 }
-function setEmptyJust() {
-    for (i = 0; i < $("#statement" + " li").length; i++) {
-        if (i < 10) { row = "0" + (i + 1); }
-        else { row = "" + (i + 1); }
-        $("#justification").append('<li>' + row + '<li>');
-        $("#justification").children().eq(i).attr('value', row);
-    }
-
-}
+// set step column in table
 $(function () {
     for (i = 0; i < $("#statement_opt li").length; i++) {
-
         $("#step").append(`<li class="shufflerstep">${i + 1}</li>`);
     }
 });
-
+// make statements sortable and draggable
 $(function () {
     $("#statement_opt,#statement").sortable({
         connectWith: "#statement_opt,#statement",
@@ -127,14 +106,7 @@ $(function () {
         }
     });
 });
-function disAbleSortable(item) {
-    $(item).sortable('disable');
-    $(item + " li").css({ 'background': '#B1D6FC', 'color': 'black' });
-}
-function enAbleSortable(item) {
-    $(item).sortable('enable');
-    $(item + " li").css({ 'background': '#B1D6FC', 'color': 'black' });
-}
+// make functions sortable and draggable
 $(function () {
     $("#justification_opt,#justification").sortable({
         connectWith: "#justification_opt,#justification",
@@ -152,7 +124,33 @@ $(function () {
         }
     });
 });
-// Update height and color of li
+// show/hide table columns for different proof types
+function setHide(TF) {
+    let sethide = ['.st', '.stOpt', '.just', '.justOpt'];
+    let setstyle = ['#statement', '#statement_opt', '#justification', '#justification_opt'];
+    for (let i = 0; i < TF.length; i++) {
+        $(sethide[i]).prop('hidden', TF[i]);
+        if (TF[i]) {
+            $(setstyle[i] + " li").css({ 'background': '#B1D6FC', 'color': 'black' });
+        }
+    }
+}
+// set which columns are sortable and which are static
+function setSortable(TF) {
+    let setstyle = ['#statement', '#statement_opt', '#justification', '#justification_opt'];
+    for (let i = 0; i < TF.length; i++) {
+        // alert('sortable');
+        $(setstyle[i]).sortable('enable');
+        if (TF[i]) {
+            $(setstyle[i]).sortable('enable');
+        }
+        else {
+            $(setstyle[i]).sortable('disable');
+            $(setstyle[i] + " li").css({ 'background': '#B1D6FC', 'color': 'black' });
+        }
+    }
+}
+// Update height and color of li on drag
 function liHt() {
     $("li").css('height', '');
     let h = 0;
@@ -184,7 +182,7 @@ function liHt() {
 }
 // shuffle li elements in ul -- needs shuffleNodes(e) function call
 // https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
-
+// put items in column in random order (li elements)
 function shuffle(items) {
     var cached = items.slice(0), temp, i = cached.length, rand;
     while (--i) {
@@ -195,6 +193,7 @@ function shuffle(items) {
     }
     return cached;
 }
+// rearrange rows in a column into a random order (li elements)
 function shuffleNodes(e) {
     let listli = document.getElementById(e);
     var nodes = listli.children, i = 0;
@@ -205,7 +204,7 @@ function shuffleNodes(e) {
         ++i;
     }
 }
-
+// dynamically set height of all columns (ul elements)
 function setHeight() {
     $(".shuffler1,#step,.shuffler2").each(function () {
         $(this).css("height", '');
@@ -219,19 +218,19 @@ function setHeight() {
         $(this).css("height", maxht);
     });
 }
-
+// gather values on column (li values)
 let getData = arr => {
     return arr.map(function () {
         return $(this).attr('value');
     }).get();
 }
-//  value < compare-data
+//  gather before/after values on each li in a column (li compare-data values)
 let getDependency = arr => {
     return arr.map(function () {
         return $(this).attr('data-compare');
     }).get();
 }
-// Check for correct order
+// get incorrect order of proof statements column --  return before and after info for errors
 function checkOrder(l1) {
     let l1dep = getDependency($("#statement > li"));
     // alert(l1);
@@ -259,7 +258,7 @@ function checkOrder(l1) {
     });
     return { countAfter, valAfter, countBefore, valBefore };
 }
-// Check for correct pairing -- return first row number incorrectly paired
+// get incorrect pairing of statements and justifications-- return first row number incorrectly paired
 function checkPairs(l1a, l2a) {
     // alert(l1a.length+ "   "+ l2a.length);
     let len = Math.min(l1a.length, l2a.length);
@@ -271,18 +270,15 @@ function checkPairs(l1a, l2a) {
     }
     return len + 1;
 }
-
+// check for correct pairing of statements and justifications and correct order
 function checker() {
     let str = "";
     let l1 = getData($("#statement > li"));
     let l1len = l1.length;
     let l2 = getData($("#justification > li"));
-    // alert("l1= " + l1);
-    // alert("l2= " + l2);
     let l2len = l2.length;
+    // only check pairing if justifications are present
     if (l2len > 0) {
-
-
         let maxRows = Math.max(l2len, l1len);
         if (maxRows < proofRows) {
             str += " -- At least one step is missing from the proof.<br/>";
@@ -294,17 +290,16 @@ function checker() {
             str += " -- Statements require correct pairing with justifications. First incorrect justification at step " + checkPairs(l1, l2) + ".<br/>";
         }
     }
-
-    if (l2len==0 & l1len != proofRows || l1len==0 & l2len != proofRows){
+    if (l2len == 0 & l1len != proofRows || l1len == 0 & l2len != proofRows) {
         str += " -- At least one step is missing from the proof.<br/>";
     }
-    // if (str.length == 0) {
-        let c = checkOrder(l1);
-        pluralAfter = (c.countAfter == 1) ? " is" : "s are";
-        pluralBefore = (c.countBefore == 1) ? " is" : "s are";
-        str += (c.valAfter < 0) ? "Statement order is correct so far." : " -- Statements are out of order. At least " + c.countAfter + " more step" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
-        str += (c.valBefore < 0) ? "" : " -- Statements are out of order. At least " + c.countBefore + " more step" + pluralBefore + " needed after step " + c.valBefore + ".<br/>";
-    if (str=="Statement order is correct so far."){str="Correct!";}
+    // check order of statements column
+    let c = checkOrder(l1);
+    pluralAfter = (c.countAfter == 1) ? " is" : "s are";
+    pluralBefore = (c.countBefore == 1) ? " is" : "s are";
+    str += (c.valAfter < 0) ? "Statement order is correct so far." : " -- Statements are out of order. At least " + c.countAfter + " more step" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
+    str += (c.valBefore < 0) ? "" : " -- Statements are out of order. At least " + c.countBefore + " more step" + pluralBefore + " needed after step " + c.valBefore + ".<br/>";
+    if (str == "Statement order is correct so far.") { str = "Correct!"; }
     // }
     $("#chkOrder").html(str);
 }
