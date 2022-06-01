@@ -2,97 +2,136 @@
 <!-- from: https://www.demo2s.com/javascript/jquery-implement-fill-in-the-blanks-using-drag-drop-jquery-rvnx.html -->
 
 <head>
-    <title>Fill in the blank example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex" />
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script>
-       MathJax = {
-         tex: {
-           inlineMath: [['$', '$'], ['\\(', '\\)']]
-         },
-         svg: {
-           fontCache: 'global'
-         }
-       };
-       </script>
-       <script type="text/javascript" id="MathJax-script" async
-         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-       </script>
-    <link rel="stylesheet" href="css/statement-justification.css">
-    <link rel="stylesheet" href="css/fill_in_blanks.css">
-    </style>
+  <title>An affine plane FITB example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex" />
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+  <link rel="stylesheet" href="css/statement-justification.css">
+  <link rel="stylesheet" href="css/fill_in_blanks.css">
+  <script src="js/fill_in_blank.js"></script>
+
+  </style>
+
 </head>
 
 <body onload="shuffleNodes('optionsFiB')">
-    <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
-        <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
-            title="Side navigation"></iframe>
-    </div>
-    <div class="main">
-        <div>
-            <p>TODO: Add check button, update styles as recommended by team.</p>
-            
-            <h2>A theorem for affine planes</h2>
-            
-            <p>An affine plane is a geometry system that follows four axioms given below. Like Fano's geometry, this 
-                axiomatic system uses the undefined objects "points" and "lines," and the undefined relation "contains".</p>
-            
-            <p>Axioms of an affine plane:</p>
-            
-            <ol>
-               <li>Given any two distinct points, a unique line contains the points.</li>
-               <li>Each line contains at least two points.</li>
-               <li>Given any line and any point not on that line, a unique line exists which contains the point and does not meet the given line.</li>
-               <li>At least three noncollinear points exist.</li>
-            </ol>
-            
-            <p>The Euclidean plane is an affine plane. However, finite affine planes are also popular systems of geometry.</p>
-            
-            <h3>Theorem:</h3>
-            
-            <p>A finite affine plane contains at least four points.</p>
+  <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
+    <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
+      title="Side navigation"></iframe>
+  </div>
+  <div class="main">
+    <div>
+      <h2>General fill in the blank example</h2>
+      <p>An affine plane is a geometry system that follows four axioms given below. Like Fano's geometry, this axiomatic
+        system uses the undefined objects "points" and "lines," and the undefined relation "contains".</p>
 
-        </div>
+      <p><b>Axioms of a finite affine plane:</b><br />
+      <ol>
+        <li>Given any two distinct points, a unique line contains the points.</li>
+        <li>Each line contains at least two points.</li>
+        <li>Given any line and any point not on that line, a unique line exists which contains the point and does not
+          meet the given line.</li>
+        <li>At least three noncollinear points exist.</li>
+      </ol>
+      </p>
 
-        <div>
-            <p>Drag answers to the correct location. Click an answer blank to remove the current answer.</p>
-            <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
-            <p><span id="chkOrder"></span></p>
-            <div id="proof">
-            </div>
-        </div>
-        <div>
-            <ul id="optionsFiB" , class="shuffled">
-            </ul>
-        </div>
+      <p>The Euclidean plane is an affine plane. However, finite affine planes are also popular systems of geometry.</p>
+
+      <p><b>Theorem:</b> A finite affine plane contains at least four points.</p>
     </div>
-    <button id="reset" onClick="window.location.reload();">Reset</button>
-    <script src="js/fill_in_blanks.js"></script>
-    <script>
-        // ansblanks will show between array elements at the black commas.
-        var proofText = ['By',
-                         'a unique line exists that contains any two pairs of points. Let \(k\) be the line that contains \(A\) and \(B\), let \(l\) be the line that contains \(B\) and \(C\), and let \(m\) be the line that contains \(A\) and \(C\).',
-                         'By Axiom 3, a',
-                         'that contains point \(C\) that does not meet line \(k\), the line containing points \(A\) and \(B\).',
-                         'The unique line that contains \(C\) and does not meet \(k\) cannot be line \(l\) because lines \(l\) and \(k\) both',
-                         '.',
-                         'Similarly, the unique line that contains \(C\) and does not meet \(k\) cannot be line \(m\) because lines \(m\) and \(k\) both',
-                         'So, a fourth line must exist that contains \(C\) and does not meet \(k\), ',
-                        'By',
-                        ', every line contains two points.',
-                        'However, point \(C\) is already on line \(n\) and line \(n\) does not contain \(A\) and \(B\), so',
-                        'must exist that is on line \(n\).',
-                        'Therefore, an affine plane must contain',
-                        '.'];
-        var answerText = ['Axiom 4','Axiom 1','unique line exists','contain point \(B\)','contain point \(A\)',
-                          'call the line \(n\)','Axiom 2','a fourth distinct point','at least four points'];
-        // repeated answers can share the same numbers
-        var answerIndex = ['01','02','03','04','05','06', '07', '08', '09'];
-    </script>
+    <p><b>Instructions:</b> Drag answers to the correct location. Click an answer blank to remove the current answer.
+      Check your work.</p>
+    <div id="proof">
+      <p>
+        Let \(A\), \(B\), and \(C\) be the points addressed in
+        <span class="ans" value="01" data-max="1"></span>
+        . By
+        <span class="ans" value="02" data-max="1"></span>
+        a unique line exists that contains any two pairs of points. Let \(k\) be the line that contains \(A\) and \(B\),
+        let \(l\) be the line that contains \(B\) and \(C\), and let \(m\) be the line that contains \(A\) and \(C\).
+      </p>
+      <p>
+        By Axiom 3, a
+        <span class="ans" value="03" data-max="1"></span>
+        that contains point \(C\) that does not meet line \(k\), the line containing points \(A\) and \(B\).
+      </p>
+      <p>
+        The unique line that contains \(C\) and does not meet \(k\) cannot be line \(l\) because lines \(l\) and \(k\)
+        both
+        <span class="ans" value="04" data-max="1"></span>
+        . Similarly, the unique line that contains \(C\) and does not meet \(k\) cannot be line \(m\) because lines
+        \(m\)
+        and \(k\) both
+        <span class="ans" value="05" data-max="1"></span>
+        So, a fourth line must exist that contains \(C\) and does not meet \(k\),
+        <span class="ans" value="06" data-max="1"></span>
+        . By
+        <span class="ans" value="07" data-max="1"></span>
+        every line contains two points.
+      </p>
+      <p>
+        However, point \(C\) is already on line \(n\) and line \(n\) does not contain \(A\) and \(B\), so
+        <span class="ans" value="08" data-max="1"></span>
+        must exist that is on line \(n\).
+        <br />
+        Therefore, an affine plane must contain
+        <span class="ans" value="09" data-max="1"></span>
+        .
+      </p>
+    </div>
+   <div>
+    <ul id="optionsFiB" , class="shuffled">
+      <li value=“01”>
+        Axiom 4
+      </li>
+      <li value=“02”>
+        Axiom 1
+      </li>
+      <li value=“03”>
+        unique line exists
+      </li>
+      <li value=“04”>
+        contain point \(B\)
+      </li>
+      <li value=“05”>
+        contain point \(A\)
+      </li>
+      <li value=“06”>
+        call the line \(n\)
+      </li>
+      <li value=“07”>
+        Axiom 2
+      </li>
+      <li value=“08”>
+        a fourth distinct point
+      </li>
+      <li value=“09”>
+        at least four points
+      </li>
+
+    </ul>
+  </div>
+  <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
+  <p><span id="chkOrder"></span></p>
+  </div>
+
+  <button id="reset" onClick="window.location.reload();">Reset</button>
+
 </body>
 
 </html>
