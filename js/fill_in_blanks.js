@@ -1,4 +1,3 @@
-alert('first li length = '+$('#optionsFiB').children().eq(1).html());
 // populate text and answers with arrays from script in html file
 $(function () {
     $(".ans").click(function () {
