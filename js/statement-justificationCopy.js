@@ -5,6 +5,7 @@
 let stepHtInit = $("#step > li").eq(0).height();
 var max = 0;
 let stOptDep;
+// button to hide group selection when no initial opt set
 $(function () {
     $(".selOptBtn").click(function () {
         opts = parseInt($('input:radio:checked').val());
@@ -14,6 +15,7 @@ $(function () {
         setHeight();
     });
 });
+// set statement/step/justification table
 function setStJust() {
     setStatements("#statement_opt");
     setJustifications("#justification_opt");
@@ -23,13 +25,10 @@ function setStJust() {
     else {
         $("#instructions").prop('hidden', true);
     }
-    // stOptDep = getDependency($("#statement_opt > li"));
-    // // stOptDep.forEach(function(value,key){
-    //     originalCountBefore = reqBefore;
-    //     originalCountAfter = reqAfter;
-    //     alert(originalCountBefore);
-    // // });
-
+    // set step column in table
+    for (i = 0; i < $("#statement_opt li").length; i++) {
+        $("#step").append(`<li class="shufflerstep">${i + 1}</li>`);
+    }
 }
 // select the type of proof wanted and display page
 function giddyup() {
@@ -67,12 +66,11 @@ function giddyup() {
             break;
     }
 }
+// rename columns for nonshuffled content --  checker uses statement and justification columns only
 function rename(item) {
     $(`#${item}_opt`).attr('id', `${item}1`);
     $(`#${item}`).attr('id', `${item}_opt`);
     $(`#${item}1`).attr('id', `${item}`);
-    $()
-
 }
 // initialize statements
 function setStatements(idName) {
@@ -92,12 +90,7 @@ function setJustifications(idName) {
         // $(idName+" li").val(row); 
     }
 }
-// set step column in table
-$(function () {
-    for (i = 0; i < $("#statement_opt li").length; i++) {
-        $("#step").append(`<li class="shufflerstep">${i + 1}</li>`);
-    }
-});
+
 // make statements sortable and draggable
 $(function () {
     $("#statement_opt,#statement").sortable({
@@ -226,13 +219,13 @@ function setHeight() {
         $(this).css("height", maxht);
     });
 }
-// gather values on column (li values)
+// gather values on column (li 'value' values)
 let getData = arr => {
     return arr.map(function () {
         return $(this).attr('value');
     }).get();
 }
-//  gather before/after values on each li in a column (li compare-data values)
+//  gather before/after values on each li in a column (li 'data-compare' values)
 let getDependency = arr => {
     return arr.map(function () {
         return $(this).attr('data-compare');
@@ -241,36 +234,39 @@ let getDependency = arr => {
 // get incorrect order of proof statements column --  return before and after info for errors
 function checkOrder(l1) {
     let l1dep = getDependency($("#statement > li"));
-    // alert(l1);
-    // alert(l1dep);
+    // alert(l1dep[0]);
     let valAfter = -1, valBefore = -1;
     let countAfter = 0, countBefore = 0;
     l1dep.forEach(function (value, key) {
         checkRow = parseInt(key) + 1;
         // check for distractor
-        alert(l1[key]);
+        // alert(parseInt(l1[key]));
         if (l1[key] > proofRows) {
             countAfter = 100;
             valAfter = checkRow;
         }
         for (let t = 0; t < l1.length; t++) {
+            alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]);
             // any dependent rows after?
             if (valAfter < 0 && t >= checkRow) {
+                alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]+"\n depAft= "+l1dep[t].slice(2, 5) +"\n"+ l1[key]);
                 if (l1dep[t].slice(2, 5) == l1[key]) {
                     valAfter = checkRow;
                     countAfter++;
                 }
-                
+
             }
             // any dependent rows before?
             if (valBefore < 0 && t < checkRow) {
+                alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]+"\n depBef= "+l1dep[t].slice(0, 2) +"\n"+ l1[key]);
+               
                 if (l1dep[t].slice(0, 2) == l1[key]) {
                     valBefore = checkRow;
                     countBefore++;
                 }
             }
             // any dependent rows missing before?
-            alert(reqBefore[parseInt(l1[key])-1]+ " = ??  "+l1dep[t].slice(0, 2) + "  " + value + "  " + key + "   " + l1[key]);
+            // alert(reqBefore[parseInt(l1[key])-1]+ " = ??  "+l1dep[t].slice(0, 2) + "  " + value + "  " + key + "   " + l1[key]);
             // if (key==0 && l1dep[t].slice(0, 2)!='00'){
             //     val
             //     valbefore = checkRow;
@@ -305,19 +301,16 @@ function checker() {
     let l1len = l1.length;
     let l2 = getData($("#justification > li"));
     let l2len = l2.length;
-    alert(l1len+"    "+l2len);
-    if (l2len >= 0) {
-        let maxRows = Math.max(l2len, l1len);
-        if (maxRows < proofRows) {
-            str += " -- At least one step is missing from the proof.<br/>";
-        }
-        else if (maxRows > proofRows) {
-            str += " -- The solution has fewer than " + maxRows + " steps.<br/>";
-        }
-        // only check pairing if justifications are present
-        if ((!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) && opts > 1) {
-            str += " -- Statements require correct pairing with justifications. First incorrect justification at step " + checkPairs(l1, l2) + ".<br/>";
-        }
+    let maxRows = Math.max(l2len, l1len);
+    if (maxRows < proofRows) {
+        str += " -- At least one step is missing from the proof.<br/>";
+    }
+    else if (maxRows > proofRows) {
+        str += " -- The solution has fewer than " + maxRows + " steps.<br/>";
+    }
+    // only check pairing if justifications are present
+    if ((!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) && opts > 1) {
+        str += " -- Statements require correct pairing with justifications. First incorrect justification at step " + checkPairs(l1, l2) + ".<br/>";
     }
     // check order of statements column
     let c = checkOrder(l1);
@@ -337,4 +330,5 @@ function checker() {
     if (str == "Order is correct so far." && l1len == proofRows) { str = "Correct!"; }
     // }
     $("#chkOrder").html(str);
+    // alert(reqBefore+"\n"+reqAfter);
 }
