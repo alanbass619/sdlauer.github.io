@@ -1,6 +1,10 @@
 <!DOCTYPE html>
+<!-- suggests for draggable, sortable from https://www.w3schools.blog/jqueryui-sortable -->
+
+<!-- load relevant files for functionality and style -->
+
 <head>
-   <title>Proof: Geometry example</title>
+   <title><!-- TODO --></title><!-- sets tab name in browser -->
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="robots" content="noindex" />
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -29,18 +33,17 @@
    </div>
    <div class="main">
       <div>
-         <h2>Proving the perpendicular bisector theorem</h2>
-         <p>From: <a
-               href="https://learn.zybooks.com/zybook/GeometryFundamentalsDev/chapter/2/section/6?content_resource_id=65937084"
-               target="_blank">GeometryFundamentalsDev</a></p>
-         <p><b>Perpendicular bisector theorem:</b> Any given point on the perpendicular bisector of a line segment is
-            the same distance from either endpoint of the line segment.</p>
-         <p><b>Given:</b> \(\overleftrightarrow{CD}\) is the perpendicular bisector for \(\overline{AB}\)</p>
-         <p><b>Prove:</b> \(AD=BD\)</p>
-         <img src="images/geom2_5.png"
-            alt="A figure shows a horizontal line segment A B and a vertical line. The line intersects the line segment A B perpendicularly at C and moves vertically up through point D. A dashed line segment connects A and D, and a dashed line segment connects B and D."
+         <h2><!-- TODO --></h2>
+         <!-- <p>From: <a
+               href="-- TODO --"
+               target="_blank"> -- TODO -- </a></p> -->
+         <p><b><!-- TODO --></b> <!-- TODO --></p>
+         <p><b>Given:</b> <!-- TODO --></p>
+         <p><b>Prove:</b> <!-- TODO --></p>
+         <!-- <img src="-- TODO --"
+            alt="-- TODO --"
             width="500">
-         </img>
+         </img> -->
       </div>
       <div id="instructions">
          <p id="instr"></p>
@@ -58,7 +61,7 @@
          <div class="selGroup text-center">
             <button class="selOptBtn" type="button">Submit</button>
          </div>
-
+         
          <table class="proofRows">
             <tr>
                <th class="stOpt" hidden>Statement options</th>
@@ -70,12 +73,11 @@
             <tr>
                <td class="stOpt" hidden>
                   <ul id="statement_opt" class="shuffler2">
-                     <li>\(AC ~\)\(=CB\)</li>
-                     <li>\(m\angle DCA~\) \(= m\angle DCB~\) \(= 90^\circ\)</li>
-                     <li>\(CD~ \)\(=CD\)</li>
-                     <li>\(\triangle ACD~ \)\( \cong \triangle BCD\)</li>
-                     <li>\(AD ~\)\(=BD\)</li>
-                     <li>distractor</li>
+                     <li>1<!-- TODO --></li>
+                     <li>2<!-- TODO --></li>
+                     <li>3<!-- TODO --></li>
+                     <li>4<!-- TODO --></li>
+                     <li>distractor<!-- TODO --></li>
                   </ul>
                </td>
                <td class="st" hidden>
@@ -91,30 +93,12 @@
                   </ul>
                </td>
                <td class="justOpt" hidden>
-                  <!-- TODO  may want to develop feedback for some of the explanations already written in previous versions of texts 
-                  sample explanations are included in comments below -->
-                  <!-- id must match the id from the corresponding statement above -->
                   <ul id="justification_opt" class="shuffler2">
-                     <li>Definition of bisector</li>
-                     <!--Since \(\overleftrightarrow{CD}\) is the perpendicular bisector
-          for \(\overline{AB}\), \(\overline{AC}\) and \(\overline{CB}\) are the same length.-->
-                     <li>Definition of perpendicular lines
-                        <!--Since \(\overleftrightarrow{CD}\) is the perpendicular bisector for 
-                           \(\overline{AB}\), all four angles formed are right angles.-->
-                     </li>
-                     <li>Reflexive property
-                        <!--The reflexive property is not always included in proofs, but can 
-                           be used to help set up the next step.-->
-                     </li>
-                     <li>SAS congruence theorem
-                        <!--The two triangles have two sides congruent with the included angles also 
-                           congruent, so the two triangles are congruent.-->
-                     </li>
-                     <li>Property of congruent triangles
-                        <!--\(\overline{AD}\) and \(\overline{BD}\) are corresponding parts of 
-                           congruent triangles, so \(AD=BD\).-->
-                     </li>
-                     <li>distractor</li>
+                     <li>1<!-- TODO --></li>
+                     <li>2<!-- TODO --></li>
+                     <li>3<!-- TODO --></li>
+                     <li>4<!-- TODO --></li>
+                     <li>distractor<!-- TODO --></li>
                   </ul>
                </td>
             </tr>
@@ -133,13 +117,13 @@
       </div>
    </div>
    <script>
-      var proofRows = 5;
+      var proofRows = 4;// INT REQUIRED -- TODO -- 
       // index row positions  ['01','02','03','04','05','06' . . . ]
 
       /* reqBefore = two digit row number 'bb' of step BEFORE the index row
          reqAfter = two digit row number 'aa' of step AFTER the index row */
-      var reqBefore = ['00', '00', '00', '01', '04', ''];
-      var reqAfter = ['04', '04', '04', '05', '00', ''];
+      var reqBefore = ['00', '01', '02', '03', '99', '99'];
+      var reqAfter = ['02', '03', '04', '00', '99', '99'];
       // for before and after, use '' for distractors and '00' if no requirement for step  
 
 
@@ -148,7 +132,7 @@
                   = 3 if only justifications move (use no statement distractors)
                   = 4 if both statements and justifications move 
       */
-      var opts;
+      var opts; //<!-- TODO --> is specific type is wanted
    </script>
    <script src="js/statement-justificationCopy.js"></script>
 </body>

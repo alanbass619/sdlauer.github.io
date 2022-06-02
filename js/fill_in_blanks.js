@@ -12,7 +12,7 @@ $(function () {
     $("#optionsFiB>li").each(function() {
         max = $(this).width() > max ? $(this).width() : max;
       });
-      $(".ans, #optionsFiB>li, #optionsFiB>li:hover").css('width',''+(max/12)+'vw');
+      $(".ans, #optionsFiB>li, #optionsFiB>li:hover").css('width',''+(max));
 });
 
 $(function () {
@@ -56,6 +56,7 @@ function shuffleNodes(e) {
         listli.appendChild(nodes[i]);
         ++i;
     }
+    
 }
 
 function checker() {

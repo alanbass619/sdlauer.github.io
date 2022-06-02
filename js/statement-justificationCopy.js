@@ -38,7 +38,7 @@ function giddyup() {
             rename("justification");
             $("th .just").html("Justifications");
             shuffleNodes('statement_opt');
-            $('.instr').html('<b>Proof:</b> Match each statement with the appropriate justification in the correct order.');
+            $('#instr').html('<b>Proof:</b> Match each statement with the appropriate justification in the correct order.');
             break;
         case 3: // static statements with shuffled justifications
             setHide([true, false, false, false]);
@@ -46,7 +46,7 @@ function giddyup() {
             rename("statement");
             $("th .stOpt").html("Statements");
             shuffleNodes('justification_opt');
-            $('.instr').html('<b>Proof:</b> Reorder the justifications to pair with the statements.');
+            $('#instr').html('<b>Proof:</b> Reorder the justifications to pair with the statements.');
             break;
         case 4: // shuffled statements and justifications
             setHide([false, false, false, false]);
@@ -54,7 +54,7 @@ function giddyup() {
             shuffleNodes('justification_opt');
             shuffleNodes('statement_opt');
             $(".2Col").prop('hidden', false);
-            $('.instr').html('<b>Proof:</b> Reorder each statement and justification to pair in the correct order.');
+            $('#instr').html('<b>Proof:</b> Reorder each statement and justification to pair in the correct order.');
         default:
             break;
     }
@@ -239,6 +239,10 @@ function checkOrder(l1) {
     let countAfter = 0, countBefore = 0;
     l1dep.forEach(function (value, key) {
         checkRow = parseInt(key) + 1;
+        if (l1[key] > proofRows){
+            countAfter = 91;
+            valAfter = checkRow;
+        }
         if (valAfter < 0) {
             for (let t = checkRow; t < l1.length; t++) {
                 if (l1dep[t].slice(2, 5) == l1[key]) {
@@ -277,8 +281,7 @@ function checker() {
     let l1len = l1.length;
     let l2 = getData($("#justification > li"));
     let l2len = l2.length;
-    // only check pairing if justifications are present
-    if (l2len > 0) {
+    if (l2len >= 0 ) {
         let maxRows = Math.max(l2len, l1len);
         if (maxRows < proofRows) {
             str += " -- At least one step is missing from the proof.<br/>";
@@ -286,20 +289,27 @@ function checker() {
         else if (maxRows > proofRows) {
             str += " -- The solution has fewer than " + maxRows + " steps.<br/>";
         }
-        if (!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) {
+        // only check pairing if justifications are present
+        if ((!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) & opts>1) {
             str += " -- Statements require correct pairing with justifications. First incorrect justification at step " + checkPairs(l1, l2) + ".<br/>";
         }
-    }
-    if (l2len == 0 & l1len != proofRows || l1len == 0 & l2len != proofRows) {
-        str += " -- At least one step is missing from the proof.<br/>";
     }
     // check order of statements column
     let c = checkOrder(l1);
     pluralAfter = (c.countAfter == 1) ? " is" : "s are";
     pluralBefore = (c.countBefore == 1) ? " is" : "s are";
-    str += (c.valAfter < 0) ? "Statement order is correct so far." : " -- Statements are out of order. At least " + c.countAfter + " more step" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
+    
+    if (c.countAfter>90){
+        str+= "Step " + c.valAfter + " is not part of the proof.";
+    }
+    else if (c.countAfter>0){
+        str += " -- Statements are out of order. At least " + c.countAfter + " more step" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
+    }
+    if (c.valAfter < 0){
+        str += "Order is correct so far.";
+    }
     str += (c.valBefore < 0) ? "" : " -- Statements are out of order. At least " + c.countBefore + " more step" + pluralBefore + " needed after step " + c.valBefore + ".<br/>";
-    if (str == "Statement order is correct so far.") { str = "Correct!"; }
+    if (str == "Order is correct so far." & l1len==proofRows) { str = "Correct!"; }
     // }
     $("#chkOrder").html(str);
 }

@@ -1,9 +1,12 @@
 html * {
   font-size: 1.3vw;
-  line-height: 1.25;
+  line-height: 1.5;
   font-family: Arial, Helvetica, sans-serif;
 }
-
+ol>li,ol>li:hover{
+  background-color: white;
+  color: black;
+}
 /* The sidenav */
 .sidenav {
   height: 100%;
@@ -41,10 +44,11 @@ ul {
 .ans,
 #optionsFiB>li,
 #optionsFiB>li:hover {
+  
   /* stops text from jumping */
   vertical-align:text-top;
   height: 3vh;
-  width: 10vw;
+  /* width: 10vw; */
   /* margin-left: .5vw;
   margin-right: .5vw; */
   list-style-type: none;
