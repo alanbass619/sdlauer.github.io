@@ -7,115 +7,119 @@
    <meta name="robots" content="noindex" />
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
    <script>
       MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        svg: {
-          fontCache: 'global'
-        }
+         tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+         },
+         svg: {
+            fontCache: 'global'
+         }
       };
-      </script>
-      <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-      </script>
+   </script>
+   <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+   </script>
    <link rel="stylesheet" href="css/statement-justification.css">
 </head>
 
-<body onload="shuffleNodes('statement_opt');setHeight();shuffleNodes('justification_opt')">
-   
+
+<body onload="setStJust();giddyup()">
    <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
-      <iframe src="sidenav.html"
-         style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;" title="Side navigation"></iframe>
+      <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
+         title="Side navigation"></iframe>
    </div>
-      <div class="main">
-            <div>
-               <h2>General 2-column proof example</h2>
-               <p><b>Proof:</b> Match each statement with the appropriate justification in the correct order.</p>
-               <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
-               <p><span id="chkOrder"></span></p>
-            </div>
-         <div>
-            <!--id here is number of rows in completed proof-->
-            <table class="proofRows" data-compare="5">
-               <tr>
-                  <th>Statement options</th>
-                  <th>Statement</th>
-                  <th class="auto">Step</th>
-                  <th>Justification</th>
-                  <th>Justification options</th>
-               </tr>
-               <tr>
-                  <td>
-                     <!-- data-compare xxyy corresponds to 
-                  the id number xx of the li that must come before this row
-                  the id number yy of the li that must come after this row
-               include no data-compare for distractors and include all distractors last -->
-                     <ul id="statement_opt" class="shuffler2">
-                        <li data-compare="0004" value="01" class="shuffled">1 🦉</li>
-                        <li data-compare="0004" value="02" class="shuffled">1 🦜</li>
-                        <li data-compare="0004" value="03" class="shuffled">1 🦆</li>
-                        <li data-compare="0105" value="04" class="shuffled">2</li>
-                        <li data-compare="0406" value="05" class="shuffled">3</li>
-                        <li value="07" class="shuffled">distractor</li>
-                     </ul>
-                  </td>
-                  <td>
-                     <ul id="statement" class="shuffler2">
-                     </ul>
-                  </td>
-                  <td class="auto">
-                     <ul id="step" class="auto">
-                        <li class="shufflerstep">1</li>
-                        <li class="shufflerstep">2</li>
-                        <li class="shufflerstep">3</li>
-                        <li class="shufflerstep">4</li>
-                        <li class="shufflerstep">5</li>
-                        <li class="shufflerstep">6</li>
-                     </ul>
-                  </td>
-                  <td>
-                     <ul id="justification" class="shuffler2">
-                     </ul>
-                  </td>
-                  <td>
-                     <ul id="justification_opt" class="shuffler2">
-                        <li value="01" class="shuffled">1 🦉</li>
-                        <li value="02" class="shuffled">1 🦜</li>
-                        <li value="03" class="shuffled">1 🦆</li>
-                        <li value="04" class="shuffled">2 </li>
-                        <li value="05" class="shuffled">3</li>
-                        <li value="08" class="shuffled">distractor</li>
-                     </ul>
-                  </td>
-               </tr>
-               <tr>
-                  <td></td>
-                  <td></td>
-                  <td class="auto"></td>
-                  <td></td>
-                  <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button>
-                  </td>
-               </tr>
-            </table>
-         </div>
+   <div class="main">
+      <div>
+         <h2>General 2-column proof example</h2>
+      </div>
+      <div id="instructions">
+         <p id="instr"></p>
+         <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
+         <p><span id="chkOrder"></span></p>
       </div>
 
-   <script src="js/statement-justification.js"></script>
+      <div>
+         <div class="selGroup">
+            <label><strong>Select proof type</strong>:-</label><br>
+            <label><input type="radio" name="selOpt" value="1">1-col</label>
+            <label><input type="radio" name="selOpt" value="2">2-col statements only</label>
+            <label><input type="radio" name="selOpt" value="3">2-col justifications only</label>
+            <label><input type="radio" name="selOpt" value="4">Full 2-column proof</label>
+         </div>
+         <div class="selGroup text-center">
+            <button class="selOptBtn" type="button">Submit</button>
+         </div>
+
+         <table class="proofRows">
+            <tr>
+               <th class="stOpt" hidden>Statement options</th>
+               <th class="st" hidden>Statements</th>
+               <th class="auto">Step</th>
+               <th class="just" hidden>Justifications</th>
+               <th class="justOpt" hidden>Justification options</th>
+            </tr>
+            <tr>
+               <td class="stOpt" hidden>
+                  <ul id="statement_opt" class="shuffler2">
+                     <li>1 🦉</li>
+                     <li>1 🦜</li>
+                     <li>1 🦆</li>
+                     <li>2</li>
+                     <li>3</li>
+                     <li>distractor</li>
+                  </ul>
+               </td>
+               <td class="st" hidden>
+                  <ul id="statement" class="shuffler2">
+                  </ul>
+               </td>
+               <td class="auto">
+                  <ul id="step" class="auto">
+                  </ul>
+               </td>
+               <td class="just" hidden>
+                  <ul id="justification" class="shuffler2">
+                  </ul>
+               </td>
+               <td class="justOpt" hidden>
+                  <ul id="justification_opt" class="shuffler2">
+                     <li>1 🦉</li>
+                     <li>1 🦜</li>
+                     <li>1 🦆</li>
+                     <li>2 </li>
+                     <li>3</li>
+                     <li>distractor</li>
+                  </ul>
+               </td>
+            </tr>
+            <tr>
+               <td height="1vh"></td>
+            </tr>
+            <tr>
+               <td class="st"></td>
+               <td class="stOpt"></td>
+               <td class="2Col" hidden></td>
+               <td class="justOpt"></td>
+               <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button>
+               </td>
+            </tr>
+         </table>
+      </div>
+   </div>
+
+   <script src="js/statement-justificationCopy.js"></script>
    <script>
       var proofRows = 5; // Number of statements in proof
-      var statement_opt =['1 🦉','1 🦜','1 🦆','2','3','distractor']; 
-      var statement =[];
-      var justification =[];
-      var justification_opt =['1 🦉','1 🦜','1 🦆','2','3','distractor'];
-   /* reqBefore = two digit row number 'bb' of step BEFORE the index row
-      reqAfter = two digit row number 'aa' of step AFTER the index row */
-      var reqBefore = ['00','00','00','01','04','']; 
-      var reqAfter = ['04','04','04','05','00',''];
-   // for before and after, use '' for distractors and '00' if no requirement for step  
+
+      /* reqBefore = two digit row number 'bb' of step BEFORE the index row
+         reqAfter = two digit row number 'aa' of step AFTER the index row */
+      var reqBefore = ['00', '00', '00', '01', '04', ''];
+      var reqAfter = ['04', '04', '04', '05', '00', ''];
+      var opts;
+      // for before and after, use '' for distractors and '00' if no requirement for step
    </script>
 </body>
 

@@ -4,6 +4,7 @@
 //initial height of step li
 let stepHtInit = $("#step > li").eq(0).height();
 var max = 0;
+let stOptDep;
 $(function () {
     $(".selOptBtn").click(function () {
         opts = parseInt($('input:radio:checked').val());
@@ -16,12 +17,19 @@ $(function () {
 function setStJust() {
     setStatements("#statement_opt");
     setJustifications("#justification_opt");
-    if (opts >0){
+    if (opts > 0) {
         $(".selGroup").prop('hidden', true);
     }
     else {
         $("#instructions").prop('hidden', true);
     }
+    // stOptDep = getDependency($("#statement_opt > li"));
+    // // stOptDep.forEach(function(value,key){
+    //     originalCountBefore = reqBefore;
+    //     originalCountAfter = reqAfter;
+    //     alert(originalCountBefore);
+    // // });
+
 }
 // select the type of proof wanted and display page
 function giddyup() {
@@ -239,27 +247,43 @@ function checkOrder(l1) {
     let countAfter = 0, countBefore = 0;
     l1dep.forEach(function (value, key) {
         checkRow = parseInt(key) + 1;
-        if (l1[key] > proofRows){
-            countAfter = 91;
+        // check for distractor
+        alert(l1[key]);
+        if (l1[key] > proofRows) {
+            countAfter = 100;
             valAfter = checkRow;
         }
-        if (valAfter < 0) {
-            for (let t = checkRow; t < l1.length; t++) {
+        for (let t = 0; t < l1.length; t++) {
+            // any dependent rows after?
+            if (valAfter < 0 && t >= checkRow) {
                 if (l1dep[t].slice(2, 5) == l1[key]) {
                     valAfter = checkRow;
                     countAfter++;
                 }
+                
             }
-        }
-        if (valBefore < 0) {
-            for (let t = 0; t < checkRow; t++) {
+            // any dependent rows before?
+            if (valBefore < 0 && t < checkRow) {
                 if (l1dep[t].slice(0, 2) == l1[key]) {
                     valBefore = checkRow;
                     countBefore++;
                 }
             }
+            // any dependent rows missing before?
+            alert(reqBefore[parseInt(l1[key])-1]+ " = ??  "+l1dep[t].slice(0, 2) + "  " + value + "  " + key + "   " + l1[key]);
+            // if (key==0 && l1dep[t].slice(0, 2)!='00'){
+            //     val
+            //     valbefore = checkRow;
+            //     countBefore++;
+            // }
         }
+
+        // dependent rows missing?
+        // stOptDep.forEach(function (value, key) {
+        //     alert(value.slice(0,2)+"  "+ value+"  " +value.slice(2,5));
+        // });
     });
+    // alert(`countAfter  ${countAfter}  valAfter${valAfter}  countBefore  ${countBefore}  valBefore  ${valBefore}`);
     return { countAfter, valAfter, countBefore, valBefore };
 }
 // get incorrect pairing of statements and justifications-- return first row number incorrectly paired
@@ -281,7 +305,8 @@ function checker() {
     let l1len = l1.length;
     let l2 = getData($("#justification > li"));
     let l2len = l2.length;
-    if (l2len >= 0 ) {
+    alert(l1len+"    "+l2len);
+    if (l2len >= 0) {
         let maxRows = Math.max(l2len, l1len);
         if (maxRows < proofRows) {
             str += " -- At least one step is missing from the proof.<br/>";
@@ -290,7 +315,7 @@ function checker() {
             str += " -- The solution has fewer than " + maxRows + " steps.<br/>";
         }
         // only check pairing if justifications are present
-        if ((!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) & opts>1) {
+        if ((!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) && opts > 1) {
             str += " -- Statements require correct pairing with justifications. First incorrect justification at step " + checkPairs(l1, l2) + ".<br/>";
         }
     }
@@ -298,18 +323,18 @@ function checker() {
     let c = checkOrder(l1);
     pluralAfter = (c.countAfter == 1) ? " is" : "s are";
     pluralBefore = (c.countBefore == 1) ? " is" : "s are";
-    
-    if (c.countAfter>90){
-        str+= "Step " + c.valAfter + " is not part of the proof.";
+
+    if (c.countAfter > 90) {
+        str += "Step " + c.valAfter + " is not part of the proof.";
     }
-    else if (c.countAfter>0){
+    else if (c.countAfter > 0) {
         str += " -- Statements are out of order. At least " + c.countAfter + " more step" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
     }
-    if (c.valAfter < 0){
+    if (c.valAfter < 0) {
         str += "Order is correct so far.";
     }
     str += (c.valBefore < 0) ? "" : " -- Statements are out of order. At least " + c.countBefore + " more step" + pluralBefore + " needed after step " + c.valBefore + ".<br/>";
-    if (str == "Order is correct so far." & l1len==proofRows) { str = "Correct!"; }
+    if (str == "Order is correct so far." && l1len == proofRows) { str = "Correct!"; }
     // }
     $("#chkOrder").html(str);
 }

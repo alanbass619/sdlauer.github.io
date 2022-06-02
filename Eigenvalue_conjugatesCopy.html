@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<!-- suggests for draggable, sortable from https://www.w3schools.blog/jqueryui-sortable -->
-
-<!-- load relevant files for functionality and style -->
+<!-- https://www.w3schools.blog/jqueryui-sortable -->
 
 <head>
-   <title><!-- TODO --></title><!-- sets tab name in browser -->
+   <title>Proof: Geometry example</title>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="robots" content="noindex" />
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -26,6 +24,7 @@
    </script>
    <link rel="stylesheet" href="css/statement-justification.css">
 </head>
+
 <body onload="setStJust();giddyup()">
    <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
       <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
@@ -33,17 +32,14 @@
    </div>
    <div class="main">
       <div>
-         <h2><!-- TODO --></h2>
-         <!-- <p>From: <a
-               href="-- TODO --"
-               target="_blank"> -- TODO -- </a></p> -->
-         <p><b><!-- TODO --></b> <!-- TODO --></p>
-         <p><b>Given:</b> <!-- TODO --></p>
-         <p><b>Prove:</b> <!-- TODO --></p>
-         <!-- <img src="-- TODO --"
-            alt="-- TODO --"
-            width="500">
-         </img> -->
+         <h2>Proof for the conjugate of an eigenpair</h2>
+         <p>From: <a
+               href="https://learn.zybooks.com/zybook/LinearAlgebraDev/chapter/8/section/4?content_resource_id=67780181"
+               target="_blank">LinearAlgebraDev</a></p>
+
+         <p><b>Theorem:</b> Let \(A\) be an \(n \times n\) real matrix. If \(\lambda = a+bi\) and \(\textbf{v}\) form an
+            eigenpair of \(A\), then \(\lambda = a-bi\) and \(\overline{\textbf{v}}\) also form an eigenpair of \(A\).
+         </p>
       </div>
       <div id="instructions">
          <p id="instr"></p>
@@ -61,7 +57,7 @@
          <div class="selGroup text-center">
             <button class="selOptBtn" type="button">Submit</button>
          </div>
-         
+
          <table class="proofRows">
             <tr>
                <th class="stOpt" hidden>Statement options</th>
@@ -72,12 +68,28 @@
             </tr>
             <tr>
                <td class="stOpt" hidden>
-                  <ul id="statement_opt" class="shuffler2">
-                     <li>1<!-- TODO --></li>
-                     <li>2<!-- TODO --></li>
-                     <li>3<!-- TODO --></li>
-                     <li>4<!-- TODO --></li>
-                     <li>distractor<!-- TODO --></li>
+                  <ul id="statement_opt" class="shuffler1">
+                     <li> If a complex number \(a+bi\) is a solution to
+                        a
+                        polynomial equation with real coefficients, then \(a-bi\) is also
+                        a solution.</li>
+                     <li>Suppose \( ( \lambda, \textbf{v})\) is an
+                        eigenpair of \(A\).</li>
+                     <li>By the definition of an eigenpair,
+                        \(A\textbf{v} =
+                        \lambda \textbf{v}\).</li>
+                     <li>Taking the conjugate of both sides gives
+                        \(\overline{A\textbf{v}} = \overline{\lambda \textbf{v}}\).</li>
+                     <li>By theorems of conjugate matrices and vectors,
+                        \(\overline{A} \overline{\textbf{v}} = \overline{\lambda}\overline{\textbf{v}}\).</li>
+                     <li>Since \(A\) is a real matrix,
+                        \(\overline{A}=A\).
+                     </li>
+                     <li>\(A \overline{\textbf{v}} =
+                        \overline{\lambda}\overline{\textbf{v}}\)</li>
+                     <li>By definition, \( ( \overline{\lambda},
+                        \overline{\textbf{v}} )\) is an eigenpair of \(A\).</li>
+                     <li>Distractor</li>
                   </ul>
                </td>
                <td class="st" hidden>
@@ -94,11 +106,15 @@
                </td>
                <td class="justOpt" hidden>
                   <ul id="justification_opt" class="shuffler2">
-                     <li>1<!-- TODO --></li>
-                     <li>2<!-- TODO --></li>
-                     <li>3<!-- TODO --></li>
-                     <li>4<!-- TODO --></li>
-                     <li>distractor<!-- TODO --></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
                   </ul>
                </td>
             </tr>
@@ -117,13 +133,13 @@
       </div>
    </div>
    <script>
-      var proofRows = 4;// INT REQUIRED -- TODO -- 
+      var proofRows = 8;// INT REQUIRED -- TODO -- 
       // index row positions  ['01','02','03','04','05','06' . . . ]
 
       /* reqBefore = two digit row number 'bb' of step BEFORE the index row
          reqAfter = two digit row number 'aa' of step AFTER the index row */
-      var reqBefore = ['00', '01', '02', '03', '99', ''];
-      var reqAfter = ['02', '03', '04', '00', '99', ''];
+      var reqBefore = ['00', '00', '02', '03', '04', '00', '06', '07', '', ''];
+      var reqAfter = ['08', '03', '04', '05', '07', '07', '08', '00', ''];
       // for before and after, use '' for distractors and '00' if no requirement for step  
 
 
@@ -132,7 +148,7 @@
                   = 3 if only justifications move (use no statement distractors)
                   = 4 if both statements and justifications move 
       */
-      var opts; //<!-- TODO --> if specific type is wanted
+      var opts = 1; //<!-- TODO --> if specific type is wanted
    </script>
    <script src="js/statement-justificationCopy.js"></script>
 </body>
