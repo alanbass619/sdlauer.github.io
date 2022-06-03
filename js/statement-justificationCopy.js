@@ -246,7 +246,7 @@ function checkOrder(l1) {
             valAfter = checkRow;
         }
         for (let t = 0; t < l1.length; t++) {
-            alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]);
+            // alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]);
             // any dependent rows after?
             if (valAfter < 0 && t >= checkRow) {
                 alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]+"\n depAft= "+l1dep[t].slice(2, 5) +"\n"+ l1[key]);

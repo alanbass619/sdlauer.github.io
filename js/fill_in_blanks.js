@@ -12,7 +12,9 @@ $(function () {
     $("#optionsFiB>li").each(function() {
         max = $(this).width() > max ? $(this).width() : max;
       });
-      $(".ans, #optionsFiB>li, #optionsFiB>li:hover").css('width',''+(max));
+      $(".ans, #optionsFiB>li, #optionsFiB>li:hover").css('width',''+(max)/12 +'vw');
+    //   $(".ans").('height','');
+      $("#optionsFiB").css('min-height', $("#optionsFiB").height());
 });
 
 $(function () {
