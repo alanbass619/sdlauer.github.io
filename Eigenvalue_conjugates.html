@@ -7,29 +7,28 @@
    <meta name="robots" content="noindex" />
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
    <script>
       MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        svg: {
-          fontCache: 'global'
-        }
+         tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+         },
+         svg: {
+            fontCache: 'global'
+         }
       };
-      </script>
-      <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-      </script>
+   </script>
+   <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+   </script>
    <link rel="stylesheet" href="css/statement-justification.css">
 </head>
 
-<body onload="shuffleNodes('statement_opt');setHeight();shuffleNodes('justification_opt')">
-
+<body onload="setStJust();giddyup()">
    <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
-      <iframe src="sidenav.html"
-         style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;" title="Side navigation"></iframe>
+      <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
+         title="Side navigation"></iframe>
    </div>
    <div class="main">
       <div>
@@ -40,80 +39,118 @@
 
          <p><b>Theorem:</b> Let \(A\) be an \(n \times n\) real matrix. If \(\lambda = a+bi\) and \(\textbf{v}\) form an
             eigenpair of \(A\), then \(\lambda = a-bi\) and \(\overline{\textbf{v}}\) also form an eigenpair of \(A\).
-
-         <p><b>Proof: </b>The steps for the proof of the theorem are listed below. Put the steps in order.</p>
+         </p>
+      </div>
+      <div id="instructions">
+         <p id="instr"></p>
          <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
          <p><span id="chkOrder"></span></p>
       </div>
       <div>
-         <!--id here is number of rows in completed proof-->
-         <table class="proofRows" data-compare="8">
+         <div class="selGroup">
+            <label><strong>Select proof type</strong>:-</label><br>
+            <label><input type="radio" name="selOpt" value="1">1-col</label>
+            <label><input type="radio" name="selOpt" value="2">2-col statements only</label>
+            <label><input type="radio" name="selOpt" value="3">2-col justifications only</label>
+            <label><input type="radio" name="selOpt" value="4">Full 2-column proof</label>
+         </div>
+         <div class="selGroup text-center">
+            <button class="selOptBtn" type="button">Submit</button>
+         </div>
+
+         <table class="proofRows">
             <tr>
-               <th>Statement options</th>
+               <th class="stOpt" hidden>Statement options</th>
+               <th class="st" hidden>Statements</th>
                <th class="auto">Step</th>
-               <th>Proof</th>
-               <!-- <th>Justification</th>
-                  <th>Justification options</th> -->
+               <th class="just" hidden>Justifications</th>
+               <th class="justOpt" hidden>Justification options</th>
             </tr>
             <tr>
-               <td>
-                  <!-- data-compare xxyy corresponds to 
-                  the id number xx of the li that must come before this row
-                  the id number yy of the li that must come after this row
-               include no data-compare for distractors and include all distractors last -->
+               <td class="stOpt" hidden>
                   <ul id="statement_opt" class="shuffler1">
-                     <li data-compare="0008" value="01" class="shuffled"> If a complex number \(a+bi\) is a solution to a
+                     <li> If a complex number \(a+bi\) is a solution to
+                        a
                         polynomial equation with real coefficients, then \(a-bi\) is also
                         a solution.</li>
-                     <li data-compare="0003" value="02" class="shuffled">Suppose \( ( \lambda, \textbf{v})\) is an
+                     <li>Suppose \( ( \lambda, \textbf{v})\) is an
                         eigenpair of \(A\).</li>
-                     <li data-compare="0204" value="03" class="shuffled">By the definition of an eigenpair, \(A\textbf{v} =
+                     <li>By the definition of an eigenpair,
+                        \(A\textbf{v} =
                         \lambda \textbf{v}\).</li>
-                     <li data-compare="0305" value="04" class="shuffled">Taking the conjugate of both sides gives
+                     <li>Taking the conjugate of both sides gives
                         \(\overline{A\textbf{v}} = \overline{\lambda \textbf{v}}\).</li>
-                     <li data-compare="0407" value="05" class="shuffled">By theorems of conjugate matrices and vectors,
+                     <li>By theorems of conjugate matrices and vectors,
                         \(\overline{A} \overline{\textbf{v}} = \overline{\lambda}\overline{\textbf{v}}\).</li>
-                     <li data-compare="0007" value="06" class="shuffled">Since \(A\) is a real matrix, \(\overline{A}=A\).
+                     <li>Since \(A\) is a real matrix,
+                        \(\overline{A}=A\).
                      </li>
-                     <li data-compare="0608" value="07" class="shuffled">\(A \overline{\textbf{v}} =
+                     <li>\(A \overline{\textbf{v}} =
                         \overline{\lambda}\overline{\textbf{v}}\)</li>
-                     <li data-compare="0700" value="08" class="shuffled">By definition, \( ( \overline{\lambda},
+                     <li>By definition, \( ( \overline{\lambda},
                         \overline{\textbf{v}} )\) is an eigenpair of \(A\).</li>
-                     <li id="09" class="shuffled">Distractor</li>
+                     <li>Distractor</li>
+                  </ul>
+               </td>
+               <td class="st" hidden>
+                  <ul id="statement" class="shuffler2">
                   </ul>
                </td>
                <td class="auto">
                   <ul id="step" class="auto">
-                     <li class="shufflerstep">1</li>
-                     <li class="shufflerstep">2</li>
-                     <li class="shufflerstep">3</li>
-                     <li class="shufflerstep">4</li>
-                     <li class="shufflerstep">5</li>
-                     <li class="shufflerstep">6</li>
-                     <li class="shufflerstep">7</li>
-                     <li class="shufflerstep">8</li>
-                     <li class="shufflerstep">9</li>
-                     <!-- <li class="shufflerstep">10</li> -->
                   </ul>
                </td>
-               <td>
-                  <ul id="statement" class="shuffler1">
+               <td class="just" hidden>
+                  <ul id="justification" class="shuffler2">
+                  </ul>
+               </td>
+               <td class="justOpt" hidden>
+                  <ul id="justification_opt" class="shuffler2">
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
+                     <li></li>
                   </ul>
                </td>
             </tr>
             <tr>
-               <!-- <td></td>
-               <td></td> -->
-               <td></td>
-               <td class="auto"></td>
+               <td height="1vh"></td>
+            </tr>
+            <tr>
+               <td class="st"></td>
+               <td class="stOpt"></td>
+               <td class="2Col" hidden></td>
+               <td class="justOpt"></td>
                <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button>
                </td>
             </tr>
          </table>
       </div>
    </div>
+   <script>
+      var proofRows = 8;// INT REQUIRED -- TODO -- 
+      // index row positions  ['01','02','03','04','05','06' . . . ]
 
-   <script src="js/statement.js"></script>
+      /* reqBefore = two digit row number 'bb' of step BEFORE the index row
+         reqAfter = two digit row number 'aa' of step AFTER the index row */
+      var reqBefore = ['00', '00', '02', '03', '04', '00', '06', '07', '', ''];
+      var reqAfter = ['08', '03', '04', '05', '07', '07', '08', '00', ''];
+      // for before and after, use '' for distractors and '00' if no requirement for step  
+
+
+      /* set opts = 1 if only statements (one column proof) 
+                  = 2 if only statements move (use no justification distractors)
+                  = 3 if only justifications move (use no statement distractors)
+                  = 4 if both statements and justifications move 
+      */
+      var opts = 1; //<!-- TODO --> if specific type is wanted
+   </script>
+   <script src="js/statement-justificationCopy.js"></script>
 </body>
 
 </html>

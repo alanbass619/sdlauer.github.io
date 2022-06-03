@@ -112,7 +112,6 @@ function checkOrder(l1) {
 function checker() {
     let l1 = getData($("#statement > li"));
     let l1len = l1.length;
-    alert(l1len)
     let str = "";
     let maxRows = /*Math.max(l2len,*/ l1len/*)*/;
     if (maxRows < proofRows) {
