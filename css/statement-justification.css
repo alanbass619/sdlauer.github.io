@@ -13,7 +13,8 @@ html * {
    left: 0;
    background-color: #e3e0e0;
    overflow-x: hidden;
-   padding-left: .5vw;
+   padding-left: .25vw;
+   font-size: 1.1vw;
  }
  .shufflerstep{
    display: flex;
@@ -22,7 +23,7 @@ html * {
 
  /* Page content */
  .main {
-   margin-left: 17%; /* Same as the width of the sidenav */
+   margin-left: 15%; /* Same as the width of the sidenav */
    width: 83%;
  }
 h1 {
@@ -48,11 +49,18 @@ img {
    list-style-type: none;
    counter-reset: elementcounter;
    padding-left: 0;
+   list-style-position: inside;
+   margin-left: 6em;
+   text-indent: -6em;
  }
-#axiom:before {
+ .axiom{
+   text-indent: -4.5em;
+ }
+.axiom:before {
    content: "Axiom " counter(elementcounter) ":  ";
    counter-increment: elementcounter;
    font-weight: bold;
+   text-indent: -4.5em;
  }
 .shuffled, .shufflerstep {
    background-color: #f2f2f2;
