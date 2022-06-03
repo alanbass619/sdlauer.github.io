@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<!-- https://www.w3schools.blog/jqueryui-sortable -->
+<!-- suggests for draggable, sortable from https://www.w3schools.blog/jqueryui-sortable -->
+
+<!-- load relevant files for functionality and style -->
 
 <head>
-   <title>General example</title>
+   <title>TODO TEMPLATE_block_proof</title><!-- sets tab name in browser -->
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="robots" content="noindex" />
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -24,8 +26,6 @@
    </script>
    <link rel="stylesheet" href="css/statement-justification.css">
 </head>
-
-
 <body onload="setStJust();giddyup()">
    <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
       <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
@@ -33,14 +33,23 @@
    </div>
    <div class="main">
       <div>
-         <h2>General 2-column proof example</h2>
+         <h2>TODO title</h2>
+         <!-- <p>From: <a
+               href="-- TODO --"
+               target="_blank"> -- TODO -- </a></p> -->
+         <p><b><!-- TODO --></b> <!-- TODO --></p>
+         <p><b>Given:</b> <!-- TODO --></p>
+         <p><b>Prove:</b> <!-- TODO --></p>
+         <!-- <img src="-- TODO --"
+            alt="-- TODO --"
+            width="500">
+         </img> -->
       </div>
       <div id="instructions">
          <p id="instr"></p>
          <p><button id="check" type="button2" onclick="checker()">Check</button></p>
          <p><span id="chkOrder"></span></p>
       </div>
-
       <div>
          <div class="selGroup">
             <label><strong>Select proof type</strong>:-</label><br>
@@ -52,7 +61,7 @@
          <div class="selGroup text-center">
             <button class="selOptBtn" type="button">Submit</button>
          </div>
-
+         
          <table class="proofRows">
             <tr>
                <th class="stOpt" hidden>Statement options</th>
@@ -64,12 +73,11 @@
             <tr>
                <td class="stOpt" hidden>
                   <ul id="statement_opt" class="shuffler2">
-                     <li>1 🦉</li>
-                     <li>1 🦜</li>
-                     <li>1 🦆</li>
-                     <li>2</li>
-                     <li>3</li>
-                     <li>distractor</li>
+                     <li>1<!-- TODO --></li>
+                     <li>2<!-- TODO --></li>
+                     <li>3<!-- TODO --></li>
+                     <li>4<!-- TODO --></li>
+                     <li>distractor<!-- TODO --></li>
                   </ul>
                </td>
                <td class="st" hidden>
@@ -86,12 +94,11 @@
                </td>
                <td class="justOpt" hidden>
                   <ul id="justification_opt" class="shuffler2">
-                     <li>1 🦉</li>
-                     <li>1 🦜</li>
-                     <li>1 🦆</li>
-                     <li>2 </li>
-                     <li>3</li>
-                     <li>distractor</li>
+                     <li>1<!-- TODO --></li>
+                     <li>2<!-- TODO --></li>
+                     <li>3<!-- TODO --></li>
+                     <li>4<!-- TODO --></li>
+                     <li>distractor<!-- TODO --></li>
                   </ul>
                </td>
             </tr>
@@ -109,18 +116,22 @@
          </table>
       </div>
    </div>
-
-   <script src="js/statement-justificationCopy.js"></script>
    <script>
-      var proofRows = 5; // Number of statements in proof
-
+      var proofRows = 4;// INT REQUIRED -- TODO -- 
+      // index row positions  ['01','02','03','04','05','06' . . . ]
       /* reqBefore = two digit row number 'bb' of step BEFORE the index row
          reqAfter = two digit row number 'aa' of step AFTER the index row */
-      var reqBefore = ['00', '00', '00', '01', '04', ''];
-      var reqAfter = ['04', '04', '04', '05', '00', ''];
-      var opts;
-      // for before and after, use '' for distractors and '00' if no requirement for step
+      var reqBefore = ['00', '01', '02', '03', '99', ''];//<!-- TODO -->
+      var reqAfter = ['02', '03', '04', '00', '99', ''];//<!-- TODO -->
+      // for before and after, use '' for distractors and '00' if no requirement for step  
+      /* set opts = 1 if only statements (one column proof) 
+                  = 2 if only statements move (use no justification distractors)
+                  = 3 if only justifications move (use no statement distractors)
+                  = 4 if both statements and justifications move 
+      */
+      var opts; //<!-- TODO --> set opts if specific type is wanted
    </script>
+   <script src="js/statement-justificationCopy.js"></script>
 </body>
 
 </html>

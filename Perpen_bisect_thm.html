@@ -1,31 +1,32 @@
 <!DOCTYPE html>
-<!-- https://www.w3schools.blog/jqueryui-sortable -->
+<!-- suggests for draggable, sortable from https://www.w3schools.blog/jqueryui-sortable -->
 
+<!-- load relevant files for functionality and style -->
 <head>
    <title>Proof: Geometry example</title>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="robots" content="noindex" />
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
    <script>
       MathJax = {
-         tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-         },
-         svg: {
-            fontCache: 'global'
-         }
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        svg: {
+          fontCache: 'global'
+        }
       };
-   </script>
-   <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-   </script>
-   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      </script>
+      <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+      </script>
    <link rel="stylesheet" href="css/statement-justification.css">
 </head>
 
-<body onload="shuffleNodes('statement_opt');shuffleNodes('justification_opt')">
+<body onload="shuffleNodes('statement_opt');setHeight();shuffleNodes('justification_opt')">
    <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
       <iframe src="sidenav.html" 
          style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;" title="Side navigation"></iframe>
@@ -45,35 +46,48 @@
             width="500">
          </img>
          <p><b>Proof:</b> Match each statement with the appropriate justification in the correct order.</p>
-         <p><button id="check" type="button2" onclick="checker()">Check order</button></p>
+         <p><button id="check" type="button2" onclick="checker()">Check</button></p>
          <p><span id="chkOrder"></span></p>
       </div>
       <div>
-         <!--id here is number of rows in completed proof-->
+         <!-- 4 containers to hold the initial and answer statement and justification options
+            data-compare here is number of rows in completed proof -->
          <table class="proofRows" data-compare="5">
             <tr>
                <th>Statement options</th>
                <th>Statement</th>
+               <th class="auto">Step</th>
                <th>Justification</th>
                <th>Justification options</th>
             </tr>
             <tr>
                <td>
-                  <!-- data-compare xxyy corresponds to 
-                  the id number xx of the li that must come before this row
-                  the id number yy of the li that must come after this row
-               include no data-compare for distractors and include all distractors last -->
+                  <!-- data-compare xxyy corresponds to: 
+                        the id number xx of the last li row that must come before this row (if several, any of them may be used)
+                        the id number yy of the first li row that must come after this row (if several, any of them may be used)
+                  include NO data-compare for distractors and include all distractors last -->
                   <ul id="statement_opt" class="shuffler2">
-                     <li data-compare="0004" id="01" class="shuffled">\(AC ~\)\(=CB\)</li>
-                     <li data-compare="0004" id="02" class="shuffled">\(m\angle DCA~ \)\( = m\angle DCB\)\( = 90^\circ\)</li>
-                     <li data-compare="0004" id="03" class="shuffled">\(CD~ \)\(=CD\)</li>
-                     <li data-compare="0105" id="04" class="shuffled">\(\triangle ACD~ \)\( \cong \triangle BCD\)</li>
-                     <li data-compare="0406" id="05" class="shuffled">\(AD ~\)\(=BD\)</li>
-                     <li id="7" class="shuffled">distractor</li>
+                     <li data-compare="0004" value="01" class="shuffled">\(AC ~\)\(=CB\)</li>
+                     <li data-compare="0004" value="02" class="shuffled">\(m\angle DCA~\) \(= m\angle DCB~\) \(= 90^\circ\)</li>
+                     <li data-compare="0004" value="03" class="shuffled">\(CD~ \)\(=CD\)</li>
+                     <li data-compare="0105" value="04" class="shuffled">\(\triangle ACD~ \)\( \cong \triangle BCD\)</li>
+                     <li data-compare="0406" value="05" class="shuffled">\(AD ~\)\(=BD\)</li>
+                     <li value="7" class="shuffled">distractor</li>
                   </ul>
                </td>
+               <!-- table cells created to shuffle statement and justification -->
                <td>
                   <ul id="statement" class="shuffler2">
+                  </ul>
+               </td>
+               <td class="auto">
+                  <ul id="step" class="auto">
+                     <li class="shufflerstep">1</li>
+                     <li class="shufflerstep">2</li>
+                     <li class="shufflerstep">3</li>
+                     <li class="shufflerstep">4</li>
+                     <li class="shufflerstep">5</li>
+                     <li class="shufflerstep">6</li>
                   </ul>
                </td>
                <td>
@@ -81,27 +95,30 @@
                   </ul>
                </td>
                <td>
+                  <!-- TODO  may want to develop feedback for some of the explanations already written in previous versions of texts 
+                  sample explanations are included in comments below -->
+                  <!-- id must match the id from the corresponding statement above -->
                   <ul id="justification_opt" class="shuffler2">
-                     <li id="01" class="shuffled">Definition of bisector</li>
+                     <li value="01" class="shuffled">Definition of bisector</li>
                      <!--Since \(\overleftrightarrow{CD}\) is the perpendicular bisector
           for \(\overline{AB}\), \(\overline{AC}\) and \(\overline{CB}\) are the same length.-->
-                     <li id="02" class="shuffled">Definition of perpendicular lines
+                     <li value="02" class="shuffled">Definition of perpendicular lines
                         <!--Since \(\overleftrightarrow{CD}\) is the perpendicular bisector for 
-            \(\overline{AB}\), all four angles formed are right angles.-->
+                           \(\overline{AB}\), all four angles formed are right angles.-->
                      </li>
-                     <li id="03" class="shuffled">Reflexive property
+                     <li value="03" class="shuffled">Reflexive property
                         <!--The reflexive property is not always included in proofs, but can 
-            be used to help set up the next step.-->
+                           be used to help set up the next step.-->
                      </li>
-                     <li id="04" class="shuffled">SAS congruence theorem
+                     <li value="04" class="shuffled">SAS congruence theorem
                         <!--The two triangles have two sides congruent with the included angles also 
-            congruent, so the two triangles are congruent.-->
+                           congruent, so the two triangles are congruent.-->
                      </li>
-                     <li id="05" class="shuffled">Property of congruent triangles
+                     <li value="05" class="shuffled">Property of congruent triangles
                         <!--\(\overline{AD}\) and \(\overline{BD}\) are corresponding parts of 
-            congruent triangles, so \(AD=BD\).-->
+                           congruent triangles, so \(AD=BD\).-->
                      </li>
-                     <li id="06" class="shuffled">distractor</li>
+                     <li value="06" class="shuffled">distractor</li>
                   </ul>
                </td>
             </tr>
@@ -109,6 +126,8 @@
                <td></td>
                <td></td>
                <td></td>
+               <td class="auto"></td>
+               <!-- reset button to shuffle lines and drag them back to initial containers -->
                <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button>
                </td>
             </tr>

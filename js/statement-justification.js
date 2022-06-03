@@ -1,31 +1,78 @@
+// Number of statements in proof
+let proofRows = $(".proofRows").attr('data-compare');
+//initial height of step li
+let stepHtInit = $("#step li").eq(0).height();
+var max = 0;
+
 // https://www.pureexample.com/ExampleTesterII-81.html
-// li items draggable
+// li items draggable/sortable
 
 $(function () {
-	$("#statement_opt,#statement").sortable({
-		connectWith: "#statement_opt,#statement",
+    $("#statement_opt,#statement").sortable({
+        connectWith: "#statement_opt,#statement",
         start: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		},
-		stop: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		}
-	});
-	$("#statement_opt,#statement").disableSelection();
+            ui.item.toggleClass("highlight");
+        },
+        stop: function (event, ui) {
+            ui.item.toggleClass("highlight");
+            var children = $(this)
+                .sortable('refreshPositions')
+                .children();
+            liHt();
+        }
+    });
 });
+function disAbleSortable(item){
+    $(item).sortable('disable');
+    $(item+" li").css({'background': '#B1D6FC', 'color': 'black'});
+}
 $(function () {
-	$("#justification_opt,#justification").sortable({
-		connectWith: "#justification_opt,#justification",
+    $("#justification_opt,#justification").sortable({
+        connectWith: "#justification_opt,#justification",
         start: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		},
-		stop: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		}
-	});
-	$("#justification_opt,#justification").disableSelection();
+            ui.item.toggleClass("highlight");
+        },
+        // tolerance: 'intersection',
+        stop: function (event, ui) {
+            ui.item.toggleClass("highlight");
+            // https://www.geeksforgeeks.org/jquery-ui-sortable-refreshpositions-method/
+            var children = $(this)
+                .sortable('refreshPositions')
+                .children();
+            liHt();
+        }
+    });
 });
-
+// Update height and color of li
+function liHt() {
+    $("li").css('height', '');
+    let h = 0;
+    for (let i = 0; i < $("#step li").length; i++) {
+        m = Math.max($("#statement li").length, $("#justification li").length);
+        if (i < m) {
+            if ($("#statement li").length > i && $("#justification li").length > i) {
+                h = Math.max($("#statement li").eq(i).height(), $("#justification li").eq(i).height());
+                $("#statement li").eq(i).height(h);
+                $("#justification li").eq(i).height(h);
+            }
+            else if ($("#justification li").length < m) {
+                h = $("#statement li").eq(i).height();
+                $("#statement li").eq(i).height(h);
+            }
+            else {
+                h = $("#justification li").eq(i).height();
+                $("#justification li").eq(i).height(h);
+            }
+            $("#step li").eq(i).height(h);
+            $("#step li").eq(i).css('background-color', '#3193F5');
+        }
+        else {
+            $("#step li").eq(i).height(stepHtInit);
+            $("#step li").eq(i).css('background-color', 'rgb(232, 232, 232)');
+        }
+    }
+    setHeight();
+}
 // shuffle li elements in ul -- needs shuffleNodes(e) function call
 // https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
 
@@ -49,34 +96,40 @@ function shuffleNodes(e) {
         ++i;
     }
 }
-// based on: https://stackoverflow.com/questions/68965082/how-do-i-move-item-from-1-list-to-another-list-in-html-->
-// allow option lists to be moved to Statement and Justification
 
-// set equal heights  all li elements
-var max = -1;
-$(".shuffled").each(function () {
-    var h = $(this).height();
-    max = h > max ? h : max;
-});
-$(".shuffled").each(function () {
-    $(this).css("height", max);
-});
-
-// set height of 4 ul elements 
-let l1set = document.getElementById("statement_opt").childElementCount;
-let l1aset = document.getElementById("justification_opt").childElementCount;
-
-let ht = Math.max(l1set, l1aset) * (max + 19);
-$(".shuffler2,.shuffler1").each(function () {
-    $(this).css("height", ht);
-});
+function setHeight() {
+    $(".shuffler1,#step,.shuffler2").each(function () {
+        $(this).css("height", '');
+    });
+    let h = [document.getElementById('statement_opt'),document.getElementById('justification_opt'),document.getElementById('step'),document.getElementById('statement'),document.getElementById('justification')];
+    let maxht = h[0].clientHeight;
+    for (let i = 0; i < 5; i++){
+        if (h[i].clientHeight>maxht) maxht =h[i].clientHeight; 
+    }
+    $(".shuffler1,#step,.shuffler2").each(function () {
+        $(this).css("height", maxht);
+    });
+}
+function setHeightStatementOnly() {
+    $(".shuffler1,#step,.shuffler2").each(function () {
+        $(this).css("height", '');
+    });
+    let h = [document.getElementById('statement_opt'),document.getElementById('justification_opt'),document.getElementById('step'),document.getElementById('statement'),document.getElementById('justification')];
+    let maxht = h[0].clientHeight;
+    for (let i = 0; i < 5; i++){
+        if (h[i].clientHeight>maxht) maxht =h[i].clientHeight; 
+    }
+    $(".shuffler1,#step,.shuffler2").each(function () {
+        $(this).css("height", maxht);
+    });
+}
 
 let getData = arr => {
     return arr.map(function () {
-        return $(this).attr('id');
+        return $(this).attr('value');
     }).get();
 }
-//  id < compare-data
+//  value < compare-data
 let getDependency = arr => {
     return arr.map(function () {
         return $(this).attr('data-compare');
@@ -85,24 +138,21 @@ let getDependency = arr => {
 // Check for correct order
 function checkOrder(l1) {
     let l1dep = getDependency($("#statement > li"));
-    // alert(parseInt(l1dep[0].slice(0,3)));
     let valAfter = -1, valBefore = -1;
     let countAfter = 0, countBefore = 0;
     l1dep.forEach(function (value, key) {
         checkRow = parseInt(key) + 1;
         if (valAfter < 0) {
             for (let t = checkRow; t < l1.length; t++) {
-                if (l1dep[t].slice(2,5) == l1[key]) {
-                    // alert(l1dep[t][1]);
+                if (l1dep[t].slice(2, 5) == l1[key]) {
                     valAfter = checkRow;
                     countAfter++;
                 }
             }
         }
         if (valBefore < 0) {
-            for (let t=0; t < checkRow; t++) {
-                if (l1dep[t].slice(0,2) == l1[key]) {
-                    // alert(l1dep[t][1]);
+            for (let t = 0; t < checkRow; t++) {
+                if (l1dep[t].slice(0, 2) == l1[key]) {
                     valBefore = checkRow;
                     countBefore++;
                 }
@@ -121,7 +171,6 @@ function checkPairs(l1a, l2a) {
     }
     return len + 1;
 }
-let proofRows = $(".proofRows").attr('data-compare');
 function checker() {
     let l1 = getData($("#statement > li"));
     let l1len = l1.length;
@@ -133,12 +182,12 @@ function checker() {
         str += " -- At least one step is missing from the proof.<br/>";
     }
     else if (maxRows > proofRows) {
-        str += " -- The solution has fewer than " + maxRows + " rows.<br/>";
+        str += " -- The solution has fewer than " + maxRows + " steps.<br/>";
     }
     if (!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) {
-        str += " -- Statements require correct pairing with justifications. First incorrect pairing at step " + checkPairs(l1, l2) + ".<br/>";
+        str += " -- Statements require correct pairing with justifications. First incorrect justification at step " + checkPairs(l1, l2) + ".<br/>";
     }
-
+    // if (l1len == proofRows){
     if (str.length == 0) {
         let c = checkOrder(l1);
         pluralAfter = (c.countAfter == 1) ? " is" : "s are";

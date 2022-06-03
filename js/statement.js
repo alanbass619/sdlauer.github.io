@@ -1,33 +1,51 @@
+
+// Number of statements in proof
+let proofRows = $(".proofRows").attr('data-compare');
+//initial height of step li
+let stepHtInit = $("#step li").eq(0).height();
+var max = 0;
+
 // https://www.pureexample.com/ExampleTesterII-81.html
-// li items draggable
-
+// li items draggable/sortable
 $(function () {
-	$("#statement_opt,#statement").sortable({
-		connectWith: "#statement_opt,#statement",
+    $("#statement_opt,#statement").sortable({
+        connectWith: "#statement_opt,#statement",
         start: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		},
-		stop: function (event, ui) {
-			ui.item.toggleClass("highlight");
-		}
-	});
-	$("#statement_opt,#statement").disableSelection();
+            ui.item.toggleClass("highlight");
+        },
+        stop: function (event, ui) {
+            ui.item.toggleClass("highlight");
+            // https://www.geeksforgeeks.org/jquery-ui-sortable-refreshpositions-method/
+            var children = $(this)
+                .sortable('refreshPositions')
+                .children();
+            liHt();
+        },
+    });
 });
-// $(function () {
-// 	$("#justification_opt,#justification").sortable({
-// 		connectWith: "#justification_opt,#justification",
-//         start: function (event, ui) {
-// 			ui.item.toggleClass("highlight");
-// 		},
-// 		stop: function (event, ui) {
-// 			ui.item.toggleClass("highlight");
-// 		}
-// 	});
-// 	$("#justification_opt,#justification").disableSelection();
-// });
 
-// shuffle li elements in ul -- needs shuffleNodes(e) function call
-// https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
+// Update height and color of li
+function liHt() {
+    for (let i = 0; i < $("#step li").length; i++) {
+        if (i < $("#statement li").length) {
+            $("#step li").eq(i).height($("#statement li").eq(i).height());
+            $("#step li").eq(i).css('background-color', '#3193F5');
+        }
+        else {
+            $("#step li").eq(i).height(stepHtInit);
+            $("#step li").eq(i).css('background-color', 'rgb(232, 232, 232)');
+        }
+    }
+}
+
+// Set initial ul box heights
+function setHeight() {
+    let h = document.getElementById('statement_opt');
+    let ht = h.clientHeight;
+    $(".shuffler1,#step").each(function () {
+        $(this).css("height", ht);
+    });
+}
 
 function shuffle(items) {
     var cached = items.slice(0), temp, i = cached.length, rand;
@@ -49,31 +67,10 @@ function shuffleNodes(e) {
         ++i;
     }
 }
-// based on: https://stackoverflow.com/questions/68965082/how-do-i-move-item-from-1-list-to-another-list-in-html-->
-// allow option lists to be moved to Statement and Justification
-
-// set equal heights  all li elements
-var max = -1;
-$(".shuffled").each(function () {
-    var h = $(this).height();
-    max = h > max ? h : max;
-});
-$(".shuffled").each(function () {
-    $(this).css("height", max);
-});
-
-// set height of 4 ul elements 
-let l1set = document.getElementById("statement_opt").childElementCount;
-// let l1aset = document.getElementById("justification_opt").childElementCount;
-
-let ht = Math.max(l1set/*, l1aset*/) * (max + 19);
-$(".shuffler2,.shuffler1").each(function () {
-    $(this).css("height", ht);
-});
 
 let getData = arr => {
     return arr.map(function () {
-        return $(this).attr('id');
+        return $(this).attr('value');
     }).get();
 }
 //  id < compare-data
@@ -92,7 +89,7 @@ function checkOrder(l1) {
         checkRow = parseInt(key) + 1;
         if (valAfter < 0) {
             for (let t = checkRow; t < l1.length; t++) {
-                if (l1dep[t].slice(2,5) == l1[key]) {
+                if (l1dep[t].slice(2, 5) == l1[key]) {
                     // alert(l1dep[t][1]);
                     valAfter = checkRow;
                     countAfter++;
@@ -100,8 +97,8 @@ function checkOrder(l1) {
             }
         }
         if (valBefore < 0) {
-            for (let t=0; t < checkRow; t++) {
-                if (l1dep[t].slice(0,2) == l1[key]) {
+            for (let t = 0; t < checkRow; t++) {
+                if (l1dep[t].slice(0, 2) == l1[key]) {
                     valBefore = checkRow;
                     countBefore++;
                 }
@@ -110,22 +107,11 @@ function checkOrder(l1) {
     });
     return { countAfter, valAfter, countBefore, valBefore };
 }
-// Check for correct pairing -- return first row number incorrectly paired
-// function checkPairs(l1a, l2a) {
-//     let len = Math.min(l1a.length, l2a.length);
-//     for (let i = 0; i < len; i++) {
-//         if (l1a[i] != l2a[i]) {
-//             return i + 1;
-//         }
-//     }
-//     return len + 1;
-// }
-let proofRows = $(".proofRows").attr('data-compare');
+
+
 function checker() {
     let l1 = getData($("#statement > li"));
     let l1len = l1.length;
-    // let l2 = getData($("#justification > li"));
-    // let l2len = l2.length;
     let str = "";
     let maxRows = /*Math.max(l2len,*/ l1len/*)*/;
     if (maxRows < proofRows) {
@@ -134,16 +120,13 @@ function checker() {
     else if (maxRows > proofRows) {
         str += " -- The solution has fewer than " + maxRows + " rows.<br/>";
     }
-    // if (!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) {
-    //     str += " -- Statements require correct pairing with justifications. First incorrect pairing at step " + checkPairs(l1, l2) + ".<br/>";
-    // }
 
     if (str.length == 0) {
         let c = checkOrder(l1);
         pluralAfter = (c.countAfter == 1) ? " is" : "s are";
         pluralBefore = (c.countBefore == 1) ? " is" : "s are";
-        str += (c.valAfter < 0) ? "Correct!" : " -- Statements are out of order. At least " + c.countAfter + " more step" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
-        str += (c.valBefore < 0) ? "" : " -- Statements are out of order. At least " + c.countBefore + " more step" + pluralBefore + " needed after step " + c.valBefore + ".<br/>";
+        str += (c.valAfter < 0) ? "Correct!" : " -- Statements are out of order. At least " + c.countAfter + " more statement" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
+        str += (c.valBefore < 0) ? "" : " -- Statements are out of order. At least " + c.countBefore + " more statement" + pluralBefore + " needed after step " + c.valBefore + ".<br/>";
 
     }
     $("#chkOrder").html(str);
