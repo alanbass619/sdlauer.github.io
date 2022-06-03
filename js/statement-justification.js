@@ -171,13 +171,10 @@ function checkPairs(l1a, l2a) {
     }
     return len + 1;
 }
-
 function checker() {
     let l1 = getData($("#statement > li"));
     let l1len = l1.length;
     let l2 = getData($("#justification > li"));
-    // alert("l1= "+l1);
-    // alert("l2= "+ l2);
     let l2len = l2.length;
     let str = "";
     let maxRows = Math.max(l2len, l1len);
@@ -190,8 +187,6 @@ function checker() {
     if (!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) {
         str += " -- Statements require correct pairing with justifications. First incorrect justification at step " + checkPairs(l1, l2) + ".<br/>";
     }
-
-
     // if (l1len == proofRows){
     if (str.length == 0) {
         let c = checkOrder(l1);

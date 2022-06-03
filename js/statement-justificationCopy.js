@@ -249,7 +249,7 @@ function checkOrder(l1) {
             // alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]);
             // any dependent rows after?
             if (valAfter < 0 && t >= checkRow) {
-                alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]+"\n depAft= "+l1dep[t].slice(2, 5) +"\n"+ l1[key]);
+                // alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]+"\n depAft= "+l1dep[t].slice(2, 5) +"\n"+ l1[key]);
                 if (l1dep[t].slice(2, 5) == l1[key]) {
                     valAfter = checkRow;
                     countAfter++;
@@ -258,7 +258,7 @@ function checkOrder(l1) {
             }
             // any dependent rows before?
             if (valBefore < 0 && t < checkRow) {
-                alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]+"\n depBef= "+l1dep[t].slice(0, 2) +"\n"+ l1[key]);
+                // alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]+"\n depBef= "+l1dep[t].slice(0, 2) +"\n"+ l1[key]);
                
                 if (l1dep[t].slice(0, 2) == l1[key]) {
                     valBefore = checkRow;
