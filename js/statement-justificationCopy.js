@@ -12,7 +12,7 @@ $(function () {
         $(".selGroup").prop('hidden', true);
         $("#instructions").prop('hidden', false);
         giddyup();
-        setHeight();
+        
     });
 });
 // set statement/step/justification table
@@ -29,6 +29,7 @@ function setStJust() {
     for (i = 0; i < $("#statement_opt li").length; i++) {
         $("#step").append(`<li class="shufflerstep">${i + 1}</li>`);
     }
+    setHeight();
 }
 // select the type of proof wanted and display page
 function giddyup() {
