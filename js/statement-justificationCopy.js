@@ -11,11 +11,10 @@ $(function () {
         opts = parseInt($('input:radio:checked').val());
         $(".selGroup").prop('hidden', true);
         $("#instructions").prop('hidden', false);
-        giddyup();
-        
+        giddyup();     
     });
 });
-// set statement/step/justification table
+// set statement/step/justification table with proof type chosen/!chosen
 function setStJust() {
     setStatements("#statement_opt");
     setJustifications("#justification_opt");
@@ -108,7 +107,7 @@ $(function () {
         }
     });
 });
-// make functions sortable and draggable
+// make justifications sortable and draggable
 $(function () {
     $("#justification_opt,#justification").sortable({
         connectWith: "#justification_opt,#justification",
@@ -177,7 +176,7 @@ function liHt() {
         }
         else {
             $("#step li").eq(i).height(stepHtInit);
-            $("#step li").eq(i).css('background-color', 'rgb(232, 232, 232)');
+            $("#step li").eq(i).css('background-color', '#e8e8e8');
         }
     }
     setHeight();

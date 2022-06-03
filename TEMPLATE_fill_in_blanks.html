@@ -1,5 +1,5 @@
 <html>
-<!-- from: https://www.demo2s.com/javascript/jquery-implement-fill-in-the-blanks-using-drag-drop-jquery-rvnx.html -->
+<!-- some content from: https://www.demo2s.com/javascript/jquery-implement-fill-in-the-blanks-using-drag-drop-jquery-rvnx.html -->
 <head>
     <title>TODO TEMPLATE_fill_in_blanks</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,51 +40,54 @@
                 answer.
                 Check your work.</p>
         </div>
+        <!-- set value attr in #optionsFiB to match for .ans in #proof -->
         <div>
-            <!-- answer choices (values are the same for repeated answers)-->
+            <!-- answer choices (value attr are the same for repeated answers)-->
             <ul id="optionsFiB" , class="shuffled">
                 <li value=“01”>
-                    TODO 1
+                    TODO 1<!-- TODO -->
                 </li>
                 <li value=“02”>
-                    TODO 2
+                    TODO 2<!-- TODO -->
                 </li>
                 <li value=“03”>
-                    TODO 3
+                    TODO 3<!-- TODO -->
                 </li>
                 <li value=“04”>
-                    TODO 4
+                    TODO 4<!-- TODO -->
                 </li>
                 <li value=“05”>
-                    TODO 5
+                    TODO 5<!-- TODO -->
                 </li>
                 <li value=“06”>
-                    TODO 6
+                    TODO 6<!-- TODO -->
                 </li>
             </ul>
         </div>
         <div id="proof">
-            <!-- proof text (values are the same for repeated answers)-->
+            <!-- proof text (value attr are the same for repeated answers)-->
             <p>
-                TODO beginning -- ans 1
+                TODO beginning -- ans 1<!-- TODO -->
                 <span class="ans" value="01" data-max="1"></span>
-                TODO ans 2
+                TODO ans 2<!-- TODO -->
                 <span class="ans" value="02" data-max="1"></span>
-                TODO ans 3
+                TODO ans 3<!-- TODO -->
                 <span class="ans" value="03" data-max="1"></span>
-                TODO ns 4
+                TODO ans 4<!-- TODO -->
                 <span class="ans" value="04" data-max="1"></span>
-                TODO ans 5
+                TODO ans 5<!-- TODO -->
                 <span class="ans" value="05" data-max="1"></span>
-                TODO ans 6
+                TODO ans 6<!-- TODO -->
                 <span class="ans" value="06" data-max="1"></span>
-                TODO end
+                TODO end<!-- TODO -->
             </p>
-            <p><button id="check" type="button2" onclick="checker()">Check</button></p>
-            <p><span id="chkOrder"></span></p>
-            <button id="reset" onClick="window.location.reload();">Reset</button>
         </div>
-    </div>
-</body>
+        <div>
+          <p><button id="check" type="button2" onclick="checker()">Check</button></p>
+          <p><span id="chkOrder"></span></p>
+          <button id="reset" onClick="window.location.reload();">Reset</button>
+        </div>
+      </div>
+    </body>
 
 </html>

@@ -119,20 +119,17 @@
    <script>
       var proofRows = 4;// INT REQUIRED -- TODO -- 
       // index row positions  ['01','02','03','04','05','06' . . . ]
-
       /* reqBefore = two digit row number 'bb' of step BEFORE the index row
          reqAfter = two digit row number 'aa' of step AFTER the index row */
-      var reqBefore = ['00', '01', '02', '03', '99', ''];
-      var reqAfter = ['02', '03', '04', '00', '99', ''];
+      var reqBefore = ['00', '01', '02', '03', '99', ''];//<!-- TODO -->
+      var reqAfter = ['02', '03', '04', '00', '99', ''];//<!-- TODO -->
       // for before and after, use '' for distractors and '00' if no requirement for step  
-
-
       /* set opts = 1 if only statements (one column proof) 
                   = 2 if only statements move (use no justification distractors)
                   = 3 if only justifications move (use no statement distractors)
                   = 4 if both statements and justifications move 
       */
-      var opts; //<!-- TODO --> if specific type is wanted
+      var opts; //<!-- TODO --> set opts if specific type is wanted
    </script>
    <script src="js/statement-justificationCopy.js"></script>
 </body>

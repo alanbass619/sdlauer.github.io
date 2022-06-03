@@ -11,12 +11,11 @@ html * {
    z-index: 1;
    top: 0;
    left: 0;
-   background-color: rgb(227, 224, 224);
+   background-color: #e3e0e0;
    overflow-x: hidden;
    padding-left: .5vw;
  }
  .shufflerstep{
-
    display: flex;
    align-items: center;
  }
@@ -56,7 +55,7 @@ img {
    font-weight: bold;
  }
 .shuffled, .shufflerstep {
-   background: rgb(242, 242, 242);
+   background-color: #f2f2f2;
    /* border-bottom: .2vw solid black; */
    /* border-radius: 1vw; */
    color: black;
@@ -65,22 +64,16 @@ img {
    /* display: table-column; */
    vertical-align: middle;
 }
-/* #statement_opt, #justification_opt {
-   background: #AFAFAF;
-   border-left: .1vw solid rgb(148, 147, 147);
-   border-right: .1vw solid rgb(148, 147, 147);
-   color: black;
-} */
 .shuffler1, .shuffler2, #step {
    /* background: white; */
-   border-left: .1vw solid rgb(148, 147, 147);
-   border-right: .1vw solid rgb(148, 147, 147);
+   border-left: .1vw solid #949393;
+   border-right: .1vw solid #949393;
    color: black;
    width: 100%;
    /* display: table-column;  */
 }
 #step>li{
-   background-color: rgb(232, 232, 232);
+   background-color: #e8e8e8;
    /* border-bottom: .2vw solid black; */
    /* border-radius: 1vw; */
    color: black;
@@ -110,6 +103,7 @@ div {
 #statement>li, #justification>li, #check {
    background-color: #3193F5;
    color: white;
+   border: none;
 }
 #statement>li:hover, #justification>li:hover, li:hover{
    background-color: #a4a3a36a;
