@@ -1,0 +1,90 @@
+<html>
+<!-- from: https://www.demo2s.com/javascript/jquery-implement-fill-in-the-blanks-using-drag-drop-jquery-rvnx.html -->
+<head>
+    <title>TODO TEMPLATE_fill_in_blanks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex" />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+        </script>
+    <link rel="stylesheet" href="css/statement-justification.css">
+    <link rel="stylesheet" href="css/fill_in_blanks.css">
+    <script src="js/fill_in_blanks.js"></script>
+</head>
+<body onload="shuffleNodes('optionsFiB')">
+    <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
+        <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
+            title="Side navigation"></iframe>
+    </div>
+    <div class="main">
+        <div>
+            <h2>TODO title</h2>
+            <p>TODO (If the same answer is required twice, the <b>value</b> paramater is the same for each relevant blank and
+                answer.)</p>
+            <p><b>Instructions:</b> TODO Ex: Drag answers to the correct location. Click an answer blank to remove the current
+                answer.
+                Check your work.</p>
+        </div>
+        <div>
+            <!-- answer choices (values are the same for repeated answers)-->
+            <ul id="optionsFiB" , class="shuffled">
+                <li value=“01”>
+                    TODO 1
+                </li>
+                <li value=“02”>
+                    TODO 2
+                </li>
+                <li value=“03”>
+                    TODO 3
+                </li>
+                <li value=“04”>
+                    TODO 4
+                </li>
+                <li value=“05”>
+                    TODO 5
+                </li>
+                <li value=“06”>
+                    TODO 6
+                </li>
+            </ul>
+        </div>
+        <div id="proof">
+            <!-- proof text (values are the same for repeated answers)-->
+            <p>
+                TODO beginning -- ans 1
+                <span class="ans" value="01" data-max="1"></span>
+                TODO ans 2
+                <span class="ans" value="02" data-max="1"></span>
+                TODO ans 3
+                <span class="ans" value="03" data-max="1"></span>
+                TODO ns 4
+                <span class="ans" value="04" data-max="1"></span>
+                TODO ans 5
+                <span class="ans" value="05" data-max="1"></span>
+                TODO ans 6
+                <span class="ans" value="06" data-max="1"></span>
+                TODO end
+            </p>
+            <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
+            <p><span id="chkOrder"></span></p>
+            <button id="reset" onClick="window.location.reload();">Reset</button>
+        </div>
+    </div>
+</body>
+
+</html>

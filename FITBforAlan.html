@@ -24,11 +24,7 @@
   <link rel="stylesheet" href="css/statement-justification.css">
   <link rel="stylesheet" href="css/fill_in_blanks.css">
   <script src="js/fill_in_blanks.js"></script>
-
-  </style>
-
 </head>
-
 <body onload="shuffleNodes('optionsFiB')">
   <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
     <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
@@ -36,11 +32,13 @@
   </div>
   <div class="main">
     <div>
-      <h2>General fill in the blank example</h2>
+      <h2>An affine plane fill in the blank example</h2>
+      <p>From: <a
+        href="https://learn.zybooks.com/zybook/GeometryFundamentalsDev/chapter/8/section/1?content_resource_id=65937406"
+        target="_blank">GeometryFundamentalsDev</a></p>
       <p>An affine plane is a geometry system that follows four axioms given below. Like Fano's geometry, this axiomatic
         system uses the undefined objects "points" and "lines," and the undefined relation "contains".</p>
-
-      <p><b>Axioms of a finite affine plane:</b><br />
+      <p><b>Axioms of a finite affine plane:</b>
       <ol>
         <li>Given any two distinct points, a unique line contains the points.</li>
         <li>Each line contains at least two points.</li>
@@ -49,15 +47,11 @@
         <li>At least three noncollinear points exist.</li>
       </ol>
       </p>
-
       <p>The Euclidean plane is an affine plane. However, finite affine planes are also popular systems of geometry.</p>
-
       <p><b>Theorem:</b> A finite affine plane contains at least four points.</p>
     </div>
     <p><b>Instructions:</b> Drag answers to the correct location. Click an answer blank to remove the current answer.
       Check your work.</p>
-
-
     <div>
       <ul id="optionsFiB" , class="shuffled">
         <li value=“01”>
@@ -87,7 +81,6 @@
         <li value=“09”>
           at least four points
         </li>
-
       </ul>
     </div>
     <div id="proof">
@@ -127,14 +120,11 @@
         <span class="ans" value="09" data-max="1"></span>
         .
       </p>
+      <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
+      <p><span id="chkOrder"></span></p>
+      <button id="reset" onClick="window.location.reload();">Reset</button>
     </div>
- 
-  <p><button id="check" type="button2" onclick="checker()">Check proof</button></p>
-  <p><span id="chkOrder"></span></p>
   </div>
-
-  <button id="reset" onClick="window.location.reload();">Reset</button>
-</div>
 </body>
 
 </html>

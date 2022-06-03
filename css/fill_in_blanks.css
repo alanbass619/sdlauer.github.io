@@ -7,7 +7,6 @@ ol>li,ol>li:hover{
   background-color: white;
   color: black;
 }
-/* The sidenav */
 .sidenav {
   height: 100%;
   width: 15%;
@@ -19,11 +18,9 @@ ol>li,ol>li:hover{
   overflow-x: hidden;
   padding-left: .5vw;
 }
-
 h2 {
   font-size: 3vw
 }
-
 ul {
   /* min-height: 10vh; */
   background: rgb(232, 232, 232);
@@ -37,16 +34,18 @@ ul {
   margin-right: .5vw;
 }
 
-#proof>p {
-  line-height: 5vh;
+#proof, #proof>p {
+  line-height: 3.5vh;
+  margin-inline-start: 1vw;
+  padding-right: 1.1vw;
+  background: #fff2e7;
 }
 
 .ans,
 #optionsFiB>li,
 #optionsFiB>li:hover {
-  
   /* stops text from jumping */
-  vertical-align:text-top;
+  vertical-align: text-top;
   height: 3vh;
   /* width: 10vw; */
   /* margin-left: .5vw;
@@ -54,18 +53,13 @@ ul {
   list-style-type: none;
   display: inline-block;
   text-align: center;
-  margin-left: .5vw;
-  margin-right: .5vw;
-  /* color: black; */
+  margin-left: .25vw;
+  margin-right: .25vw;
 }
-
 .ans {
   color: blue;
   border-bottom: .2vw solid black;
-  margin-left: .5vw;
-  margin-right: .5vw;
 }
-
 .ans:empty:before {
   content: "\00a0";
 }
