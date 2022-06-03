@@ -107,7 +107,7 @@ div {
    width: 90%;
    float: left;
 }
-#statement>li, #justification>li {
+#statement>li, #justification>li, #check {
    background-color: #3193F5;
    color: white;
 }
