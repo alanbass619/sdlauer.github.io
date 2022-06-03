@@ -42,13 +42,13 @@
             width="500">
          </img>
       </div>
-      <div id="instructions">
+      <div id="instructions" hidden>
          <p id="instr"></p>
          <p><button id="check" type="button2" onclick="checker()">Check</button></p>
          <p><span id="chkOrder"></span></p>
       </div>
       <div>
-         <div class="selGroup">
+         <div class="selGroup" hidden>
             <label><strong>Select proof type</strong>:-</label><br>
             <label><input type="radio" name="selOpt" value="1">1-col</label>
             <label><input type="radio" name="selOpt" value="2">2-col statements only</label>
@@ -75,7 +75,8 @@
                      <li>\(CD~ \)\(=CD\)</li>
                      <li>\(\triangle ACD~ \)\( \cong \triangle BCD\)</li>
                      <li>\(AD ~\)\(=BD\)</li>
-                     <li>distractor</li>
+                     <li>distractor 1</li>
+                     <li>distractor 2</li>
                   </ul>
                </td>
                <td class="st" hidden>
@@ -114,7 +115,8 @@
                         <!--\(\overline{AD}\) and \(\overline{BD}\) are corresponding parts of 
                            congruent triangles, so \(AD=BD\).-->
                      </li>
-                     <li>distractor</li>
+                     <li>distractor 3</li>
+                     <li>distractor 4</li>
                   </ul>
                </td>
             </tr>
@@ -134,12 +136,12 @@
    </div>
    <script>
       var proofRows = 5;
-      // index row positions  ['01','02','03','04','05','06' . . . ]
+      // index row positions  [1,2,3,4,5 . . . ]
 
-      /* reqBefore = two digit row number 'bb' of step BEFORE the index row
-         reqAfter = two digit row number 'aa' of step AFTER the index row */
-      var reqBefore = ['00', '00', '00', '01', '04', ''];
-      var reqAfter = ['04', '04', '04', '05', '00', ''];
+      /* reqBefore = row number of step BEFORE the index row
+         reqAfter = row number of step AFTER the index row */
+      var reqBefore = [0,0,0,1,4];
+      var reqAfter = [4,4,4,5,0];
       // for before and after, use '' for distractors and '00' if no requirement for step  
 
 
@@ -148,7 +150,8 @@
                   = 3 if only justifications move (use no statement distractors)
                   = 4 if both statements and justifications move 
       */
-      var opts; // if specific type is wanted
+      var opts=1; // if specific type is wanted
+      // var opts; // give user choice of proof type
    </script>
    <script src="js/statement-justificationCopy.js"></script>
 </body>

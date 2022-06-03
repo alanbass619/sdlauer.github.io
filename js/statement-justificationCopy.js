@@ -4,34 +4,51 @@
 //initial height of step li
 let stepHtInit = $("#step > li").eq(0).height();
 var max = 0;
-let stOptDep;
+var  cBefore = [];
 // button to hide group selection when no initial opt set
 $(function () {
     $(".selOptBtn").click(function () {
         opts = parseInt($('input:radio:checked').val());
         $(".selGroup").prop('hidden', true);
         $("#instructions").prop('hidden', false);
-        giddyup();     
+        giddyup();
     });
 });
 // set statement/step/justification table with proof type chosen/!chosen
-function setStJust() {
-    setStatements("#statement_opt");
-    setJustifications("#justification_opt");
+function setStJust() { // called on startup
+    // set columns of proof table
+    setColOpts("#statement_opt");
+    setColOpts("#justification_opt");
+    // set draggable/sortable interactive columns
+    setSort("#statement");
+    setSort("#justification");
+    // toggle on/off check button and proof selection button
     if (opts > 0) {
         $(".selGroup").prop('hidden', true);
+        $("#instructions").prop('hidden', false);
     }
     else {
+        $(".selGroup").prop('hidden', false);
         $("#instructions").prop('hidden', true);
     }
     // set step column in table
     for (i = 0; i < $("#statement_opt li").length; i++) {
         $("#step").append(`<li class="shufflerstep">${i + 1}</li>`);
     }
+    // set column heights -- will vary while dragging
     setHeight();
+    for (let i = 0; i < proofRows; i++) {
+         cBefore.push(0);
+    }
+    // count elements needed before row at index i
+    for (let i = 0; i < proofRows; i++) {
+        if (reqAfter[i] != 0) {
+             cBefore[reqAfter[i] - 1]++;
+        }
+    }
 }
 // select the type of proof wanted and display page
-function giddyup() {
+function giddyup() { // called on startup
     switch (opts) {
         case 1: // shuffled statements only
             setHide([false, false, true, true]);
@@ -43,7 +60,7 @@ function giddyup() {
             setHide([false, false, true, false]);
             setSortable([true, true, false, false]);
             rename("justification");
-            $("th .just").html("Justifications");
+            $("th.justOpt").html("Justifications");
             shuffleNodes('statement_opt');
             $('#instr').html('<b>Proof:</b> Match each statement with the appropriate justification in the correct order.');
             break;
@@ -51,7 +68,7 @@ function giddyup() {
             setHide([true, false, false, false]);
             setSortable([false, false, true, true]);
             rename("statement");
-            $("th .stOpt").html("Statements");
+            $("th.stOpt").html("Statements");
             shuffleNodes('justification_opt');
             $('#instr').html('<b>Proof:</b> Reorder the justifications to pair with the statements.');
             break;
@@ -71,30 +88,26 @@ function rename(item) {
     $(`#${item}_opt`).attr('id', `${item}1`);
     $(`#${item}`).attr('id', `${item}_opt`);
     $(`#${item}1`).attr('id', `${item}`);
+    
 }
-// initialize statements
-function setStatements(idName) {
+// initialize statement_opt and justification_opt columns 
+function setColOpts(idName) {
     for (i = 0; i < $(idName + " li").length; i++) {
-        if (i < 10) { row = "0" + (i + 1); }
-        else { row = "" + (i + 1); }
-        $(idName).children().eq(i).attr({ 'data-compare': `${reqBefore[i]}${reqAfter[i]}`, 'value': `${row}`, 'class': 'shuffled' });
-        // $("#step").append(`<li class="shufflerstep">${i + 1}</li>`);
+        $(idName).children().eq(i).attr({ 'value': (i+1), 'class': 'shuffled' });
     }
 }
-// initialiaze justifications
-function setJustifications(idName) {
-    for (i = 0; i < $(idName + " li").length; i++) {
-        if (i < 10) { row = "0" + (i + 1); }
-        else { row = "" + (i + 1); }
-        $(idName).children().eq(i).attr({ 'value': row, 'class': 'shuffled' });
-        // $(idName+" li").val(row); 
-    }
-}
-
-// make statements sortable and draggable
-$(function () {
-    $("#statement_opt,#statement").sortable({
-        connectWith: "#statement_opt,#statement",
+// as integers
+// function setIntArr(arr) {
+//     let newIntArr = [];
+//     arr.forEach(function (value, key) {
+//         newIntArr.push(parseInt(value));
+//     });
+//     return newIntArr;
+// }
+// make pair of columns sortable and draggable
+function setSort(col) {
+    $(`${col}_opt,${col}`).sortable({
+        connectWith: `${col}_opt,${col}`,
         start: function (event, ui) {
             ui.item.toggleClass("highlight");
         },
@@ -106,25 +119,7 @@ $(function () {
             liHt();
         }
     });
-});
-// make justifications sortable and draggable
-$(function () {
-    $("#justification_opt,#justification").sortable({
-        connectWith: "#justification_opt,#justification",
-        start: function (event, ui) {
-            ui.item.toggleClass("highlight");
-        },
-        // tolerance: 'intersection',
-        stop: function (event, ui) {
-            ui.item.toggleClass("highlight");
-            // https://www.geeksforgeeks.org/jquery-ui-sortable-refreshpositions-method/
-            var children = $(this)
-                .sortable('refreshPositions')
-                .children();
-            liHt();
-        }
-    });
-});
+}
 // show/hide table columns for different proof types
 function setHide(TF) {
     let sethide = ['.st', '.stOpt', '.just', '.justOpt'];
@@ -136,7 +131,7 @@ function setHide(TF) {
         }
     }
 }
-// set which columns are sortable and which are static
+// set which columns are sortable and which are static and update style
 function setSortable(TF) {
     let setstyle = ['#statement', '#statement_opt', '#justification', '#justification_opt'];
     for (let i = 0; i < TF.length; i++) {
@@ -151,7 +146,7 @@ function setSortable(TF) {
         }
     }
 }
-// Update height and color of li on drag
+// Update height and style of li on drag
 function liHt() {
     $("li").css('height', '');
     let h = 0;
@@ -194,7 +189,7 @@ function shuffle(items) {
     }
     return cached;
 }
-// rearrange rows in a column into a random order (li elements)
+// rearrange column rows into a random order (li elements)
 function shuffleNodes(e) {
     let listli = document.getElementById(e);
     var nodes = listli.children, i = 0;
@@ -225,62 +220,66 @@ let getData = arr => {
         return $(this).attr('value');
     }).get();
 }
-//  gather before/after values on each li in a column (li 'data-compare' values)
-let getDependency = arr => {
-    return arr.map(function () {
-        return $(this).attr('data-compare');
-    }).get();
-}
 // get incorrect order of proof statements column --  return before and after info for errors
 function checkOrder(l1) {
-    let l1dep = getDependency($("#statement > li"));
-    // alert(l1dep[0]);
-    let valAfter = -1, valBefore = -1;
-    let countAfter = 0, countBefore = 0;
-    l1dep.forEach(function (value, key) {
-        checkRow = parseInt(key) + 1;
-        // check for distractor
-        // alert(parseInt(l1[key]));
-        if (l1[key] > proofRows) {
-            countAfter = 100;
-            valAfter = checkRow;
+    let valDist='', valAfter = -1, valBefore = -1;
+    let countDist=0, countAfter = 0, countBefore = 0;
+    let str = '';
+    l1.forEach(function (value, key) {
+        val = parseInt(value) -1;
+        // alert(val);
+        if (val >= proofRows){ // distractor
+            countDist++;
+            valDist += (valDist=='')? (" "+ (key+1)): (", "+ (key+1));
+            
         }
-        for (let t = 0; t < l1.length; t++) {
-            // alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]);
-            // any dependent rows after?
-            if (valAfter < 0 && t >= checkRow) {
-                // alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]+"\n depAft= "+l1dep[t].slice(2, 5) +"\n"+ l1[key]);
-                if (l1dep[t].slice(2, 5) == l1[key]) {
-                    valAfter = checkRow;
-                    countAfter++;
-                }
-
-            }
-            // any dependent rows before?
-            if (valBefore < 0 && t < checkRow) {
-                // alert(reqBefore[parseInt(l1[key]-1)]+"\n"+reqAfter[parseInt(l1[key]-1)]+"\n depBef= "+l1dep[t].slice(0, 2) +"\n"+ l1[key]);
-               
-                if (l1dep[t].slice(0, 2) == l1[key]) {
-                    valBefore = checkRow;
+        if (valBefore < 1){
+        // checkRow = value;
+        countBefore =  cBefore[key] +1;
+        // alert(ountBefore);
+        // if(countBefore > 0){  // check for rows missing before
+            for (let r = 0; r < proofRows; r++){
+                // str+= r+"  "+countBefore +"  "+reqBefore[r]+"\n";
+                if (reqAfter[r] == val){
+                    valBefore = key+1;
                     countBefore++;
+                    // alert(countBefore+"  "+valBefore);
                 }
-            }
-            // any dependent rows missing before?
-            // alert(reqBefore[parseInt(l1[key])-1]+ " = ??  "+l1dep[t].slice(0, 2) + "  " + value + "  " + key + "   " + l1[key]);
-            // if (key==0 && l1dep[t].slice(0, 2)!='00'){
-            //     val
-            //     valbefore = checkRow;
-            //     countBefore++;
-            // }
+            }}
+        // }
+        // check for distractor
+        if(key< proofRows && val < proofRows){
+            str += (key + "  " + val + "  " +  cBefore(key) + "  " + reqBefore[val] + "  " + reqAfter[val] + "\n" );
         }
-
+        // if (l1[key] > proofRows) {
+        //     countAfter = 100;
+        //     valAfter = checkRow;
+        // }
+        // for (let t = 0; t < l1.length; t++) {
+        //     // any dependent rows after?
+        //     if (valAfter < 0 && t >= checkRow) {
+        //         if ( cBefore[t] == value) {
+        //             valAfter = checkRow;
+        //             countAfter++;
+        //         }
+        //     }
+        //     // any dependent rows before?
+        //     if (valBefore < 0 && t < checkRow) {
+        //         if (reqBefore[t-1] == value) {
+        //             valBefore = checkRow;
+        //             countBefore++;
+        //         }
+        //     }
+        // }
+        
         // dependent rows missing?
-        // stOptDep.forEach(function (value, key) {
-        //     alert(value.slice(0,2)+"  "+ value+"  " +value.slice(2,5));
-        // });
-    });
-    // alert(`countAfter  ${countAfter}  valAfter${valAfter}  countBefore  ${countBefore}  valBefore  ${valBefore}`);
-    return { countAfter, valAfter, countBefore, valBefore };
+
+        });
+        // alert(countDist+"  "+valDist);
+        alert(str);
+    
+    // alert("valDist="+ valDist +"   countDist="+ countDist +"   countAfter="+ countAfter +"   valAfter="+ valAfter +"   countBefore="+ countBefore +"   valBefore="+ valBefore);
+    return { valDist, countDist, countAfter, valAfter, countBefore, valBefore };
 }
 // get incorrect pairing of statements and justifications-- return first row number incorrectly paired
 function checkPairs(l1a, l2a) {
