@@ -1,140 +1,154 @@
 <!DOCTYPE html>
-<!-- suggests for draggable, sortable from https://www.w3schools.blog/jqueryui-sortable -->
-
-<!-- load relevant files for functionality and style -->
 <head>
    <title>Proof: Geometry example</title>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="robots" content="noindex" />
    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
    <script>
       MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        svg: {
-          fontCache: 'global'
-        }
+         tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+         },
+         svg: {
+            fontCache: 'global'
+         }
       };
-      </script>
-      <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-      </script>
-   <link rel="stylesheet" href="css/statement-justification.css">
+   </script>
+   <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+   </script>
+   <link rel="stylesheet" href="css/statement_justification.css">
 </head>
-
-<body onload="shuffleNodes('statement_opt');setHeight();shuffleNodes('justification_opt')">
+<body onload="setStJust();giddyup()">
    <div id="nav-placeholder" class="sidenav" style="overflow: hidden;">
-      <iframe src="sidenav.html" 
-         style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;" title="Side navigation"></iframe>
+      <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
+         title="Side navigation"></iframe>
    </div>
-
    <div class="main">
       <div>
          <h2>Proving the perpendicular bisector theorem</h2>
-         <p>From:  <a href="https://learn.zybooks.com/zybook/GeometryFundamentalsDev/chapter/2/section/6?content_resource_id=65937084" target="_blank">GeometryFundamentalsDev</a></p>
+         <p>From: <a
+               href="https://learn.zybooks.com/zybook/GeometryFundamentalsDev/chapter/2/section/6?content_resource_id=65937084"
+               target="_blank">GeometryFundamentalsDev</a></p>
          <p><b>Perpendicular bisector theorem:</b> Any given point on the perpendicular bisector of a line segment is
-            the
-            same distance from either endpoint of the line segment.</p>
+            the same distance from either endpoint of the line segment.</p>
          <p><b>Given:</b> \(\overleftrightarrow{CD}\) is the perpendicular bisector for \(\overline{AB}\)</p>
          <p><b>Prove:</b> \(AD=BD\)</p>
          <img src="images/geom2_5.png"
             alt="A figure shows a horizontal line segment A B and a vertical line. The line intersects the line segment A B perpendicularly at C and moves vertically up through point D. A dashed line segment connects A and D, and a dashed line segment connects B and D."
             width="500">
          </img>
-         <p><b>Proof:</b> Match each statement with the appropriate justification in the correct order.</p>
+      </div>
+      <div id="instructions" hidden>
+         <p id="instr"></p>
          <p><button id="check" type="button2" onclick="checker()">Check</button></p>
          <p><span id="chkOrder"></span></p>
       </div>
       <div>
-         <!-- 4 containers to hold the initial and answer statement and justification options
-            data-compare here is number of rows in completed proof -->
-         <table class="proofRows" data-compare="5">
+         <div class="selGroup" hidden>
+            <label><strong>Select proof type</strong>:-</label><br>
+            <label><input type="radio" name="selOpt" value="1">1-col</label>
+            <label><input type="radio" name="selOpt" value="2">2-col statements only</label>
+            <label><input type="radio" name="selOpt" value="3">2-col justifications only</label>
+            <label><input type="radio" name="selOpt" value="4">Full 2-column proof</label>
+         </div>
+         <div class="selGroup text-center">
+            <button class="selOptBtn" type="button">Submit</button>
+         </div>
+
+         <table class="proofRows">
             <tr>
-               <th>Statement options</th>
-               <th>Statement</th>
+               <th class="stOpt" hidden>Statement options</th>
+               <th class="st" hidden>Statements</th>
                <th class="auto">Step</th>
-               <th>Justification</th>
-               <th>Justification options</th>
+               <th class="just" hidden>Justifications</th>
+               <th class="justOpt" hidden>Justification options</th>
             </tr>
             <tr>
-               <td>
-                  <!-- data-compare xxyy corresponds to: 
-                        the id number xx of the last li row that must come before this row (if several, any of them may be used)
-                        the id number yy of the first li row that must come after this row (if several, any of them may be used)
-                  include NO data-compare for distractors and include all distractors last -->
+               <td class="stOpt" hidden>
                   <ul id="statement_opt" class="shuffler2">
-                     <li data-compare="0004" value="01" class="shuffled">\(AC ~\)\(=CB\)</li>
-                     <li data-compare="0004" value="02" class="shuffled">\(m\angle DCA~\) \(= m\angle DCB~\) \(= 90^\circ\)</li>
-                     <li data-compare="0004" value="03" class="shuffled">\(CD~ \)\(=CD\)</li>
-                     <li data-compare="0105" value="04" class="shuffled">\(\triangle ACD~ \)\( \cong \triangle BCD\)</li>
-                     <li data-compare="0406" value="05" class="shuffled">\(AD ~\)\(=BD\)</li>
-                     <li value="7" class="shuffled">distractor</li>
+                     <li>\(AC ~\)\(=CB\)</li>
+                     <li>\(m\angle DCA~\) \(= m\angle DCB~\) \(= 90^\circ\)</li>
+                     <li>\(CD~ \)\(=CD\)</li>
+                     <li>\(\triangle ACD~ \)\( \cong \triangle BCD\)</li>
+                     <li>\(AD ~\)\(=BD\)</li>
+                     <li>distractor 1</li>
+                     <li>distractor 2</li>
                   </ul>
                </td>
-               <!-- table cells created to shuffle statement and justification -->
-               <td>
+               <td class="st" hidden>
                   <ul id="statement" class="shuffler2">
                   </ul>
                </td>
                <td class="auto">
                   <ul id="step" class="auto">
-                     <li class="shufflerstep">1</li>
-                     <li class="shufflerstep">2</li>
-                     <li class="shufflerstep">3</li>
-                     <li class="shufflerstep">4</li>
-                     <li class="shufflerstep">5</li>
-                     <li class="shufflerstep">6</li>
                   </ul>
                </td>
-               <td>
+               <td class="just" hidden>
                   <ul id="justification" class="shuffler2">
                   </ul>
                </td>
-               <td>
+               <td class="justOpt" hidden>
                   <!-- TODO  may want to develop feedback for some of the explanations already written in previous versions of texts 
                   sample explanations are included in comments below -->
                   <!-- id must match the id from the corresponding statement above -->
                   <ul id="justification_opt" class="shuffler2">
-                     <li value="01" class="shuffled">Definition of bisector</li>
+                     <li>Definition of bisector</li>
                      <!--Since \(\overleftrightarrow{CD}\) is the perpendicular bisector
           for \(\overline{AB}\), \(\overline{AC}\) and \(\overline{CB}\) are the same length.-->
-                     <li value="02" class="shuffled">Definition of perpendicular lines
+                     <li>Definition of perpendicular lines
                         <!--Since \(\overleftrightarrow{CD}\) is the perpendicular bisector for 
                            \(\overline{AB}\), all four angles formed are right angles.-->
                      </li>
-                     <li value="03" class="shuffled">Reflexive property
+                     <li>Reflexive property
                         <!--The reflexive property is not always included in proofs, but can 
                            be used to help set up the next step.-->
                      </li>
-                     <li value="04" class="shuffled">SAS congruence theorem
+                     <li>SAS congruence theorem
                         <!--The two triangles have two sides congruent with the included angles also 
                            congruent, so the two triangles are congruent.-->
                      </li>
-                     <li value="05" class="shuffled">Property of congruent triangles
+                     <li>Property of congruent triangles
                         <!--\(\overline{AD}\) and \(\overline{BD}\) are corresponding parts of 
                            congruent triangles, so \(AD=BD\).-->
                      </li>
-                     <li value="06" class="shuffled">distractor</li>
+                     <li>distractor 3</li>
+                     <li>distractor 4</li>
                   </ul>
                </td>
             </tr>
             <tr>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td class="auto"></td>
-               <!-- reset button to shuffle lines and drag them back to initial containers -->
+               <td height="1vh"></td>
+            </tr>
+            <tr>
+               <td class="st"></td>
+               <td class="stOpt"></td>
+               <td class="2Col" hidden></td>
+               <td class="justOpt"></td>
                <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button>
                </td>
             </tr>
          </table>
       </div>
    </div>
-   <script src="js/statement-justification.js"></script>
+   <script>
+      // statement numbers =  [1,2,3,4,5 . . . ]
+
+      /* reqBefore = row number of step BEFORE the index row
+         reqAfter = row number of step AFTER the index row */
+      var reqBefore = [0,0,0,1,4];     // no numbers for distractors -- 0 if no steps required before
+      var reqAfter = [4,4,4,5,0];      // no numbers for distractors -- 0 if no steps required after
+      // choose 1 of next 5 statements and comment out the others
+      var opts = 1 // if only statements (one column proof) -- no justification_opts needed
+      // var opts = 2 // if only statements move (use no justification distractors) -- justification_opts REQUIRED
+      // var opts = 3 // if only justifications move (use no statement distractors) -- justification_opts REQUIRED
+      // var opts = 4 // if both statements and justifications move -- justification_opts REQUIRED
+      // var opts; // give user choice of proof type
+   </script>
+   <script src="js/statement_justification.js"></script>
 </body>
 
 </html>

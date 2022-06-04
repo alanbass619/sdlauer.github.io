@@ -38,7 +38,7 @@ $(function () {
 });
 // shuffle li elements in ul -- needs shuffleNodes(e) function call
 // https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
-// Same as statement-justification.js shuffle functions
+// Same as statement_justification.js shuffle functions
 function shuffle(items) {
     var cached = items.slice(0), temp, i = cached.length, rand;
     while (--i) {
