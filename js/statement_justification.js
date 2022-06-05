@@ -12,7 +12,7 @@ var max = 0;
         index 3: from html -- row number required after -- reqAfter array
 */
 var totalCounts = [[], [], reqBefore, reqAfter];
-var proofRows = reqBefore.length;
+var proofRows;
 var plural = [" is", "s are"];
 // button to hide group selection when no initial opt set
 $(function () {
@@ -25,13 +25,15 @@ $(function () {
 });
 // set statement/step/justification table with proof type chosen/!chosen
 function setStJust() { // called on startup
-    // set columns of proof table
+// set columns of proof table
+    proofRows = reqBefore.length;
     setColOpts("#statement_opt");
     setColOpts("#justification_opt");
+
     // set draggable/sortable interactive columns
     setSort("#statement");
     setSort("#justification");
-    // toggle on/off check button and proof selection button
+// toggle on/off check button and proof selection button
     if (opts > 0) {
         $(".selGroup").prop('hidden', true);
         $("#instructions").prop('hidden', false);
@@ -40,22 +42,18 @@ function setStJust() { // called on startup
         $(".selGroup").prop('hidden', false);
         $("#instructions").prop('hidden', true);
     }
-    // set step column in table and arrays for checker
+// initialize step column in table and arrays for checker
     for (i = 0; i < $("#statement_opt li").length; i++) {
         $("#step").append(`<li class="shufflerstep">${i + 1}</li>`);
     }
-    // set column heights -- will vary while dragging
-
-    // totalCounts = [[],[],reqBefore,reqAfter];
+    // get initial step column cell height from html settings
     stepHtInit = $("#step > li").eq(0).height();
-    setHeight();
-    // set array for checker
+// initialize array for checker
     for (i = 0; i < $("#statement_opt li").length; i++) {
         totalCounts[0].push(0);
         totalCounts[1].push(0);
     }
     for (let i = 0; i < proofRows; i++) {
-
         if (reqAfter[i] != 0) {
             totalCounts[0][reqAfter[i] - 1]++; // rows needed before before
         }
@@ -63,7 +61,8 @@ function setStJust() { // called on startup
             totalCounts[1][i]++; // rows needed after       
         }
     }
-    console.log(`checker array:\n[[${totalCounts[0]}]\n [${totalCounts[1]}]\n [${totalCounts[2]}]\n [${totalCounts[3]}]]`);
+// set column heights -- will vary while dragging
+    setHeight();
 }
 // select the type of proof wanted and display page
 function giddyup() { // called on startup
@@ -75,8 +74,9 @@ function giddyup() { // called on startup
             $('#instr').html('<b>Proof:</b> Reorder the statements to correct the proof.');
             break;
         case 2: // shuffled statements with static justifications
-            setHide([false, false, true, false]);
+            setHide([false, false, true, false]);       
             setSortable([true, true, false, false]);
+            $('.2Col').attr('hidden', false);
             rename("justification");
             $("th.justOpt").html("Justifications");
             shuffleNodes('statement_opt');
@@ -85,6 +85,7 @@ function giddyup() { // called on startup
         case 3: // static statements with shuffled justifications
             setHide([true, false, false, false]);
             setSortable([false, false, true, true]);
+            $('.2Col').attr('hidden', false);
             rename("statement");
             $("th.stOpt").html("Statements");
             shuffleNodes('justification_opt');
@@ -98,15 +99,19 @@ function giddyup() { // called on startup
             $(".2Col").prop('hidden', false);
             $('#instr').html('<b>Proof:</b> Reorder each statement and justification to pair in the correct order.');
         default:
+            // alert("No proof option chosen.");
             break;
     }
+    setHeight();
 }
-// rename columns for nonshuffled content --  checker uses statement and justification columns only
+// rename column <th> for nonshuffled content --  checker uses statement and justification columns only
 function rename(item) {
     $(`#${item}_opt`).attr('id', `${item}1`);
     $(`#${item}`).attr('id', `${item}_opt`);
     $(`#${item}1`).attr('id', `${item}`);
-
+    for (let i = proofRows; i < $(`#${item}`).children().length; i++) {
+        $(`#${item}`).children().eq(i).attr('hidden', true);
+    }
 }
 // initialize statement_opt and justification_opt columns 
 function setColOpts(idName) {
@@ -114,7 +119,7 @@ function setColOpts(idName) {
         $(idName).children().eq(i).attr({ 'value': (i + 1), 'class': 'shuffled' });
     }
 }
-
+// initialize draggable/sortable with column pairs
 function setSort(col) {
     $(`${col}_opt,${col}`).sortable({
         connectWith: `${col}_opt,${col}`,
@@ -145,7 +150,6 @@ function setHide(TF) {
 function setSortable(TF) {
     let setstyle = ['#statement', '#statement_opt', '#justification', '#justification_opt'];
     for (let i = 0; i < TF.length; i++) {
-        // console.log('sortable');
         $(setstyle[i]).sortable('enable');
         if (TF[i]) {
             $(setstyle[i]).sortable('enable');
@@ -188,6 +192,17 @@ function liHt() {
 }
 // shuffle li elements in ul -- needs shuffleNodes(e) function call
 // https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
+// rearrange column rows cells into a random order (li elements)
+function shuffleNodes(e) {
+    let listli = document.getElementById(e);
+    var nodes = listli.children, i = 0;
+    nodes = Array.prototype.slice.call(nodes);
+    nodes = shuffle(nodes);
+    while (i < nodes.length) {
+        listli.appendChild(nodes[i]);
+        ++i;
+    }
+}
 // put items in column in random order (li elements)
 function shuffle(items) {
     var cached = items.slice(0), temp, i = cached.length, rand;
@@ -199,18 +214,7 @@ function shuffle(items) {
     }
     return cached;
 }
-// rearrange column rows into a random order (li elements)
-function shuffleNodes(e) {
-    let listli = document.getElementById(e);
-    var nodes = listli.children, i = 0;
-    nodes = Array.prototype.slice.call(nodes);
-    nodes = shuffle(nodes);
-    while (i < nodes.length) {
-        listli.appendChild(nodes[i]);
-        ++i;
-    }
-}
-// dynamically set height of all columns (ul elements)
+// dynamically set height of all columns in table (ul elements)
 function setHeight() {
     $(".shuffler1,#step,.shuffler2").each(function () {
         $(this).css("height", '');
@@ -224,107 +228,91 @@ function setHeight() {
         $(this).css("height", maxht);
     });
 }
-// gather values on column (li 'value' values)
+// collect value attribute on column in table (li 'value' values)
 let getData = arr => {
     return arr.map(function () {
         return $(this).attr('value');
     }).get();
 }
-// get incorrect order of proof statements column --  return before and after info for errors
-function checkOrder(l1) {
-    
+// check order of proof statements column -- return str = (before and after info for errors)
+function checkOrder(l1b) {
+    let len = l1b.length;
     let countAfter, countBefore;
     let str = '', numSteps;
-    if (l1.length != proofRows) { // check proof is long enough
-        str += "Some rows are missing from the proof.<br/><br/>";
+    if (len < proofRows) { // proof is too short?
+        str += "(Some rows are missing from the proof.)<br/>";
     }
-    l1.forEach(function (value, key) {
+    if (len > proofRows) { // proof is too long?
+        str += "(Some rows should not be included in the proof.)<br/>";
+    }
+    l1b.forEach(function (value, key) {
         val = parseInt(value) - 1;
-        
         if (val >= proofRows) { // check for distractor
             str += "-- Step " + (key + 1) + " is not part of the proof.<br/>";
         }
-        else if (val == 4 && key !=4 && key <l1.length-1){ // no statements after the last proof statement
-            str+= "-- No more statements are needed AFTER step "+ (key + 1) + ".<br/>";
-        }
         countBefore = 0; countAfter = totalCounts[1][val];
         // check for statements missing before and after current statement
-        for (let r = 0; r < l1.length; r++) {
+        for (let r = 0; r < len; r++) {
             if (r < key) { // before
-                if (totalCounts[3][l1[r] - 1] == value) {
+                if (totalCounts[3][l1b[r] - 1] == value) {
                     countBefore++;
                 }
             }
             if (r > key) { // after
-                if (l1[r] == totalCounts[3][val]){
+                if (l1b[r] == totalCounts[3][val]) { // reqAfter is actually after?
                     countAfter--;
-                    console.log("countAfter =" +countAfter);
+                }
+                else if (value == proofRows) { // steps after the actual last proof statement?
+                    str += "-- No more statements are needed AFTER step " + (key + 1) + ".<br/>";
+                    r = len;
                 }
             }
         }
-        if (countBefore != totalCounts[0][val]) {
+        if (countBefore != totalCounts[0][val]) { // steps missing before?
             numSteps = totalCounts[0][val] - countBefore;
-            let i = (numSteps == 1) ? 0 : 1;
-            str += ("-- At least " + numSteps + " more statement" + plural[i] + " needed BEFORE step " + (key + 1) + ".<br/>");
+            str += ("-- At least " + numSteps + " more statement" + plural[((numSteps == 1) ? 0 : 1)] + " needed BEFORE step " + (key + 1) + ".<br/>");
         }
-        if (countAfter != 0) {
+        if (countAfter != 0) { // steps missing after?
             numSteps = 1; // TODO  make graph to check the real number of steps before 
-            let i = (numSteps == 1) ? 0 : 1;
-            str += ("-- At least " + numSteps + " more statement" + plural[i] + " needed AFTER step " + (key+1) + ".<br/>");
+            str += ("-- At least " + numSteps + " more statement" + plural[((numSteps == 1) ? 0 : 1)] + " needed AFTER step " + (key + 1) + ".<br/>");
         }
     });
-    if (str == '' && l1.length==proofRows){ 
-        str = "Correct!";
+    if (str == '' && len == proofRows) { // found no errors?
+        str = "Order is correct!";
     }
-    return str;
+    return "<b>Check for correct order:</b><br/>"+str;
 }
-// get incorrect pairing of statements and justifications-- return first row number incorrectly paired
+// check match of statements and justifications-- return first row number incorrectly paired
 function checkPairs(l1a, l2a) {
-    // console.log(l1a.length+ "   "+ l2a.length);
     let len = Math.min(l1a.length, l2a.length);
+    let str = '';
     for (let i = 0; i < len; i++) {
-        // console.log(l1a[i]+ "   "+ l2a[i]);
-        if (l1a[i] != l2a[i]) {
-            return i + 1;
+        if (l1a[i] != l2a[i]) { // incorrect match?
+            str += "-- Incorrect match at step " + (i+1) +".<br/>"; // found an incorrect match
         }
     }
-    return len + 1;
+    if (str.length == 0){ // all rows paired correctly
+        str = (len < proofRows) ? "All matches are correct so far.<br/>" : "All matches are correct!.<br/>"; 
+    }
+    if (opts == 2 && l1a.length > proofRows){
+        str +="-- Proof has fewer than "+ l1a.length + " statements.<br/>";
+    }
+    else if (l2a.length > proofRows && opts == 3){
+        str +="-- Proof has fewer than "+ l2a.length + " justifications.<br/>";
+    }
+    return "<b>Check for correct matches:</b><br/>"+str+ "<br/>";
 }
-// check for correct pairing of statements and justifications and correct order
+// check for correct match of statements and justifications and correct order
 function checker() {
-    let str = "";
+    let chk ="";
     let l1 = getData($("#statement > li"));
-    let l1len = l1.length;
-    let l2 = getData($("#justification > li"));
-    let l2len = l2.length;
-    let maxRows = Math.max(l2len, l1len);
-    if (maxRows < proofRows) {
-        str += " -- At least one step is missing from the proof.<br/>";
+    // only check match if justifications are present
+    if (opts > 1) {
+        let l2 = getData($("#justification > li"));
+        chk = checkPairs(l1, l2);
     }
-    else if (maxRows > proofRows) {
-        str += " -- The solution has fewer than " + maxRows + " steps.<br/>";
+    if (opts !=3) {
+        chk += checkOrder(l1);
     }
-    // only check pairing if justifications are present
-    if ((!(l1.every((e, i) => l2[i] == e)) || (l1len != l2len)) && opts > 1) {
-        str += " -- Statements require correct pairing with justifications. First incorrect justification at step " + checkPairs(l1, l2) + ".<br/>";
-    }
-    // check order of statements column
-    // let pluralAfter = (c.countAfter == 1) ? " is" : "s are";
-    // let pluralBefore = (c.countBefore == 1) ? " is" : "s are";
-
-    // if (c.countAfter > 90) {
-    //     str += "Step " + c.valAfter + " is not part of the proof.";
-    // }
-    // else if (c.countAfter > 0) {
-    //     str += " -- Statements are out of order. At least " + c.countAfter + " more step" + pluralAfter + " needed before step " + c.valAfter + ".<br/>";
-    // }
-    // if (c.valAfter < 0) {
-    //     str += "Order is correct so far.";
-    // }
-    // str += (c.valBefore < 0) ? "" : " -- Statements are out of order. At least " + c.countBefore + " more step" + pluralBefore + " needed after step " + c.valBefore + ".<br/>";
-    // if (str == "Order is correct so far." && l1len == proofRows) { str = "Correct!"; }
-    // // }
-    chk = checkOrder(l1);
     $("#chkOrder").html(chk);
-    // console.log(reqBefore+"\n"+reqAfter);
 }

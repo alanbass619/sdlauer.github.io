@@ -119,13 +119,16 @@ div {
    font: bold;
 }
 #reset {
-   border: 0vw;
    background-color: #E68143;
    color: white;
    font-size: 2vw;
    float: right;
 }
-#reset:hover {
+#reset, #check {
+   border: 0vw;
+   font-size: 2vw;
+}
+#reset:hover, #check:hover{
   color: black;
 }
 /* For watermark */

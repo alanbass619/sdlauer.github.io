@@ -38,96 +38,91 @@
                href="https://learn.zybooks.com/zybook/DiscreteMathDev/chapter/2/section/4?content_resource_id=68904435"
                target="_blank">DiscreteMathDev</a></p>
          <p><b>Theorem: </b> The square of any rational number is also rational.</p>
-         </div>
-         <div>
-            <div class="selGroup">
-               <label><strong>Select proof type</strong>:-</label><br>
-               <label><input type="radio" name="selOpt" value="1">1-col</label>
-               <label><input type="radio" name="selOpt" value="2">2-col statements only</label>
-               <label><input type="radio" name="selOpt" value="3">2-col justifications only</label>
-               <label><input type="radio" name="selOpt" value="4">Full 2-column proof</label>
-            </div>
-            <div class="selGroup text-center">
-               <button class="selOptBtn" type="button">Submit</button>
-            </div>
-            <div id="instructions">
-               <p id="instr"></p>
-               <p><button id="check" type="button2" onclick="checker()">Check</button></p>
-               <p><span id="chkOrder"></span></p>
-            </div>
-            <!--id here is number of rows in completed proof-->
-            <table class="proofRows">
-               <tr>
-                  <th class="stOpt" hidden>Statement options</th>
-                  <th class="st" hidden>Statements</th>
-                  <th class="auto">Step</th>
-                  <th class="just" hidden>Justifications</th>
-                  <th class="justOpt" hidden>Justification options</th>
-               </tr>
-               <tr>
-                  <td class="stOpt" hidden>
-                     <ul id="statement_opt" class="shuffler2">
-                        <li>Let r be a rational number.</li>
-                        <li>There exists integers <br />x and y such that <br />r = x/y and y &ne; 0.</li>
-                        <li>r<sup>2</sup> = (x/y)<sup>2</sup> = x<sup>2</sup>/y<sup>2</sup>.</li>
-                        <li> x<sup>2</sup> and y<sup>2</sup> are integers, <br />y<sup>2</sup> &ne; 0.</li>
-                        <li> r<sup>2</sup> is a rational number.</li>
-                     </ul>
-                  </td>
-                  <td class="st" hidden>
-                     <ul id="statement" class="shuffler2">
-                     </ul>
-                  </td>
-                  <td class="auto">
-                     <ul id="step" class="auto">
-                     </ul>
-                  </td>
-                  <td class="just" hidden>
-                     <ul id="justification" class="shuffler2">
-                     </ul>
-                  </td>
-                  <td class="justOpt" hidden>
-                     <ul id="justification_opt" class="shuffler2">
-                        <li>Assumption.</li>
-                        <li>Definition of rational</li>
-                        <li>Algebra.</li>
-                        <li>x and y are integers, y &ne; 0.</li>
-                        <li>r<sup>2</sup> = x<sup>2</sup>/y<sup>2</sup>,<br /> x<sup>2</sup> and y<sup>2</sup> are both
-                           integers, <br />and y<sup>2</sup> &ne; 0.</li>
-                        </ul>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td height="1vh"></td>
-                  </tr>
-                  <tr>
-                     <td class="st"></td>
-                     <td class="stOpt"></td>
-                     <td class="2Col" hidden></td>
-                     <td class="justOpt"></td>
-                     <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button>
-                     </td>
-                  </tr>
-               </table>
-            </div>
       </div>
+      <div>
+         <div class="selGroup">
+            <label><strong>Select proof type</strong>:-</label><br>
+            <label><input type="radio" name="selOpt" value="1">1-col</label>
+            <label><input type="radio" name="selOpt" value="2">2-col statements only</label>
+            <label><input type="radio" name="selOpt" value="3">2-col justifications only</label>
+            <label><input type="radio" name="selOpt" value="4">Full 2-column proof</label>
+         </div>
+         <div class="selGroup text-center">
+            <button class="selOptBtn" type="button">Submit</button>
+         </div>
+         <div id="instructions">
+            <p id="instr"></p>
+            <p><button id="check" type="button2" onclick="checker()">Check</button></p>
+            <p><span id="chkOrder"></span></p>
+         </div>
+         <!--id here is number of rows in completed proof-->
+         <table class="proofRows">
+            <tr>
+               <th class="stOpt" hidden>Statement options</th>
+               <th class="st" hidden>Statements</th>
+               <th class="auto">Step</th>
+               <th class="just" hidden>Justifications</th>
+               <th class="justOpt" hidden>Justification options</th>
+            </tr>
+            <tr>
+               <td class="stOpt" hidden>
+                  <ul id="statement_opt" class="shuffler2">
+                     <li>Let r be a rational number.</li>
+                     <li>There exists integers <br />x and y such that <br />r = x/y and y &ne; 0.</li>
+                     <li>r<sup>2</sup> = (x/y)<sup>2</sup> = x<sup>2</sup>/y<sup>2</sup>.</li>
+                     <li> x<sup>2</sup> and y<sup>2</sup> are integers, <br />y<sup>2</sup> &ne; 0.</li>
+                     <li> r<sup>2</sup> is a rational number.</li>
+                  </ul>
+               </td>
+               <td class="st" hidden>
+                  <ul id="statement" class="shuffler2">
+                  </ul>
+               </td>
+               <td class="auto">
+                  <ul id="step" class="auto">
+                  </ul>
+               </td>
+               <td class="just" hidden>
+                  <ul id="justification" class="shuffler2">
+                  </ul>
+               </td>
+               <td class="justOpt" hidden>
+                  <ul id="justification_opt" class="shuffler2">
+                     <li>Assumption.</li>
+                     <li>Definition of rational</li>
+                     <li>Algebra.</li>
+                     <li>x and y are integers, y &ne; 0.</li>
+                     <li>r<sup>2</sup> = x<sup>2</sup>/y<sup>2</sup>,<br /> x<sup>2</sup> and y<sup>2</sup> are both
+                        integers, <br />and y<sup>2</sup> &ne; 0.</li>
+                  </ul>
+               </td>
+            </tr>
+            <tr>
+               <td height="1vh"></td>
+            </tr>
+            <tr>
+               <td class="st"></td>
+               <td class="stOpt"></td>
+               <td class="2Col" hidden></td>
+               <td class="justOpt"></td>
+               <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button>
+               </td>
+            </tr>
+         </table>
+      </div>
+   </div>
    <script>
-      var proofRows = 5;
       // index row positions  ['01','02','03','04','05','06' . . . ]
-
       /* reqBefore = two digit row number 'bb' of step BEFORE the index row
          reqAfter = two digit row number 'aa' of step AFTER the index row */
-      var reqBefore = ['00', '01', '02', '02', '03', ''];
-      var reqAfter = ['02', '03', '05', '05', '00', ''];
-      // for before and after, use '' for distractors and '00' if no requirement for step  
-
-
-      /* set opts = 1 if only statements (one column proof) 
-                  = 2 if only statements move (use no justification distractors)
-                  = 3 if only justifications move (use no statement distractors)
-                  = 4 if both statements and justifications move 
-      */
-      var opts;
+      var reqBefore = [0, 1, 2, 2, 3];//<!-- TODO -->
+      var reqAfter = [2, 3, 5, 5, 0];//<!-- TODO -->
+      // choose 1 of next 5 statements and comment out the others
+      // var opts = 1 // if only statements (one column proof) -- no justification_opts needed
+      // var opts = 2 // if only statements move (use no justification distractors) -- justification_opts REQUIRED
+      // var opts = 3 // if only justifications move (use no statement distractors) -- justification_opts REQUIRED
+      // var opts = 4 // if both statements and justifications move -- justification_opts REQUIRED
+      var opts; // give user choice of proof type
    </script>
    <script src="js/statement_justification.js"></script>
 </body>

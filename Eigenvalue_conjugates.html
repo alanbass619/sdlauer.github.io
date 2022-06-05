@@ -133,22 +133,18 @@
       </div>
    </div>
    <script>
-      var proofRows = 8;// INT REQUIRED -- TODO -- 
-      // index row positions  ['01','02','03','04','05','06' . . . ]
+      // statement numbers =  [1,2,3,4,5 . . . ]
 
-      /* reqBefore = two digit row number 'bb' of step BEFORE the index row
-         reqAfter = two digit row number 'aa' of step AFTER the index row */
-      var reqBefore = ['00', '00', '02', '03', '04', '00', '06', '07', '', ''];
-      var reqAfter = ['08', '03', '04', '05', '07', '07', '08', '00', ''];
-      // for before and after, use '' for distractors and '00' if no requirement for step  
-
-
-      /* set opts = 1 if only statements (one column proof) 
-                  = 2 if only statements move (use no justification distractors)
-                  = 3 if only justifications move (use no statement distractors)
-                  = 4 if both statements and justifications move 
-      */
-      var opts = 1; //<!-- TODO --> if specific type is wanted
+      /* reqBefore = row number of step BEFORE the index row
+         reqAfter = row number of step AFTER the index row */
+      var reqBefore = [0,0,2,3,4,0,6,7];     // no numbers for distractors -- 0 if no steps required before
+      var reqAfter = [8,3,4,5,7,7,8,0];      // no numbers for distractors -- 0 if no steps required after
+      // choose 1 of next 5 statements and comment out the others
+      var opts = 1 // if only statements (one column proof) -- no justification_opts needed
+      // var opts = 2 // if only statements move (use no justification distractors) -- justification_opts REQUIRED
+      // var opts = 3 // if only justifications move (use no statement distractors) -- justification_opts REQUIRED
+      // var opts = 4 // if both statements and justifications move -- justification_opts REQUIRED
+      // var opts; // give user choice of proof type
    </script>
    <script src="js/statement_justification.js"></script>
 </body>

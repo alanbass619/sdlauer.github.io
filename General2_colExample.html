@@ -102,25 +102,27 @@
                <td class="st"></td>
                <td class="stOpt"></td>
                <td class="2Col" hidden></td>
-               <td class="justOpt"></td>
+               <td class="just"></td>
                <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button>
                </td>
             </tr>
          </table>
       </div>
    </div>
-
-   <script src="js/statement_justification.js"></script>
    <script>
-      var proofRows = 5; // Number of statements in proof
+      // statement numbers =  [1,2,3,4,5 . . . ]
 
-      /* reqBefore = two digit row number 'bb' of step BEFORE the index row
-         reqAfter = two digit row number 'aa' of step AFTER the index row */
-      var reqBefore = ['00', '00', '00', '01', '04', ''];
-      var reqAfter = ['04', '04', '04', '05', '00', ''];
-      var opts;
-      // for before and after, use '' for distractors and '00' if no requirement for step
+      /* reqBefore = row number of step BEFORE the index row
+         reqAfter = row number of step AFTER the index row */
+      var reqBefore = [0,0,0,1,4];     // no numbers for distractors -- 0 if no steps required before
+      var reqAfter = [4,4,4,5,0];      // no numbers for distractors -- 0 if no steps required after
+      // choose 1 of next 5 statements and comment out the others
+      // var opts = 1 // if only statements (one column proof) -- no justification_opts needed
+      // var opts = 2 // if only statements move (use no justification distractors) -- justification_opts REQUIRED
+      // var opts = 3 // if only justifications move (use no statement distractors) -- justification_opts REQUIRED
+      // var opts = 4 // if both statements and justifications move -- justification_opts REQUIRED
+      var opts; // give user choice of proof type
    </script>
+   <script src="js/statement_justification.js"></script>
 </body>
-
 </html>
