@@ -3,6 +3,10 @@ html * {
    line-height: 1.25;
    font-family: Arial, Helvetica, sans-serif;
 }
+.statement:empty:before, .justification:empty:before{
+   content: "\00a0";
+ }
+ 
 /* The sidenav */
 .sidenav {
    height: 100%;

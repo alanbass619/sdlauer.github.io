@@ -5,13 +5,13 @@
 var stepHtInit;
 var max = 0;
 /*
-    totalCounts:
+    decisionMatrix:
         index 0: number of rows needed before -- dependent on reqAfter array
         index 1: 1 for row needed after, 0 for last row and distractors
         index 2: from html -- row number required before (only ONE include if multiple) -- reqBefore array
         index 3: from html -- row number required after -- reqAfter array
 */
-var totalCounts = [[], [], reqBefore, reqAfter];
+var decisionMatrix = [[], [], reqAfter];
 var proofRows;
 var plural = [" is", "s are"];
 // button to hide group selection when no initial opt set
@@ -26,7 +26,7 @@ $(function () {
 // set statement/step/justification table with proof type chosen/!chosen
 function setStJust() { // called on startup
 // set columns of proof table
-    proofRows = reqBefore.length;
+    proofRows = reqAfter.length;
     setColOpts("#statement_opt");
     setColOpts("#justification_opt");
 
@@ -50,15 +50,15 @@ function setStJust() { // called on startup
     stepHtInit = $("#step > li").eq(0).height();
 // initialize array for checker
     for (i = 0; i < $("#statement_opt li").length; i++) {
-        totalCounts[0].push(0);
-        totalCounts[1].push(0);
+        decisionMatrix[0].push(0);
+        decisionMatrix[1].push(0);
     }
     for (let i = 0; i < proofRows; i++) {
-        if (reqAfter[i] != 0) {
-            totalCounts[0][reqAfter[i] - 1]++; // rows needed before before
+        if (decisionMatrix[2][i] != 0) {
+            decisionMatrix[0][decisionMatrix[2][i] - 1]++; // rows needed before before
         }
         if (i < proofRows - 1) {
-            totalCounts[1][i]++; // rows needed after       
+            decisionMatrix[1][i]++; // rows needed after       
         }
     }
 // set column heights -- will vary while dragging
@@ -250,16 +250,16 @@ function checkOrder(l1b) {
         if (val >= proofRows) { // check for distractor
             str += "-- Step " + (key + 1) + " is not part of the proof.<br/>";
         }
-        countBefore = 0; countAfter = totalCounts[1][val];
+        countBefore = 0; countAfter = decisionMatrix[1][val];
         // check for statements missing before and after current statement
         for (let r = 0; r < len; r++) {
             if (r < key) { // before
-                if (totalCounts[3][l1b[r] - 1] == value) {
+                if (decisionMatrix[2][l1b[r] - 1] == value) {
                     countBefore++;
                 }
             }
             if (r > key) { // after
-                if (l1b[r] == totalCounts[3][val]) { // reqAfter is actually after?
+                if (l1b[r] == decisionMatrix[2][val]) { // reqAfter is actually after?
                     countAfter--;
                 }
                 else if (value == proofRows) { // steps after the actual last proof statement?
@@ -268,8 +268,8 @@ function checkOrder(l1b) {
                 }
             }
         }
-        if (countBefore != totalCounts[0][val]) { // steps missing before?
-            numSteps = totalCounts[0][val] - countBefore;
+        if (countBefore != decisionMatrix[0][val]) { // steps missing before?
+            numSteps = decisionMatrix[0][val] - countBefore;
             str += ("-- At least " + numSteps + " more statement" + plural[((numSteps == 1) ? 0 : 1)] + " needed BEFORE step " + (key + 1) + ".<br/>");
         }
         if (countAfter != 0) { // steps missing after?
