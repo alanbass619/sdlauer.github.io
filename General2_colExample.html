@@ -34,11 +34,30 @@
    <div class="main">
       <div>
          <h2>General 2-column proof example</h2>
-      </div>
-      <div id="instructions">
          <p id="instr"></p>
          <p><button id="check" type="button2" onclick="checker()">Check</button></p>
-         <p><span id="chkOrder"></span></p>
+      </div>
+      <div id="instructions">
+         <table>
+            <tr>
+               <td>
+                  <p><span id="chkOrder"></span></p>
+               </td>
+               <td id="expl">
+                  <p id="explHead" hidden><b>Sample explanations:</b></p>
+                  <ul id="explOpt">
+                     <li><span></span>owl</li>
+                     <li><span></span>parrot</li>
+                     <li><span></span>duck</li>
+                     <li><span></span>Statement requires 3 feathered friends before.</li>
+                     <li><span></span>Statement requires an additional step after 3 feathered friends are in place.</li>
+                     <li><span></span>❌ Statement is not part of the solution.</li>
+                  </ul>
+               </td>
+
+            </tr>
+         </table>
+
       </div>
 
       <div>
@@ -64,11 +83,11 @@
             <tr>
                <td class="stOpt" hidden>
                   <ul id="statement_opt" class="shuffler2">
-                     <li>1 🦉</li>
-                     <li>1 🦜</li>
-                     <li>1 🦆</li>
-                     <li>2</li>
-                     <li>3</li>
+                     <li style="font-size:30px">1 🦉</li>
+                     <li style="font-size:30px">1 🦜</li>
+                     <li style="font-size:30px">1 🦆</li>
+                     <li style="font-size:30px">2</li>
+                     <li style="font-size:30px">3</li>
                      <li>distractor</li>
                   </ul>
                </td>
@@ -86,11 +105,11 @@
                </td>
                <td class="justOpt" hidden>
                   <ul id="justification_opt" class="shuffler2">
-                     <li>1 🦉</li>
-                     <li>1 🦜</li>
-                     <li>1 🦆</li>
-                     <li>2 </li>
-                     <li>3</li>
+                     <li style="font-size:30px">1 🦉</li>
+                     <li style="font-size:30px">1 🦜</li>
+                     <li style="font-size:30px">1 🦆</li>
+                     <li style="font-size:30px">2 </li>
+                     <li style="font-size:30px">3</li>
                      <li>distractor</li>
                   </ul>
                </td>
@@ -112,7 +131,8 @@
    <script>
       // index row positions  [1,2,3,4, . . . ]
       // reqAfter = step number required immediately AFTER the index row 
-      var reqAfter = [4,4,4,5,0];      // no numbers for distractors -- 0 if no steps required after
+      var reqAfter = [4, 4, 4, 5, 0];            // no numbers for distractors -- 0 if no steps required after
+      var staticProofRows = [0, 0, 0, 0, 0];     // 0 if step is static, 1 if step moves
       // choose 1 of next 5 statements and comment out the others
       // var opts = 1 // if only statements (one column proof) -- no justification_opts needed
       // var opts = 2 // if only statements move (use no justification distractors) -- justification_opts REQUIRED
@@ -122,4 +142,5 @@
    </script>
    <script src="js/statement_justification.js"></script>
 </body>
+
 </html>

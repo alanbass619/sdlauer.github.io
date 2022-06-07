@@ -38,6 +38,34 @@
                href="https://learn.zybooks.com/zybook/DiscreteMathDev/chapter/2/section/4?content_resource_id=68904435"
                target="_blank">DiscreteMathDev</a></p>
          <p><b>Theorem: </b> The square of any rational number is also rational.</p>
+         <p id="instr"></p>
+         <p><button id="check" type="button2" onclick="checker()">Check</button></p>
+      </div>
+      <div id="instructions">
+         <table>
+            <tr>
+               <td>
+                  <p><span id="chkOrder"></span></p>
+               </td>
+               <td id="expl">
+                  <!-- <td id="expl" hidden> -->
+                  <ul id="explOpt">
+                     <li><span></span>The proof starts by stating what is assumed and what will be proven.</li>
+                     <li><span></span>The only available assumption is that r is rational, so the first step is to apply
+                        the definition of a rational number to r.</li>
+                     <li><span></span>The proof must show that r2 is rational, so the expression x/y is plugged in to
+                        r2. The goal of the algebra is to express r2 as the ratio of two integers.</li>
+                     <li><span></span>The proof needs to argue that derived fraction x2/y2 satisfies the requirements
+                        for a rational number: the numerator and denominator must both be integers and the denominator
+                        must be non-zero.</li>
+                     <li><span></span>The proof concludes by explaining that the expression for r2 satisfies the
+                        requirements for a rational number, and therefore r2 is rational.</li>
+                  </ul>
+               </td>
+
+            </tr>
+         </table>
+
       </div>
       <div>
          <div class="selGroup">
@@ -114,7 +142,8 @@
    <script>
       // index row positions  [1,2,3,4, . . . ]
       // reqAfter = step number required immediately AFTER the index row 
-      var reqAfter = [2, 3, 5, 5, 0];//<!-- TODO -->
+      var reqAfter = [2, 3, 5, 5, 0];        // no numbers for distractors -- 0 if no steps required after
+      var staticProofRows = [0, 0, 0, 0, 0];     // 0 if step is static, 1 if step moves
       // choose 1 of next 5 statements and comment out the others
       // var opts = 1 // if only statements (one column proof) -- no justification_opts needed
       // var opts = 2 // if only statements move (use no justification distractors) -- justification_opts REQUIRED

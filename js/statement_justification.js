@@ -11,13 +11,16 @@ var max = 0;
         index 2: from html -- row number required before (only ONE include if multiple) -- reqBefore array
         index 3: from html -- row number required after -- reqAfter array
 */
-var decisionMatrix = [[], [], reqAfter];
+var decisionMatrix = [[], [], reqAfter, reqAfter, staticProofRows];
 var proofRows;
 var plural = [" is", "s are"];
 // button to hide group selection when no initial opt set
 $(function () {
     $(".selOptBtn").click(function () {
         opts = parseInt($('input:radio:checked').val());
+        if (opts < 1) {
+            opts = 1;
+        }
         $(".selGroup").prop('hidden', true);
         $("#instructions").prop('hidden', false);
         giddyup();
@@ -25,15 +28,18 @@ $(function () {
 });
 // set statement/step/justification table with proof type chosen/!chosen
 function setStJust() { // called on startup
-// set columns of proof table
+    // set columns of proof table
     proofRows = reqAfter.length;
-    setColOpts("#statement_opt");
-    setColOpts("#justification_opt");
-
+    setColOpts("#statement_opt", 'shuffled');
+    setColOpts("#justification_opt", 'shuffled');
+    setColOpts("#explOpt", 'explanations');
+    $("#explOpt").sortable(); // TODO reorder explanations to correct step order
+    setSpanExpl();
     // set draggable/sortable interactive columns
+    stateMover();
     setSort("#statement");
     setSort("#justification");
-// toggle on/off check button and proof selection button
+    // toggle on/off check button and proof selection button
     if (opts > 0) {
         $(".selGroup").prop('hidden', true);
         $("#instructions").prop('hidden', false);
@@ -42,13 +48,13 @@ function setStJust() { // called on startup
         $(".selGroup").prop('hidden', false);
         $("#instructions").prop('hidden', true);
     }
-// initialize step column in table and arrays for checker
+    // initialize step column in table and arrays for checker
     for (i = 0; i < $("#statement_opt li").length; i++) {
         $("#step").append(`<li class="shufflerstep">${i + 1}</li>`);
     }
     // get initial step column cell height from html settings
     stepHtInit = $("#step > li").eq(0).height();
-// initialize array for checker
+    // initialize array for checker
     for (i = 0; i < $("#statement_opt li").length; i++) {
         decisionMatrix[0].push(0);
         decisionMatrix[1].push(0);
@@ -61,7 +67,7 @@ function setStJust() { // called on startup
             decisionMatrix[1][i]++; // rows needed after       
         }
     }
-// set column heights -- will vary while dragging
+    // set column heights -- will vary while dragging
     setHeight();
 }
 // select the type of proof wanted and display page
@@ -74,7 +80,7 @@ function giddyup() { // called on startup
             $('#instr').html('<b>Proof:</b> Reorder the statements to correct the proof.');
             break;
         case 2: // shuffled statements with static justifications
-            setHide([false, false, true, false]);       
+            setHide([false, false, true, false]);
             setSortable([true, true, false, false]);
             $('.2Col').attr('hidden', false);
             rename("justification");
@@ -104,6 +110,13 @@ function giddyup() { // called on startup
     }
     setHeight();
 }
+function stateMover() { // TODO complete static row portion
+    if (decisionMatrix[4][2] == 1) {
+        $("#statement").append($("#statement_opt").children().eq(2));
+        $("#statement").children().eq(0).attr('class', 'staticRow');
+    }
+    liHt();
+}
 // rename column <th> for nonshuffled content --  checker uses statement and justification columns only
 function rename(item) {
     $(`#${item}_opt`).attr('id', `${item}1`);
@@ -114,15 +127,23 @@ function rename(item) {
     }
 }
 // initialize statement_opt and justification_opt columns 
-function setColOpts(idName) {
+function setColOpts(idName, clName) {
     for (i = 0; i < $(idName + " li").length; i++) {
-        $(idName).children().eq(i).attr({ 'value': (i + 1), 'class': 'shuffled' });
+        $(idName).children().eq(i).attr({ 'value': (i + 1), 'class': clName });
+    }
+}
+// initialize explanation list
+function setSpanExpl() {
+    for (i = 0; i < $("span").not('[id="chkOrder"]').length; i++) {
+        $("li.explanations").eq(i).find("span").attr({ 'value': (i + 1), 'id': 'explStep' + (i + 1) });
+        $("li.explanations").eq(i).prop('hidden', true);
     }
 }
 // initialize draggable/sortable with column pairs
 function setSort(col) {
     $(`${col}_opt,${col}`).sortable({
         connectWith: `${col}_opt,${col}`,
+        items: 'li[class!=staticRow]',
         start: function (event, ui) {
             ui.item.toggleClass("highlight");
         },
@@ -235,7 +256,9 @@ let getData = arr => {
     }).get();
 }
 // check order of proof statements column -- return str = (before and after info for errors)
-function checkOrder(l1b) {
+function checkOrder(l1b) { // TODO include reqBefore counts -- decisionMatrix[3]
+    $(".explanations").prop('hidden', true);
+    $("#explHead").prop('hidden', true);
     let len = l1b.length;
     let countAfter, countBefore;
     let str = '', numSteps;
@@ -246,9 +269,11 @@ function checkOrder(l1b) {
         str += "(Some rows should not be included in the proof.)<br/>";
     }
     l1b.forEach(function (value, key) {
+        let explStr = '';
         val = parseInt(value) - 1;
         if (val >= proofRows) { // check for distractor
             str += "-- Step " + (key + 1) + " is not part of the proof.<br/>";
+            explStr += "(distractor) ";
         }
         countBefore = 0; countAfter = decisionMatrix[1][val];
         // check for statements missing before and after current statement
@@ -271,16 +296,23 @@ function checkOrder(l1b) {
         if (countBefore != decisionMatrix[0][val]) { // steps missing before?
             numSteps = decisionMatrix[0][val] - countBefore;
             str += ("-- At least " + numSteps + " more statement" + plural[((numSteps == 1) ? 0 : 1)] + " needed BEFORE step " + (key + 1) + ".<br/>");
+            explStr += "(more steps needed BEFORE) ";
         }
         if (countAfter != 0) { // steps missing after?
             numSteps = 1; // TODO  make graph to check the real number of steps before 
             str += ("-- At least " + numSteps + " more statement" + plural[((numSteps == 1) ? 0 : 1)] + " needed AFTER step " + (key + 1) + ".<br/>");
+            explStr += "(more steps needed AFTER) ";
+        }
+        if (explStr.length > 0) { // explanation reveal and header         
+            $("li.explanations").eq(val).prop('hidden', false);
+            $("#explStep" + value).text('Step ' + (key + 1) + ': ' + explStr);
+            $("#explHead").prop('hidden', false);
         }
     });
     if (str == '' && len == proofRows) { // found no errors?
         str = "Order is correct!";
     }
-    return "<b>Check for correct order:</b><br/>"+str;
+    return "<b>Check for correct order:</b><br/>" + str;
 }
 // check match of statements and justifications-- return first row number incorrectly paired
 function checkPairs(l1a, l2a) {
@@ -288,30 +320,30 @@ function checkPairs(l1a, l2a) {
     let str = '';
     for (let i = 0; i < len; i++) {
         if (l1a[i] != l2a[i]) { // incorrect match?
-            str += "-- Incorrect match at step " + (i+1) +".<br/>"; // found an incorrect match
+            str += "-- Incorrect match at step " + (i + 1) + ".<br/>"; // found an incorrect match
         }
     }
-    if (str.length == 0){ // all rows paired correctly
-        str = (len < proofRows) ? "All matches are correct so far.<br/>" : "All matches are correct!.<br/>"; 
+    if (str.length == 0) { // all rows paired correctly
+        str = (len < proofRows) ? "All matches are correct so far, but more matching is needed.<br/>" : "All matches are correct!<br/>";
     }
-    if (opts == 2 && l1a.length > proofRows){
-        str +="-- Proof has fewer than "+ l1a.length + " statements.<br/>";
+    if (opts == 2 && l1a.length > proofRows) {
+        str += "-- Proof has fewer than " + l1a.length + " statements.<br/>";
     }
-    else if (l2a.length > proofRows && opts == 3){
-        str +="-- Proof has fewer than "+ l2a.length + " justifications.<br/>";
+    else if (l2a.length > proofRows && opts == 3) {
+        str += "-- Proof has fewer than " + l2a.length + " justifications.<br/>";
     }
-    return "<b>Check for correct matches:</b><br/>"+str+ "<br/>";
+    return "<b>Check for correct matches:</b><br/>" + str + "<br/>";
 }
 // check for correct match of statements and justifications and correct order
 function checker() {
-    let chk ="";
+    let chk = "";
     let l1 = getData($("#statement > li"));
     // only check match if justifications are present
     if (opts > 1) {
         let l2 = getData($("#justification > li"));
         chk = checkPairs(l1, l2);
     }
-    if (opts !=3) {
+    if (opts != 3) {
         chk += checkOrder(l1);
     }
     $("#chkOrder").html(chk);
