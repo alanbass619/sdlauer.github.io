@@ -1,0 +1,101 @@
+html * {
+  font-size: 1.3vw;
+  line-height: 1.5;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.statement:empty:before, .justification:empty:before{
+  content: "\00a0";
+}
+div {
+  padding-left: 1vw;
+  padding-bottom: 1vw;
+  width: 90%;
+  float: left;
+}
+/* The sidenav */
+.sidenav {
+  height: 100%;
+  width: 15%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #e3e0e0;
+  overflow-x: hidden;
+  padding-left: .25vw;
+  font-size: 1.1vw;
+}
+.shufflerstep{
+  display: flex;
+  align-items: center;
+}
+
+/* Page content */
+.main {
+  margin-left: 15%; /* Same as the width of the sidenav */
+  width: 83%;
+}
+h1 {
+  font-size: 4vw;
+}
+h2 {
+   font-size: 3vw
+}
+ol>li,ol>li:hover{
+  background-color: white;
+  color: black;
+}
+td {
+  vertical-align: top;
+}
+.sidenav {
+  height: 100%;
+  width: 15%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(227, 224, 224);
+  overflow-x: hidden;
+  padding-left: .5vw;
+}
+h2 {
+  font-size: 3vw
+}
+li {
+  padding-left: 1vw;
+  background: rgb(232, 232, 232);
+}
+
+#optionsFiB>li:hover {
+  background-color: #a4a3a36a;
+  color: #8424AC;
+}
+
+#proof {
+  width: 20vw;
+  background: #fff6ef;
+}
+
+#optionsFiB>li,
+#optionsFiB>li:hover{
+  vertical-align: text-top;
+  width: 19vw;
+  list-style-type: none;
+  margin-bottom: 2px;
+}
+.ans>li{
+  /* vertical-align: text-top; */
+  width: 18.8vw;
+  list-style-type: none;
+}
+.ans {
+  display: inline-block;
+  width: 99%;
+  color: blue;
+  border: .2vw solid black;
+  margin-bottom: 2px;
+}
+.ans:empty:before {
+  content: "\00a0";
+}

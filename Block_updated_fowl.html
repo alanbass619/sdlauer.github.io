@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!-- https://www.w3schools.blog/jqueryui-sortable -->
+
+<head>
+   <title>General example</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="robots" content="noindex" />
+   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+   <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script>
+      MathJax = {
+         tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+         },
+         svg: {
+            fontCache: 'global'
+         }
+      };
+   </script>
+   <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+   </script>
+    <!-- <link rel="stylesheet" href="css/statement_justification.css"> -->
+    <link rel="stylesheet" href="css/Block_updated.css">
+</head>
+
+<body onload="shuffleNodes('optionsFiB')">
+   <div id="nav-placeholder" class="sidenav" style="overflow:;">
+      <iframe src="sidenav.html" style="margin: 0px; padding: 0px; border: 0px; width: 100%; height: 100%;"
+         title="Side navigation"></iframe>
+   </div>
+   <div class="main">
+      <div>
+         <h2>Block proof example</h2>
+         <!-- <p>From: <a
+               href="-- TODO --"
+               target="_blank"> -- TODO -- </a></p> -->
+               <p><b><!-- TODO --></b> <!-- TODO --></p>
+               <p><b>Given:</b> <!-- TODO --></p>
+               <p><b>Prove:</b> <!-- TODO --></p>
+               <!-- <img src="-- TODO --"
+                  alt="-- TODO --"
+                  width="500">
+               </img> -->
+         <p id="instr">Instructions: Rearrange the sentences to complete the proof. (For paragraph proof)</p>
+         <p><button id="check" type="button2" onclick="checker()">Check</button></p>
+      </div>
+      <div id="instructions">
+         <table>
+            <tr>
+               <td>
+                  <p><span id="chkOrder"></span></p>
+               </td>
+               <!-- <td id="expl">
+                  <p id="explHead"><b>Sample explanations:</b></p>
+                  <ul id="explOpt">
+                     <li><span></span>owl</li>
+                     <li><span></span>parrot</li>
+                     <li><span></span>duck</li>
+                     <li><span></span>Statement requires 3 feathered friends before.</li>
+                     <li><span></span>Statement requires an additional step after 3 feathered friends are in place.</li>
+                     <li><span></span>❌ Statement is not part of the solution.</li>
+                  </ul>
+               </td> -->
+
+            </tr>
+         </table>
+
+      </div>
+
+      <div>
+         <!-- <div class="selGroup">
+            <label><strong>Select proof type</strong>:-</label><br>
+            <label><input type="radio" name="selOpt" value="1">1-col</label>
+            <label><input type="radio" name="selOpt" value="2">2-col statements only</label>
+            <label><input type="radio" name="selOpt" value="3">2-col justifications only</label>
+            <label><input type="radio" name="selOpt" value="4">Full 2-column proof</label>
+         </div>  
+         <div class="selGroup text-center">
+            <button class="selOptBtn" type="button">Submit</button>
+         </div> -->
+
+         <table class="proofRows">
+            <tr>
+               <th class="stOpt">Sentence options</th>
+               <th class="st">Proof</th>
+               <!-- <th class="just">Justifications</th>
+               <th class="justOpt">Justification options</th> -->
+            </tr>
+            <tr>
+               <td class="stOpt">
+                  <ul  id="optionsFiB" , class="shuffled">
+                     <li value="01">1 🦉 with some \(\LaTeX\) like \(x^2 +\frac{a}{b}\) and a more rows to demo height adjustments.</li>
+                     <li value="02">1 🦜</li>
+                     <li value="03">1 🦆</li>
+                     <li value="04">2</li>
+                     <li value="05">3</li>
+                     <li value="06">distractor</li>
+                  </ul>
+               </td>
+               <td class="st">
+                  <p id="proof">
+                     <span class="ans" value="01"></span><br/>
+                     <span class="ans" value="02"></span><br/>
+                     <span class="ans" value="03"></span><br/>
+                     <span class="ans" value="04"></span><br/>
+                     <span class="ans" value="05"></span><br/>
+                  <p>
+               </td>
+               <!-- <td class="auto">
+                  <ul id="step" class="auto">
+                  </ul>
+               </td>
+               <td class="just">
+                  <ul id="justification" class="shuffler2">
+                  </ul>
+               </td>
+               <td class="justOpt">
+                  <ul id="justification_opt" class="shuffler2">
+                     <li style="font-size:30px">1 🦉</li>
+                     <li style="font-size:30px">1 🦜</li>
+                     <li style="font-size:30px">1 🦆</li>
+                     <li style="font-size:30px">2 </li>
+                     <li style="font-size:30px">3</li>
+                     <li>distractor</li>
+                  </ul>
+               </td> -->
+            </tr>
+            <tr>
+               <td height="1vh"></td>
+            </tr>
+            <tr>
+               <td class="st"></td>
+               <td class="stOpt"></td>
+               <!-- <td class="2Col"></td>
+               <td class="just"></td> -->
+               <td style="text-align: center;"><button id="reset" onClick="window.location.reload();">Reset</button>
+               </td>
+            </tr>
+         </table>
+      </div>
+   </div>
+   <!-- <script>
+      // index row positions  [1,2,3,4, . . . ]
+      // reqAfter = step number required immediately AFTER the index row 
+      var reqAfter = [4, 4, 4, 5, 0];            // no numbers for distractors -- 0 if no steps required after
+      var staticProofRows = [0, 0, 0, 0, 0];     // 0 if step is static, 1 if step moves
+      // choose 1 of next 5 statements and comment out the others
+      var opts = 1 // if only statements (one column proof) -- no justification_opts needed
+      // var opts = 2 // if only statements move (use no justification distractors) -- justification_opts REQUIRED
+      // var opts = 3 // if only justifications move (use no statement distractors) -- justification_opts REQUIRED
+      // var opts = 4 // if both statements and justifications move -- justification_opts REQUIRED
+      // var opts; // give user choice of proof type
+   </script> -->
+   <script src="js/Block_updated.js"></script>
+</body>
+
+</html>
