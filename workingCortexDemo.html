@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+        </script>
+</head>
+
+<body>
+    <div>
+        <div style="float:left; margin-right: 15px; width: 33%">
+            
+            <p>
+            <h4>Approximate answer</h4>
+            For \(f(x) = -3 + 4 \cos(5x - 3)\), approximate f(0).</p>
+            <p><math-field style="border:1px solid #000000; width: 95%;" id="formulaApprox1"
+                    virtual-keyboard-mode="manual">
+                </math-field>
+            </p>
+<!-- onclick="showHide()" -->
+            <p>
+                <button type="button" id="chkAns1"
+                    style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;" onclick="approxCE(0)">Check</button>
+                &emsp;&emsp;&emsp;&emsp;
+                <button type="button" id="showHideAns1" style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show answer</button>
+            </p>
+           
+        </div>
+
+        <div style="float:left; margin-left: 15px; width: 33%"><H4><b>Answer Information</b></H4>
+            Check result (User input is checked with author's answer.)<br />
+            <p id="checker1">
+                <textarea id="latexChkr1" autocapitalize="off" autocomplete="off" autocorrect="off"
+                    spellcheck="false" rows="6" cols="40" style="border:1px solid #000000;"></textarea>
+            </p>
+            <p id="bothLatexAns1" hidden style="background-color:lightgoldenrodyellow;">User and author LaTeX answers <br />
+                &emsp;User (in a textarea connected to the answer blank)
+                &emsp;<textarea id="latexUserAns1" autocapitalize="off" autocomplete="off" autocorrect="off"
+                spellcheck="false" rows="2" cols="40"></textarea><br />
+                &emsp;Author (expected user input)<br />
+                &emsp;<textarea id="MyauthorAns1" readonly style="background-color:lavender;">-3 + 4 \cos(-3)</textarea>
+                &emsp;<math-field style="border:1px solid #000000; width: 95%;" id="MyauthorAnsApprox1"readonly style="background-color:lavender;">-3 + 4 \cos(-3)</math-field>
+        </div>
+    </div>
+    <script defer src="js/cortexDemo.js"></script>
+</body>
+
+</html>
