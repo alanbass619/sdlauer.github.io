@@ -1,4 +1,4 @@
-import("https://unpkg.com/mathlive@latest?module");
+import("https://unpkg.com/mathlive?module");
 import("https://unpkg.com/@cortex-js/compute-engine");
 let mfMy1 = document.querySelector('#formulaApprox1');
 let latexField1 = document.querySelector('#latexUserAns1');
