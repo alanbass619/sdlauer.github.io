@@ -35,41 +35,54 @@ function approxCE(x, num, sieve) {
     let p = 4;
     let prec = Math.pow(10, -p);
     document.getElementById("latexChkr" + num).value = "";
-    let mfUser = document.querySelector('#latexUserAns' + num);
-    let mfAuthor = document.querySelector('#MyauthorAns' + num);
-    if (mfUser == mfAuthor) console.log("equal expressions");
+    let mathFieldUser = document.querySelector('#latexUserAns' + num);
+    let textAreaAuthor = document.querySelector('#MyauthorAns' + num);
+    if (mathFieldUser == textAreaAuthor) console.log("equal expressions");
     // let x = 5;
     ce.set({ x: x });
-    let exprUsimp = ce.parse(mfUser.value).simplify().latex;
-    let exprAsimp = ce.parse(mfAuthor.value).simplify().latex;
+    let exprUsimp = ce.parse(mathFieldUser.value).simplify().latex;
+    let exprAsimp = ce.parse(textAreaAuthor.value).simplify().latex;
     document.getElementById('latexChkr' + num).value = "";
     let out1 = "Incorrect";
-
-    let exprUeval = ce.parse(mfUser.value).evaluate();
-    let exprAeval = ce.parse(mfAuthor.value).evaluate();
-    let out2 = mfAuthor.value + " \\approx " + exprAeval;
+    let exprUn = "doesn't work";
+    let exprAn = "doesn't work";
+    try {
+    exprUn = ce.parse(mathFieldUser.value).N();
+    exprAn = ce.parse(textAreaAuthor.value).N();
+    }
+    catch (err){}
+    let exprUeval = ce.parse(mathFieldUser.value).evaluate();
+    let exprAeval = ce.parse(textAreaAuthor.value).evaluate();
+    let outVars = "USER VALUES:\n  document.querySelector('#latexUserAns' + num)\n    =" + mathFieldUser + "\n    mathFieldUser.value \n     =" + mathFieldUser.value 
+                    + "\n    ce.parse(mathFieldUser.value).simplify().latex;\n     =" + exprUsimp +"\n    ce.parse(mathFieldUser.value).evaluate()\n     =" + exprUeval 
+                    +"\n    ce.parse(mathFieldUser.value).N()\n     =" + exprUn
+                    + "\n\nAUTHOR VALUES\n    document.querySelector('#MyauthorAns' + num)\n    =" + textAreaAuthor + "\n    textAreaAuthor.value \n     =" + textAreaAuthor.value 
+                    + "\n    ce.parse(textAreaAuthor.value).simplify().latex \n     =" + exprAsimp +"\n    ce.parse(textAreaAuthor.value).evaluate() \n     =" + exprAeval 
+                    +"\n    ce.parse(textAreaAuthor.value).N() \n     =" + exprAn;
+    let out2 = textAreaAuthor.value + " \\approx " + exprAeval;
     if (exprUsimp == "" || (exprUeval == '["Sequence"]')) out1 = "Incorrect\nNO USER INPUT";
     else {
         switch (sieve) {
             case 'latex':
-                if (mfUser.value == mfAuthor.value)
-                    out1 = "Correct  \nLaTeX (user <==> author) = \n    " + mfUser.value + "\n==\n    " + mfAuthor.value;
+                if (mathFieldUser.value == textAreaAuthor.value)
+                    out1 = "Correct  \nLaTeX (user <==> author) = \n    " + mathFieldUser.value + "\n==\n    " + textAreaAuthor.value;
 
                 else if (exprUsimp == exprAsimp)
                      out1 = "Correct, but different order";
-                    else if (exprUeval == exprAsimp) out1 += "\nThe answer of " + mfUser.value + " is a correct approximation, but an expression is expected, not a numerical value.\nLaTeX (user NOT IDENTICAL author) = " + mfUser.value + " IS NOT IDENTICAL TO\n    " + mfAuthor.value;
+                    else if (exprUeval == exprAsimp) out1 += "\nThe answer of " + mathFieldUser.value + " is a correct approximation, but an expression is expected, not a numerical value.\nLaTeX (user NOT IDENTICAL author) = " + mathFieldUser.value + " IS NOT IDENTICAL TO\n    " + textAreaAuthor.value;
 
-                else if (mfUser.value == exprUeval) out1 += "\nAn expression is expected.";
+                else if (mathFieldUser.value == exprUeval) out1 += "\nAn expression is expected.";
                 else out1 += "\nThe expression contains an error.";
                 break;
             case 'approx':
                 out1 += "\nA numerical approximation is expected.";
             case 'exact':
-                let exprUvalOf = ce.parse(mfUser.value).N().valueOf();
-                let exprAvalOf = ce.parse(mfAuthor.value).N().valueOf();
+                let exprUvalOf = ce.parse(mathFieldUser.value).N().valueOf();
+                let exprAvalOf = ce.parse(textAreaAuthor.value).N().valueOf();
                 out2 = exprAsimp + " \\approxeq " + exprAvalOf.toFixed(p);
+                outVars += "\n\nIf number:\nUSER    ce.parse(mathFieldUser.value).N().valueOf()\n     = " + exprUvalOf + "\nAUTHOR    ce.parse(textAreaAuthor.value).N().valueOf() \n    =" + exprAvalOf + "\n    exprAvalOf.toFixed(p)\n    =" + exprAvalOf.toFixed(p);  
                 if (exprUsimp == exprAsimp) out1 = "Incorrect\nA simple numerical answer is expected, not an expression.\n" +
-                    "User input: " + mfUser.value + "    Expected input: " + exprAvalOf.toFixed(p);
+                    "User input: " + mathFieldUser.value + "    Expected input: " + exprAvalOf.toFixed(p);
                 else {
 
                     if ((exprAvalOf - prec) < exprUvalOf && exprUvalOf < (exprAvalOf + prec)) {
@@ -82,6 +95,7 @@ function approxCE(x, num, sieve) {
                 break;
         }
     }
+    console.log(outVars);
     document.getElementById('latexChkr' + num).value = out1;
     document.getElementById('MyauthorAnsApprox' + num).innerHTML = out2;
 
