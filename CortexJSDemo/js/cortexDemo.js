@@ -40,27 +40,42 @@ function approxCE(x, num, sieve) {
     if (mfUser == mfAuthor) console.log("equal expressions");
     // let x = 5;
     ce.set({ x: x });
-    let exprU = ce.parse(mfUser.value).simplify().latex;
-    let exprA = ce.parse(mfAuthor.value).simplify().latex;
+    let exprUsimp = ce.parse(mfUser.value).simplify().latex;
+    let exprAsimp = ce.parse(mfAuthor.value).simplify().latex;
     document.getElementById('latexChkr' + num).value = "";
-    let out1 = "";
-    let out2 = "";
-    let exprUv = ce.parse(mfUser.value).N().valueOf();  
-    if (exprU == "" || (exprUv == '["Sequence"]')) out1 = "Incorrect\nNO USER INPUT";
-    if (exprU == exprA) out1 = "Incorrect\nA simple numerical answer with $p decimal accuracy is expected, not an expression." +
-        "User input: " + mfUser.value + "    Expected input: " + mfAuthor.value;
+    let out1 = "Incorrect";
+
+    let exprUeval = ce.parse(mfUser.value).evaluate();
+    let exprAeval = ce.parse(mfAuthor.value).evaluate();
+    let out2 = mfAuthor.value + " \\approx " + exprAeval;
+    if (exprUsimp == "" || (exprUeval == '["Sequence"]')) out1 = "Incorrect\nNO USER INPUT";
     else {
         switch (sieve) {
             case 'latex':
-                if (exprU == exprA) 
-                    out1 = "Correct  \nLaTeX (user <--> author) = " + mfUser.value + " <--> " + exprA;
+                if (mfUser.value == mfAuthor.value)
+                    out1 = "Correct  \nLaTeX (user <==> author) = \n    " + mfUser.value + "\n==\n    " + mfAuthor.value;
+
+                else if (exprUsimp == exprAsimp)
+                     out1 = "Correct, but different order";
+                    else if (exprUeval == exprAsimp) out1 += "\nThe answer of " + mfUser.value + " is a correct approximation, but an expression is expected, not a numerical value.\nLaTeX (user NOT IDENTICAL author) = " + mfUser.value + " IS NOT IDENTICAL TO\n    " + mfAuthor.value;
+
+                else if (mfUser.value == exprUeval) out1 += "\nAn expression is expected.";
+                else out1 += "\nThe expression contains an error.";
                 break;
             case 'approx':
+                out1 += "\nA numerical approximation is expected.";
             case 'exact':
-                let exprAv = ce.parse(mfAuthor.value).N().valueOf();
-                if ((exprAv - prec) < exprUv && exprUv < (exprAv + prec)) {
-                    out1 = "Correct" + "\nFor: x = " + x + "\nLaTeX = " + exprU + " ? " + exprA + "\napproximation (user <--> author) = " + exprUv + " <--> " + exprAv;;
-                    out2 = exprA + " \\approx " + exprAv.toFixed(p);
+                let exprUvalOf = ce.parse(mfUser.value).N().valueOf();
+                let exprAvalOf = ce.parse(mfAuthor.value).N().valueOf();
+                out2 = exprAsimp + " \\approxeq " + exprAvalOf.toFixed(p);
+                if (exprUsimp == exprAsimp) out1 = "Incorrect\nA simple numerical answer is expected, not an expression.\n" +
+                    "User input: " + mfUser.value + "    Expected input: " + exprAvalOf.toFixed(p);
+                else {
+
+                    if ((exprAvalOf - prec) < exprUvalOf && exprUvalOf < (exprAvalOf + prec)) {
+                        out1 = "Correct" + "\nFor: x = " + x + "\nLaTeX = " + exprUsimp + " ? " + exprAsimp + "\napproximation (user <--> author) = " + exprUvalOf + " <--> " + exprAvalOf;;
+
+                    }
                 }
                 break;
             default:
@@ -69,5 +84,6 @@ function approxCE(x, num, sieve) {
     }
     document.getElementById('latexChkr' + num).value = out1;
     document.getElementById('MyauthorAnsApprox' + num).innerHTML = out2;
+
 
 }
