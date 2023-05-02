@@ -66,43 +66,39 @@ function approxCE(x, num, sieve) {
             case 'latex':
                 // The expected answer
                 if (mathFieldUser.value == textAreaAuthor.value && exprUn == exprAn)
-                    out1 = "Correct  \nLaTeX (user <==> author) = \n    " + mathFieldUser.value + "\n==\n    " + textAreaAuthor.value;
+                    out1 = "Correct  \nLaTeX = " + textAreaAuthor.value;
                 // Answer in a different order
                 else if (exprUsimp == exprAsimp && exprUn == exprAn)
-                    out1 = "Correct, but different order\nExpected " + textAreaAuthor.value;
+                    out1 = "Correct, but slightly different than expected.\nExpected input: " + textAreaAuthor.value;
                 // Numerical answer, but needed an expression
-                else if (exprUeval == exprAsimp) out1 += "\nThe answer " + mathFieldUser.value + " is a correct approximation, but an expression is expected, not a numerical value.\n\n" + mathFieldUser.value + " IS NOT IDENTICAL TO " + textAreaAuthor.value;
+                else if (exprUeval == exprAsimp) out1 += "\nThe answer " + mathFieldUser.value + " is a correct approximation, but an expression is expected, not a numerical value.\nExpected: " + textAreaAuthor.value;
                 // Neither a correct number nor expression
                 else out1 += "\nThe expression contains an error.";
                 break;
             case 'approx':
-                if (exprUeval == exprAsimp){
-                    out1 = "Correct. ";
-                    if (mathFieldUser.value == exprUsimp)
-                       out1 += "The expected answer is " + textAreaAuthor.value; 
-                    else 
-                        out1 += "However, a number is expected, not an expression.";
-                    break;
-                }
-                
-            case 'exact':
                 let exprUvalOf = ce.parse(mathFieldUser.value).N().valueOf();
                 let exprAvalOf = ce.parse(textAreaAuthor.value).N().valueOf();
+                
+
+                if (mathFieldUser.value >= exprAvalOf - 5*prec && mathFieldUser.value <= exprAvalOf + 5*prec){
+                    if (mathFieldUser.value == exprAvalOf) 
+                        out1 = "Correct. However, A simple numerical answer is expected, not an expression.\n" +
+                        "User input: " + mathFieldUser.value + "    Expected: " + exprAvalOf.toFixed(p)
+                    else
+                        out1 = "Correct. Expected: " + exprAeval.toFixed(p); 
+                }
+                else out1 = "Incorrect.\nUser input: " + mathFieldUser.value + "    Expected: " + exprAvalOf.toFixed(p); 
                 out2 = exprAsimp + " \\approxeq " + exprAvalOf.toFixed(p);
+                break;
+            case 'exact':
+                out2 = exprAsimp + " \\approxeq " + exprAvalOf.toFixed(p);
+                
                 outVars += "\n\nIf number:\nUSER    ce.parse(mathFieldUser.value).N().valueOf()\n     = " + exprUvalOf +
                     "\nAUTHOR    ce.parse(textAreaAuthor.value).N().valueOf() \n    =" + exprAvalOf + "\n    exprAvalOf.toFixed(p)\n    =" + exprAvalOf.toFixed(p);
-                if (exprUsimp == exprAsimp && exprUn != exprAn) 
-                    out1 = "Correct. However, A simple numerical answer is expected, not an expression.\n" +
-                        "User input: " + mathFieldUser.value + "    Expected input: " + exprAvalOf.toFixed(p);
-                else {
-
-                    if ((exprAvalOf - prec) < exprUvalOf && exprUvalOf < (exprAvalOf + prec)) {
-                        out1 = "Correct" + "\nFor: x = " + x + "\nLaTeX = " + exprUsimp + " ? " + exprAsimp + 
-                            "\napproximation (user <--> author) = " + exprUvalOf + " <--> " + exprAvalOf;;
-
-                    }
-                    else out1 = "Incorrect value.  Expected answer is " + exprAsimp;
-                }
+                if (exprUsimp == exprAsimp) 
+                    out1 += "Correct. The expected answer is " + textAreaAuthor.value;
+                else 
+                    out1 = "Incorrect.\nUser input: " + mathFieldUser.value + "    Expected input: " + textAreaAuthor.value;
                 break;
             default:
                 break;
