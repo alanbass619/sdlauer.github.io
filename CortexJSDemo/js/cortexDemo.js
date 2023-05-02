@@ -40,7 +40,10 @@ function approxCE(x, num, sieve) {
     if (mathFieldUser == textAreaAuthor) console.log("equal expressions");
     // let x = 5;
     ce.set({ x: x });
+    mathFieldUser.value = mathFieldUser.value.replaceAll('$','')
     let exprUsimp = ce.parse(mathFieldUser.value).simplify().latex;
+    // exprUsimp = exprUsimp.replace('$','');
+    console.log(exprUsimp);
     let exprAsimp = ce.parse(textAreaAuthor.value).simplify().latex;
     document.getElementById('latexChkr' + num).value = "";
     let out1 = "Incorrect";
@@ -65,7 +68,9 @@ function approxCE(x, num, sieve) {
             // Want a LaTeX expression for the answer
             case 'latex':
                 // The expected answer
-                if (mathFieldUser.value == textAreaAuthor.value && exprUn == exprAn)
+                let adjMathFieldUser = mathFieldUser.value.replace(/\s/g, "");
+                let adjTextAreaAuthor = textAreaAuthor.value.replace(/\s/g, "");
+                if (adjMathFieldUser == adjTextAreaAuthor && exprUn == exprAn)
                     out1 = "Correct  \nLaTeX = " + textAreaAuthor.value;
                 // Answer in a different order
                 else if (exprUsimp == exprAsimp && exprUn == exprAn)
