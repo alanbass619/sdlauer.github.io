@@ -5,6 +5,9 @@ for (let i = 1; i < 4; i++) {
     let latexField1 = document.querySelector('#latexUserAns' + i);
     latexField1.addEventListener('input', () => mfMy1.setValue(latexField1.value));
     function onMathfieldInput() {
+        // Output MathJSON representation of the expression
+        // console.clear();
+        // console.log('MathJSON expression', mfMy1.expression.json);
         // Update raw LaTeX value
         latexField1.value = mfMy1.value;
     }
@@ -16,6 +19,7 @@ for (let i = 1; i < 4; i++) {
     document.getElementById("showHideAns" + i).addEventListener("click", function (e) {
         if (remove) {
             this.textContent = "Hide answer";
+            // document.getElementById("bothLatexAns").hidden = false;
             $("#bothLatexAns" + i).prop('hidden', false);
             remove = false;
         } else {
@@ -25,44 +29,20 @@ for (let i = 1; i < 4; i++) {
         }
     });
 }
-function orderCheck(a,u) {
-    console.clear();
-    aAdj = a;
-    uAdj = u;
-    uAdj = uAdj.replace(/\D+/g, "-1")
-    aAdj = aAdj.replace(/\D+/g, "-1")
-    // for (let i = 0; i <= 9; i++){
-    //     aAdj = aAdj.replace(i,-i);
-    //     uAdj = uAdj.replace(i,-i);
-        
-    // }
-    console.log(a + '  ' +aAdj +'\n');
-    console.log(u + '  ' +uAdj +'\n');
-    console.log(aAdj == uAdj);
-    return aAdj == uAdj;
-}
 
-function isNumeric(str) {
-    if (typeof str != "string") return false +"not string"// we only process strings!  
-    return (!isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-           !isNaN(parseFloat(str)))  + str// ...and ensure strings of whitespace fail
-  }
-function approxCE(x, num, sieve, orderMatters) {
+function approxCE(x, num, sieve) {
     let ce = new ComputeEngine.ComputeEngine();
     let p = 4;
     let prec = Math.pow(10, -p);
     document.getElementById("latexChkr" + num).value = "";
     let mathFieldUser = document.querySelector('#latexUserAns' + num);
-    console.log(isNumeric(mathFieldUser.value + '\n'));
     let textAreaAuthor = document.querySelector('#MyauthorAns' + num);
-    if (orderMatters){
-        orderCheck(textAreaAuthor.value,mathFieldUser.value);
-    }
-    // if (mathFieldUser == textAreaAuthor) console.log("equal expressions");
+    if (mathFieldUser == textAreaAuthor) console.log("equal expressions");
     ce.set({ x: x });
-    ce.set({ 4: 42 });
     mathFieldUser.value = mathFieldUser.value.replaceAll('$','')
     let exprUsimp = ce.parse(mathFieldUser.value).simplify().latex;
+    // exprUsimp = exprUsimp.replace('$','');
+    // console.log(exprUsimp);
     let exprAsimp = ce.parse(textAreaAuthor.value).simplify().latex;
     document.getElementById('latexChkr' + num).value = "";
     let out1 = "Incorrect";
@@ -73,7 +53,6 @@ function approxCE(x, num, sieve, orderMatters) {
     try { exprAn = ce.parse(textAreaAuthor.value).N(); }
     catch (err) { exprAn = 'LaTeX'; }
     let exprUeval = ce.parse(mathFieldUser.value).evaluate();
-
     let exprAeval = ce.parse(textAreaAuthor.value).evaluate();
     // let outVars = "USER VALUES:\n  document.querySelector('#latexUserAns' + num)\n    =" + mathFieldUser + "\n    mathFieldUser.value \n     =" + mathFieldUser.value
     //     + "\n    ce.parse(mathFieldUser.value).simplify().latex;\n     =" + exprUsimp + "\n    ce.parse(mathFieldUser.value).evaluate()\n     =" + exprUeval
@@ -86,7 +65,6 @@ function approxCE(x, num, sieve, orderMatters) {
     else {
         let exprUvalOf = parseFloat(ce.parse(mathFieldUser.value).N().valueOf());
         let exprAvalOf = parseFloat(ce.parse(textAreaAuthor.value).N().valueOf());
-
         switch (sieve) {
             // Want a LaTeX expression for the answer
             case 'latex':
@@ -94,7 +72,7 @@ function approxCE(x, num, sieve, orderMatters) {
                 let adjMathFieldUser = mathFieldUser.value.replace(/\s/g, "");
                 let adjTextAreaAuthor = textAreaAuthor.value.replace(/\s/g, "");
                 if (adjMathFieldUser == adjTextAreaAuthor && exprUn == exprAn)
-                    out1 = "Correct  \nLaTeX: " + textAreaAuthor.value;
+                    out1 = "Correct  \nLaTeX = " + textAreaAuthor.value;
                 // Answer in a different order
                 else if (exprUsimp == exprAsimp && exprUn == exprAn)
                     out1 = "Correct, but slightly different than expected.\nExpected input: " + textAreaAuthor.value;
