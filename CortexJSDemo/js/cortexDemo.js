@@ -126,7 +126,7 @@ function approxCE(x, num, sieve, orderMatters, equationCheck) {
 
         switch (sieve) {
             // Want a LaTeX expression for the answer
-            case 'latex':  
+            case 'latex':
                 // The expected answer
                 let adjMathFieldUser = mathFieldUser.value.replace(/\s/g, "");
                 let adjTextAreaAuthor = textAreaAuthor.value.replace(/\s/g, "");
