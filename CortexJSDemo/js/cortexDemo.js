@@ -1,4 +1,4 @@
-import("https://unpkg.com/mathlive@0.90.6?module");
+import("https://unpkg.com/mathlive@latest?module");
 import("https://unpkg.com/@cortex-js/compute-engine");
 for (let i = 1; i < 4; i++) {
     let mfMy1 = document.querySelector('#formulaApprox' + i);
@@ -35,29 +35,29 @@ for (let i = 1; i < 4; i++) {
 //     console.log(aAdj == uAdj);
 //     return aAdj == uAdj;
 // }
-function equationAdj(e){
-    let eNeg = ''+e;
-    let equation = false;
-    if (e.includes('=')){
-        e = e.replace('=',"-(") + ') = 0';
-        eNeg = '-(' + eNeg.replace('=',"-(") + ')) = 0';
-        equation = true;
+function equationAdj(e, tf) {
+    let eNeg = '' + e;
+    let hasEqual = false;
+    eNeg = '-(' + eNeg + ')';
+    if (e.includes('=')) {
+        if (tf) {
+            e = e.replace('=', "-(") + ') = 0';
+            eNeg = '-(' + eNeg.replace('=', "-(") + ')) = 0';
+            hasEqual = true;
+        }
     }
-    else {
-        eNeg = '-(' + eNeg +')';
-    }
-    return [e, eNeg, equation];
+    return [e, eNeg, hasEqual];
 }
 
 function isNumeric(str) {
-    if (typeof str != "string") return false +"not string"// we only process strings!  
+    if (typeof str != "string") return false //+ "not string"// we only process strings!  
     return (!isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-           !isNaN(parseFloat(str)))  + str// ...and ensure strings of whitespace fail
-  }
+        !isNaN(parseFloat(str))) //+ str// ...and ensure strings of whitespace fail
+}
 function approxCE(x, num, sieve, orderMatters, equationCheck) {
     console.clear();
     let ce = new ComputeEngine.ComputeEngine();
-    let p = 4;
+    let p = 3;
     let prec = Math.pow(10, -p);
     document.getElementById("latexChkr" + num).value = "";
     let mathFieldUser = document.querySelector('#latexUserAns' + num);
@@ -68,49 +68,51 @@ function approxCE(x, num, sieve, orderMatters, equationCheck) {
     // }
     // equationCheck(textAreaAuthor.value,mathFieldUser.value);
     // if (mathFieldUser == textAreaAuthor) console.log("equal expressions");
-    // ce.set({ x: x });
+    ce.set({ x: x });
     // ce.set({ 4: 42 });
-    mathFieldUser.value = mathFieldUser.value.replaceAll('$','')
+    mathFieldUser.value = mathFieldUser.value.replaceAll('$', '')
     let exprUorig = mathFieldUser.value;
     let exprAorig = textAreaAuthor.value;
-    let [exprUsimp, unusedVar, isUequation] = equationAdj(exprUorig)
+    let [exprUsimp, unusedVar, isUequation] = equationAdj(exprUorig, equationCheck)
     exprUsimp = ce.parse(exprUsimp).simplify().latex;
-    let [exprAsimp, exprAsimpNeg, isAequation] = equationAdj(exprAorig);
+    let [exprAsimp, exprAsimpNeg, isAequation] = equationAdj(exprAorig, equationCheck);
     let eqMess = "Okay"
-    if (isUequation != isAequation){
-        if (isUequation) {eqMess = "An expression is needed, not an equation."}
-        else {eqMess = "An equation is needed, not an expression."}
+
+
+    if (isAequation != isUequation) {
+        if (isUequation) { eqMess = "An expression is needed, not an equation." }
+        else { eqMess = "An equation is needed, not an expression." }
     }
-    console.log(exprAsimp + ' author ' + exprAsimpNeg + '\n'+eqMess +'\n')
+    console.log(exprAsimp + ' author ' + exprUsimp + '\n' + eqMess + '\n')
     exprAsimp = ce.parse(exprAsimp).simplify().latex;
     exprAsimpNeg = ce.parse(exprAsimpNeg).simplify().latex;
     let exprSimpCheck = "Nonequivalent expression or equation";
-    if (exprUsimp == exprAsimp || exprUsimp == exprAsimpNeg) {exprSimpCheck = "Equivalent expression or equation"}
-    console.log(exprUsimp + " check  "+ exprAsimp +  " check  "+ exprAsimpNeg +'\n'+ exprSimpCheck);
+    if (exprUsimp == exprAsimp || exprUsimp == exprAsimpNeg) { exprSimpCheck = "Equivalent expression or equation" }
+    console.log(exprUsimp + " check  " + exprAsimp + " check  " + exprAsimpNeg + '\n' + exprSimpCheck);
     document.getElementById('latexChkr' + num).value = "";
     let out1 = "Incorrect";
     let exprUn = "doesn't work";
     let exprAn = "doesn't work";
     console.log(exprUn + '  1 ' + exprAn);
-    let exprAeval = 404;
-    let exprUeval = 404;
-    if (isNumeric(textAreaAuthor.value)) {
-        console.log(exprUn + '  2 ' + exprAn);
-         
-        
-        exprAeval = ce.parse(textAreaAuthor.value).evaluate();
+    let exprAeval = ce.parse(textAreaAuthor.value).evaluate();
+    let exprUeval = exprUsimp;
+    if (sieve != 'latex' ) {
+        console.log(exprAeval + '  2 ' + exprAn);
+        if (sieve != "latex"){
+
+        exprAeval = ce.parse(textAreaAuthor.value).N().valueOf();
         console.log(exprAeval + '  2.5 ' + exprAn);
         exprAn = exprAeval;
-        console.log(exprAn + '  3 ' + exprAn);
-    }
-    else { exprUn = 'LaTeX'; }
-    if (isNumeric(mathFieldUser.value)) {
-        exprUeval = ce.parse(mathFieldUser.value).evaluate();  
-        exprUn = exprUeval;
-        console.log(exprUn + '  user ' + exprUeval);  
-    }
-    else { exprAn = 'LaTeX'; }
-    console.log(exprUn + '  4 ' + exprAn);
+        console.log(exprAeval + '  3 ' + exprAn);
+    }}
+    // else { exprUn = 'LaTeX'; }
+    // if (isNumeric(mathFieldUser.value)) {
+    //     exprUeval = ce.parse(mathFieldUser.value).evaluate();
+    //     exprUn = exprUeval;
+    //     console.log(exprUn + '  user ' + exprUeval);
+    // }
+    // else { exprAn = 'LaTeX'; }
+    // console.log(exprUn + '  4 ' + exprAn);
 
     // let outVars = "USER VALUES:\n  document.querySelector('#latexUserAns' + num)\n    =" + mathFieldUser + "\n    mathFieldUser.value \n     =" + mathFieldUser.value
     //     + "\n    ce.parse(mathFieldUser.value).simplify().latex;\n     =" + exprUsimp + "\n    ce.parse(mathFieldUser.value).evaluate()\n     =" + exprUeval
@@ -118,11 +120,12 @@ function approxCE(x, num, sieve, orderMatters, equationCheck) {
     //     + "\n\nAUTHOR VALUES\n    document.querySelector('#MyauthorAns' + num)\n    =" + textAreaAuthor + "\n    textAreaAuthor.value \n     =" + textAreaAuthor.value
     //     + "\n    ce.parse(textAreaAuthor.value).simplify().latex \n     =" + exprAsimp + "\n    ce.parse(textAreaAuthor.value).evaluate() \n     =" + exprAeval
     //     + "\n    ce.parse(textAreaAuthor.value).N() \n     =" + exprAn;
-    let out2 = textAreaAuthor.value + " \\approx " + exprAeval;
+    let out2 = textAreaAuthor.value + " \\approx " + exprAeval//.toFixed(p);
     if (exprUsimp == "" || (exprUeval == '["Sequence"]')) out1 = "Incorrect\nNO USER INPUT";
     else {
         let exprUvalOf = parseFloat(exprUeval);
         let exprAvalOf = parseFloat(exprAeval);
+        let approxAuthor = parseFloat(exprAvalOf.toFixed(p))
 
         switch (sieve) {
             // Want a LaTeX expression for the answer
@@ -130,39 +133,39 @@ function approxCE(x, num, sieve, orderMatters, equationCheck) {
                 // The expected answer
                 let adjMathFieldUser = mathFieldUser.value.replace(/\s/g, "");
                 let adjTextAreaAuthor = textAreaAuthor.value.replace(/\s/g, "");
-                console.log('\n'+adjMathFieldUser + ' case latex ' + adjTextAreaAuthor+ '  ' + exprUn+ '  ' + exprAn+'\n' + (adjMathFieldUser == adjTextAreaAuthor && exprUn == exprAn)+'\n')
-                if (adjMathFieldUser == adjTextAreaAuthor && exprUn == exprAn)
+                console.log('\n' + adjMathFieldUser + ' case latex ' + adjTextAreaAuthor + '  ' + exprUn + '  ' + exprAn + '\n' + (adjMathFieldUser == adjTextAreaAuthor && exprUn == exprAn) + '\n')
+                if (adjMathFieldUser == adjTextAreaAuthor && exprUsimp == exprAsimp)
                     out1 = "Correct  \nLaTeX: " + textAreaAuthor.value;
                 // Answer in a different order
-                else if (exprUsimp == exprAsimp && (exprUn >= exprAn-.001)&& (exprUn <= exprAn+.001))
+                else if (exprUsimp != exprUorig  && exprUeval == exprAeval)
                     out1 = "Correct, but slightly different than expected.\nExpected input: " + textAreaAuthor.value;
                 // Numerical answer, but needed an expression
-                else if (exprUeval == exprAeval) out1 += "\nThe answer " + mathFieldUser.value + " is a good numerical answer, but an expression is expected, not a numerical value.\nExpected: " + textAreaAuthor.value;
+                else if (exprUsimp == exprAsimp && exprUsimp == exprUorig) out1 += "\nThe answer " + mathFieldUser.value + " is a good numerical answer, but an expression is expected, not a numerical value.\nExpected: " + textAreaAuthor.value;
                 // Neither a correct number nor expression
                 else out1 += "\nThe expression contains an error.";
                 break;
             case 'approx':
-                if (exprUvalOf >= exprAvalOf - 5*prec && exprUvalOf <= exprAvalOf + 5*prec){
-                    if (mathFieldUser.value == exprAvalOf) 
+                if (exprUvalOf >= exprAvalOf - 5* prec && exprUvalOf <= exprAvalOf + 5 * prec) {
+                    if (mathFieldUser.value == exprAvalOf)
                         out1 = "Incorrect. A simple numerical answer is expected, not an expression.\n" +
-                        "User input: " + mathFieldUser.value + "    Expected: " + exprAvalOf.toFixed(p)
+                            "User input: " + mathFieldUser.value + "    Expected: " + exprAvalOf.toFixed(p)
                     else
-                        out1 = "Correct. Expected: " + exprAvalOf.toFixed(p); 
+                        out1 = "Correct. Expected: " + exprAvalOf.toFixed(p);
                 }
-                else out1 = "Incorrect.\nUser input: " + mathFieldUser.value + "    Expected: " + exprAvalOf.toFixed(p); 
-                out2 = exprAsimp + " \\approxeq " + exprAvalOf.toFixed(p);
+                else out1 = "Incorrect.\nUser input: " + mathFieldUser.value + "    Expected: " + exprAvalOf.toFixed(p);
+                out2 = exprAsimp + " \\approxeq " + approxAuthor;
                 break;
             case 'exact':
-                
-                let approxAuthor = parseFloat(exprAvalOf.toFixed(p))
-                out2 = exprAsimp + " \\approxeq " + approxAuthor;
-                
+
+                // let approxAuthor = parseFloat(exprAvalOf.toFixed(p))
+                out2 = exprAsimp + " \\approxeq " + approxAuthor.toFixed(p);
+
                 // outVars += "\n\nNumbers for 'if' below:\nUSER    ce.parse(mathFieldUser.value).N().valueOf()\n     = " + exprUvalOf +
                 //     "\nAUTHOR    ce.parse(textAreaAuthor.value).N().valueOf() \n    =" + exprAvalOf + "\n    approxAuthor\n    =" + approxAuthor;
-                if (exprUsimp == exprAsimp) 
-                    out1 = "Correct. The expected answer is " + textAreaAuthor.value ;
+                if (exprUsimp == exprAsimp)
+                    out1 = "Correct. The expected answer is " + textAreaAuthor.value;
                 else if ((exprAvalOf - 0.001) <= exprUvalOf && exprUvalOf <= (exprAvalOf + 0.001))
-                    out1 = "\nThe answer " + exprUvalOf + " is a good numerical answer, but an exact number is required.\nExpected: " + textAreaAuthor.value;
+                    out1 = "\nThe answer " + exprUvalOf + " is a good numerical approximation, but an exact number is required.\nExpected: " + textAreaAuthor.value;
                 else
                     out1 = "Incorrect.\nUser input: " + mathFieldUser.value + "    Expected input: " + textAreaAuthor.value;
                 break;
