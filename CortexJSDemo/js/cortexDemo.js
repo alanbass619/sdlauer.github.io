@@ -54,20 +54,70 @@ function equationAdj(ce, e, tf) {
     eNeg = ce.parse(eNeg).simplify().latex;
     return [e, eNeg, hasEqual, tf];
 }
+// add braces to relevant single number entities
+function addBraces(e,mtch){
+    console.log(mtch);
+    let len = mtch.length;
+    let tf = e.includes(mtch);
+    let indx = e.indexOf(mtch, 0) +len;
+    console.log(indx + ' index and char ' +e.at(indx));
+    while (tf){       
+        
+        if (e.at(indx) != '{'){
+            
+            if (mtch == 'frac'){
+                console.log(e + '  2a');
+                e = e.substring(0,indx) + '{' + e.substring(indx, indx+1)+'}{' +  e.substring(indx+1, indx+2)+ '}' +  e.substring(indx+2);
+                console.log(e + '  2b');
+            }
+            else {
+                e = e.substring(0,indx) + '{' + e.substring(indx, indx+1)+'}';
+            }
+        }
+        indx = indx +1;
+        indx = e.indexOf(mtch, indx+1) + len;
+        if (indx < 0 || indx >= len-1){tf = false}
+    }
+    console.log(e + '  1');
+    return e
+}
+// add braces to single number subscripts, superscripts, fracs
+function braceAdj(e){
+    let mtches = ['frac','_','^',]
+    console.log(mtches[1]);
+    for (const elem of mtches){
+        console.log(e.indexOf(elem));
+        if (e.indexOf(elem)>0){
+            e = addBraces(e,elem)
+        }
+    }
+    console.log(e + '  2');
+    return e;
+}
+function exprCleaner(e){
+    e = e.replaceAll('$', '').replaceAll('\\frac{-', '-\\frac{');
+
+    return e;
+}
 function approxCE(x, num, sieve, formReq, equationCheck) {
-    // console.clear();
+    console.clear();
     let ce = new ComputeEngine.ComputeEngine();
     let p = 3;
     let prec = Math.pow(10, -p);
     document.getElementById("latexChkr" + num).value = "";
     let mathFieldUser = document.querySelector('#latexUserAns' + num);
     let textAreaAuthor = document.querySelector('#MyauthorAns' + num);
-    let exprUorig = mathFieldUser.value.replaceAll('$', '')
-    let exprAorig = textAreaAuthor.value;
+    let exprUorig = exprCleaner(mathFieldUser.value);  
+    // console.log(exprUorig);
+    // exprUorig = exprCleaner(exprUorig.replaceAll('\\frac{-', '-\\frac{');
+    // console.log(exprUorig);
+    let exprAorig = exprCleaner(textAreaAuthor.value);
+    // exprAorig = exprAorig.replaceAll('\\frac{-', '-\\frac{');
     // Set comparison values for author and user input
     let [exprUsimp, unusedVar0, isUequation, isUnumber] = equationAdj(ce, exprUorig, equationCheck)
     let [exprAsimp, exprAsimpNeg, isAequation, isAnumber] = equationAdj(ce, exprAorig, equationCheck);
     let [exprAsimp1, exprAsimpNeg1, unusedVar1, unusedVar2] = equationAdj(ce, flipEquation(exprAorig), equationCheck);
+    console.log(exprAsimp +'\n'+exprUsimp);
     let equivalentExpOrNum = (exprUsimp == exprAsimp || exprUsimp == exprAsimpNeg || exprUsimp == exprAsimp1 || exprUsimp == exprAsimpNeg1);
     document.getElementById('latexChkr' + num).value = "";
     let out1 = "Incorrect";
@@ -96,19 +146,21 @@ function approxCE(x, num, sieve, formReq, equationCheck) {
             // Want a LaTeX expression for the answer
             //TODO  refine latex case for "order matters" Ex: correct form of y = mx + b
             case 'latex':
-                // whitespace removed
-                let adjMathFieldUser = exprUorig.replace(/\s/g, "");
-                let adjTextAreaAuthor = exprAorig.replace(/\s/g, "");
+                // whitespace removed, braces added for frac, _, ^
+                let adjMathFieldUser = braceAdj(exprUorig).replace(/\s/g, "");
+                let adjTextAreaAuthor = braceAdj(exprAorig).replace(/\s/g, "");
+                console.log(adjMathFieldUser + '   ' + adjTextAreaAuthor);
                 // The expected answer was given
                 if (equivalentExpOrNum) {
                     if (adjMathFieldUser == adjTextAreaAuthor)
                         out1 = "Correct  \nLaTeX: " + exprAorig;
                     // Answer in a different order or form
-                    else if (isAequation == isUequation && isUnumber == isAnumber)
+                    else if (isAequation == isUequation && isUnumber == isAnumber){
                         out1 = "Correct, but slightly different than expected.\nExpected input: " + exprAorig;
                         if (formReq != ''){
                             out1 += "\nRequired form:  " + formReq;
                         }
+                    }
                     // Numerical answer correct, but needed an expression
                     else if (exprUsimp == exprUorig) {
                         out1 += "\nThe answer " + exprUorig +
