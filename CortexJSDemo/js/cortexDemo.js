@@ -1,5 +1,6 @@
-import("https://unpkg.com/mathlive@latest?module"); // 0.94.5 = latest
+import("https://unpkg.com/mathlive@latest?module"); 
 import("https://unpkg.com/@cortex-js/compute-engine");
+// 0.94.5 = latest
 maxElems = numElems
 for (let i = 1; i <= maxElems; i++) {
     let mfMy1 = document.querySelector('#formulaApprox' + i);
