@@ -31,6 +31,7 @@
 </head>
 
 <body>
+    <p><a href="AlgebraCortexDemo.html">To Algebra examples</a></p>
     <div>
         <table>
             <!-- First problem --LaTeX------------------------------------------->
@@ -50,12 +51,14 @@
                     <!-- onclick="showHide()" -->
                     <p> <button type="button" id="chkAns1"
                             style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;"
-                            onclick="approxCE(0,'1', 'latex', false, false)">Check</button>
+                            onclick="approxCE(0,'1', 'latex', '', false)">Check</button>
                         &emsp;&emsp;&emsp;&emsp;
                         <button type="button" id="showHideAns1"
                             style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show
                             answer</button>
+                            <p style="color: red">-- NOTE:  ComputeEngine is not currently performing order of operations correctly on summations, so some incorrect answers would be given full credit here.</p>
                     </p>
+                    
 
                 </td>
                 <td style="width: 45%; vertical-align: top;">
@@ -99,7 +102,7 @@
                     <p>
                         <button type="button" id="chkAns2"
                             style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;"
-                            onclick="approxCE(0,'2', 'approx', false, false)">Check</button>
+                            onclick="approxCE(0,'2', 'approx', '', false)">Check</button>
                         &emsp;&emsp;&emsp;&emsp;
                         <button type="button" id="showHideAns2"
                             style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show
@@ -146,7 +149,7 @@
                     <p>
                         <button type="button" id="chkAns3"
                             style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;"
-                            onclick="approxCE(10,'3', 'exact', false, false)">Check</button>
+                            onclick="approxCE(10,'3', 'exact', '', false)">Check</button>
                         &emsp;&emsp;&emsp;&emsp;
                         <button type="button" id="showHideAns3"
                             style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show

@@ -1,4 +1,4 @@
-import("https://unpkg.com/mathlive@latest?module"); // 0.94.0 = latest
+import("https://unpkg.com/mathlive@latest?module"); // 0.94.5 = latest
 import("https://unpkg.com/@cortex-js/compute-engine");
 maxElems = numElems
 for (let i = 1; i <= maxElems; i++) {
@@ -30,12 +30,18 @@ function isNumeric(str) {
     if (typeof str != "string") return false //+ "not string"// we only process strings!  
     return (!isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
         !isNaN(parseFloat(str))) //+ str// ...and ensure strings of whitespace fail
-} 
-
-function equationAdj(e, tf) {
+}
+// a = b changes to b = a
+function flipEquation(e) {
+    eq = e.indexOf("=")
+    return e.substring(eq + 1) + '=' + e.substring(0, eq);
+}
+// creates negative of expressions and changes a = b to a - b = 0  
+function equationAdj(ce, e, tf) {
     let eNeg = '' + e;
     let hasEqual = false;
     eNeg = '-(' + eNeg + ')';
+    //TODO needs an adjustment for other types of "=" in equation Ex: sum_{i=1}
     if (e.includes('=')) {
         if (tf) {
             e = e.replace('=', "-(") + ') = 0';
@@ -43,12 +49,13 @@ function equationAdj(e, tf) {
             hasEqual = true;
         }
     }
-    return [e, eNeg, hasEqual,isNumeric(e)];
+    tf = isNumeric(e)
+    e = ce.parse(e).simplify().latex;
+    eNeg = ce.parse(eNeg).simplify().latex;
+    return [e, eNeg, hasEqual, tf];
 }
-
-
-function approxCE(x, num, sieve, orderMatters, equationCheck) {
-    console.clear();
+function approxCE(x, num, sieve, formReq, equationCheck) {
+    // console.clear();
     let ce = new ComputeEngine.ComputeEngine();
     let p = 3;
     let prec = Math.pow(10, -p);
@@ -57,89 +64,86 @@ function approxCE(x, num, sieve, orderMatters, equationCheck) {
     let textAreaAuthor = document.querySelector('#MyauthorAns' + num);
     let exprUorig = mathFieldUser.value.replaceAll('$', '')
     let exprAorig = textAreaAuthor.value;
-    let [exprUsimp, unusedVar, isUequation,isUnumber] = equationAdj(exprUorig, equationCheck)
-    let [exprAsimp, exprAsimpNeg, isAequation, isAnumber] = equationAdj(exprAorig, equationCheck);
-    exprUsimp = ce.parse(exprUsimp).simplify().latex;
-    exprAsimp = ce.parse(exprAsimp).simplify().latex;
-    let eqMess = ""
-    let numMess = ""
-    if (isAequation != isUequation) {
-        if (isAequation) { eqMess = "\nAn expression is needed, not an equation." }
-        else { eqMess = "\nAn equation is needed, not an expression." }
-    }
-    if (isAnumber != isUnumber) {
-        if (isAnumber) { numMess = "\nA number is needed, not an expression." }
-        else {numMess = "\nAn expression is needed, not a number." }
-    }
-    console.log(exprAsimp + ' author ' + exprUsimp + '\n' + eqMess + '\n'+numMess+ '\n')
-    exprAsimp = ce.parse(exprAsimp).simplify().latex;
-    exprAsimpNeg = ce.parse(exprAsimpNeg).simplify().latex;
-    let bothAreSameType = (exprUsimp == exprAsimp || exprUsimp == exprAsimpNeg);
-    let exprSimpCheck = "The answer entered is not equivalent to the correct answer.";
-    if (bothAreSameType) { 
-        exprSimpCheck = "The answer is an equivalent expression, equation, or number."     
-    }
-    console.log(exprUsimp + " check  " + exprAsimp + " check  " + exprAsimpNeg + '\n' + exprSimpCheck);
+    // Set comparison values for author and user input
+    let [exprUsimp, unusedVar0, isUequation, isUnumber] = equationAdj(ce, exprUorig, equationCheck)
+    let [exprAsimp, exprAsimpNeg, isAequation, isAnumber] = equationAdj(ce, exprAorig, equationCheck);
+    let [exprAsimp1, exprAsimpNeg1, unusedVar1, unusedVar2] = equationAdj(ce, flipEquation(exprAorig), equationCheck);
+    let equivalentExpOrNum = (exprUsimp == exprAsimp || exprUsimp == exprAsimpNeg || exprUsimp == exprAsimp1 || exprUsimp == exprAsimpNeg1);
     document.getElementById('latexChkr' + num).value = "";
     let out1 = "Incorrect";
-    let exprAeval = ''; 
     let exprAapprox = '';
     let exprAvalOf = '';
-    if (!isAequation){
-        let exprAeval = ce.parse(exprAorig).evaluate();
-        console.log(exprAeval);
-        if (sieve != 'latex' ) {
-            exprAeval = ce.parse(exprAorig).N().valueOf();
-            exprAapprox = " \\approx " + exprAeval.toFixed(p);
-            exprAvalOf = parseFloat(exprAeval);       
+    let exprUvalOf = '';
+    let expected = exprAorig;
+    if (!isAequation) {
+        if (sieve != 'latex') {
+            exprAvalOf =parseFloat(ce.parse(exprAorig).N().valueOf())
+            expected = exprAvalOf.toFixed(p)
+            exprAapprox = " \\approxeq " + expected;
+        }
+        else {
+            if (exprAsimp != exprAorig) {
+                exprAapprox = ' \\approxeq ' + exprAsimp;
+                //TODO//////////////   !!!! exprAsimp may not calculate correctly --  
+                ////////////////   !!!! there's an error in the ComputeEngine for ce.parse( *** ).simplify().latex;
+            }
         }
     }
 
-    let out2 = exprAorig +  exprAapprox;
     if (exprUsimp == "" || (exprUsimp == '["Sequence"]')) out1 = "Incorrect\nNO USER INPUT";
     else {
-        let exprUvalOf = parseFloat(exprUsimp);
-        let exprAvalOf = parseFloat(exprAeval);
-
         switch (sieve) {
             // Want a LaTeX expression for the answer
+            //TODO  refine latex case for "order matters" Ex: correct form of y = mx + b
             case 'latex':
                 // whitespace removed
                 let adjMathFieldUser = exprUorig.replace(/\s/g, "");
                 let adjTextAreaAuthor = exprAorig.replace(/\s/g, "");
-                console.log('\n' + adjMathFieldUser + ' case latex ' + adjTextAreaAuthor + '\n')
-                // The expected answer given
-                if (adjMathFieldUser == adjTextAreaAuthor && bothAreSameType)
-                    out1 = "Correct  \nLaTeX: " + exprAorig;
-                // Answer in a different order
-                else if (bothAreSameType && isAequation == isUequation && isUnumber == isAnumber)
-                    out1 = "Correct, but slightly different than expected.\nExpected input: " + exprAorig;
-                // Numerical answer, but needed an expression
-                else if (bothAreSameType && exprUsimp == exprUorig) out1 += "\nThe answer " + exprUorig + 
-                " is a good numerical answer, but an expression is expected, not a numerical value.\nExpected: " + exprAorig;         
-                    // Neither a correct number nor expression
+                // The expected answer was given
+                if (equivalentExpOrNum) {
+                    if (adjMathFieldUser == adjTextAreaAuthor)
+                        out1 = "Correct  \nLaTeX: " + exprAorig;
+                    // Answer in a different order or form
+                    else if (isAequation == isUequation && isUnumber == isAnumber)
+                        out1 = "Correct, but slightly different than expected.\nExpected input: " + exprAorig;
+                        if (formReq != ''){
+                            out1 += "\nRequired form:  " + formReq;
+                        }
+                    // Numerical answer correct, but needed an expression
+                    else if (exprUsimp == exprUorig) {
+                        out1 += "\nThe answer " + exprUorig +
+                            " is a good numerical answer, but an expression is needed, not a numerical value.\nExpected: " + exprAorig;
+                    }
+                }
+                // Neither a correct number nor expression
                 else out1 += "\nThe expression contains an error.";
                 break;
             case 'approx':
-                if (exprUvalOf >= exprAvalOf - 1* prec && exprUvalOf <= exprAvalOf + 1 * prec) {
-
-                    if (exprUorig == exprAvalOf)
-                        out1 = "Incorrect. A simple numerical answer is expected, not an expression.\n" +
-                            "User input: " + exprUorig + "    Expected: " + exprAvalOf.toFixed(p) + bothAreSameType
-                    else
-                        out1 = "Correct. Expected: " + exprAvalOf.toFixed(p);
+                exprUvalOf = parseFloat(ce.parse(exprUorig).N().valueOf())
+                if (exprUorig == exprUsimp && isNumeric(exprUorig)) {
+                    if ((exprUvalOf >= exprAvalOf - 1 * prec && exprUvalOf <= exprAvalOf + 1 * prec)) {
+                        out1 = "Correct. Expected: " + expected;
+                    }
+                    else { out1 = "Incorrect.\nUser input: " + exprUorig + "    Expected: " + expected; }
                 }
-                else out1 = "Incorrect.\nUser input: " + exprUorig + "    Expected: " + exprAvalOf.toFixed(p) + bothAreSameType;
-                // out2 = exprAsimp + " \\approxeq " + exprAvalOf.toFixed(p);
+                else if (exprUvalOf == expected) {
+                    out1 = "Incorrect. The answer does simplify to the expected approximation.  However, a simple numerical answer is needed, not an expression.\n" +
+                        "User input: " + exprUorig + "    Expected: " + expected
+                }
+                else {
+                    out1 = "Incorrect. A simple numerical answer is expected, not an expression.\n" +
+                        "User input: " + exprUorig + "    Expected: " + expected
+                }
                 break;
             case 'exact':
-                if (bothAreSameType) {
+                exprUvalOf = parseFloat(ce.parse(exprUorig).N().valueOf())
+                if (equivalentExpOrNum) {
                     if (exprUsimp == exprAsimp) out1 = "Correct. The expected answer is " + exprAorig;
                     // Check for opposite sign
-                    else out1 = "Incorrect.  The expected answer is opposite in sign.\nUser input: " + exprUorig + "    Expected input: " + exprAorig;
+                    else out1 = "Incorrect.  The answer is opposite in sign.\nUser input: " + exprUorig + "    Expected input: " + exprAorig;
                 }
                 else if ((exprAvalOf - 0.001) <= exprUvalOf && exprUvalOf <= (exprAvalOf + 0.001))
-                    out1 = "The answer " + exprUorig + " is a good numerical approximation, but an exact number is required.\nExpected: " + exprAorig;
+                    out1 = "The answer " + exprUorig + " is a good numerical approximation, but an exact number or expression is needed.\nExpected: " + exprAorig;
                 else
                     out1 = "Incorrect.\nUser input: " + exprUorig + "    Expected input: " + exprAorig;
                 break;
@@ -147,7 +151,7 @@ function approxCE(x, num, sieve, orderMatters, equationCheck) {
                 break;
         }
     }
-    console.log(out2);
+    let out2 = exprAorig + exprAapprox;
     document.getElementById('latexChkr' + num).value = out1;
     document.getElementById('MyauthorAnsApprox' + num).value = out2;
 

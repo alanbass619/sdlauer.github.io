@@ -31,11 +31,13 @@
 </head>
 
 <body>
+    <p><a href="workingCortexDemo.html">To Calc and trig examples</a></p>
     <div>
         <table>
-            <!-- First problem --LaTeX------------------------------------------->
+            <!-- First problem --------------------------------------------->
             <tr>
                 <td style="width: 45%; vertical-align: top;">
+                    <h4>Equation equivalence</h4>
                     <p style="width: 85%">
                         Find an equation for the line in slope-intercept form with slope \(\frac{2}{3}\) through the point \((0,-5)\).
                     </p>
@@ -46,7 +48,7 @@
                     <!-- onclick="showHide()" -->
                     <p> <button type="button" id="chkAns1"
                             style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;"
-                            onclick="approxCE(0,'1', 'latex', true, true)">Check</button>
+                            onclick="approxCE(0,'1', 'latex', 'y = mx + b', true)">Check</button>
                         &emsp;&emsp;&emsp;&emsp;
                         <button type="button" id="showHideAns1"
                             style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show
@@ -80,10 +82,10 @@
             </tr>
 
 
-            <!-- Second problem --Approximate------------------------------------------->
+            <!-- Second problem --------------------------------------------->
             <tr>
                 <td style="width: 45%; vertical-align: top;">
-                    <h4>Order matters</h4>
+                    <h4>Equation equivalence</h4>
                     <p style="width: 85%">
                         Find an equation for the line in point-slope form with slope \(-\frac{1}{4}\) through the point \((-2,3)\).
                     </p>
@@ -95,7 +97,7 @@
                     <p>
                         <button type="button" id="chkAns2"
                             style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;"
-                            onclick="approxCE(0,'2', 'latex', true, true)">Check</button>
+                            onclick="approxCE(0,'2', 'latex', 'y-y1 = m(x-x1)', true)">Check</button>
                         &emsp;&emsp;&emsp;&emsp;
                         <button type="button" id="showHideAns2"
                             style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show
@@ -119,9 +121,9 @@
                                 spellcheck="false" rows="2" cols="80"></textarea><br />
                             &emsp;Author answer (expected user input)<br />
                             &emsp;<textarea id="MyauthorAns2" readonly
-                                style="background-color:lavender;" cols="80">y - 3 = \frac{1}{4}(x + 2)</textarea><br />
+                                style="background-color:lavender;" cols="80">y - 3 = -\frac{1}{4}(x + 2)</textarea><br />
                             &emsp;<math-field style="border:1px solid #000000;" id="MyauthorAnsApprox2" readonly>
-                                y - 3 = \frac{1}{4}(x + 2)</math-field>
+                                y - 3 = -\frac{1}{4}(x + 2)</math-field>
                         </p>
                     </div>
                 </td>
@@ -130,7 +132,7 @@
             <tr>
                 <!-- Third problem --------------------------------------------->
                 <td style="width: 45%; vertical-align: top;">
-                    <h4>Order does not matter</h4>
+                    <h4>Equation equivalence</h4>
                     <p style="width: 85%">
                         What is the equation of the vertical line through \((7,-6)\)?
                     </p>
@@ -142,7 +144,7 @@
                     <p>
                         <button type="button" id="chkAns3"
                             style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;"
-                            onclick="approxCE(0,'3', 'latex', true, true)">Check</button>
+                            onclick="approxCE(0,'3', 'latex', 'x=a', true)">Check</button>
                         &emsp;&emsp;&emsp;&emsp;
                         <button type="button" id="showHideAns3"
                             style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show
@@ -177,7 +179,7 @@
             <tr>
                 <!-- Fourth problem --------------------------------------------->
                 <td style="width: 45%; vertical-align: top;">
-                    <h4>Exact answer</h4>
+                    <h4>Expression equivalence</h4>
                     <p style="width: 85%">
                         Simplify:  \(3x +7y - 2xy +8y -4x +5xy\)
                     </p>
@@ -189,7 +191,7 @@
                     <p>
                         <button type="button" id="chkAns4"
                             style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;"
-                            onclick="approxCE(0,'4', 'latex', true, false)">Check</button>
+                            onclick="approxCE(0,'4', 'latex', '', false)">Check</button>
                         &emsp;&emsp;&emsp;&emsp;
                         <button type="button" id="showHideAns4"
                             style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show
