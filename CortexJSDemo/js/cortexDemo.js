@@ -12,7 +12,7 @@ document.querySelector('math-field').addEventListener('focus', () => {
         "\\text{T}", "\\text{F}", "(",")", "\\land"
         ],
         [
-            '[backspace]','[left]', '[right]'
+            '[left]', '[right]','[backspace]'
         ]
     ]
     };
@@ -180,12 +180,17 @@ function exprCleaner(e) {
     e = replaceDoubleSign(e);
     return e;
 }
-function truthTable(placeHolders){
+function truthTable(placeHolders,vals){
     // console.clear();
     // let ce = new ComputeEngine.ComputeEngine();
     const mtt = document.getElementById(placeHolders);
-    console.log(mtt.getPromptValue('tt'))
-    mtt.addEventListener('input', (ev) => console.log(mtt.getPrompts()));
+    places = mtt.getPrompts();
+    for (let i = 1; i <= places.length; i++) {
+        if (vals[i] == mtt.getPromptValue(places[i])){
+            console.log('matches');
+        }
+    }
+    // mtt.addEventListener('input', (ev) => console.log(mtt.getPrompts()));
 }
 
 function approxCE(x, num, sieve, formReq, equationCheck) {
