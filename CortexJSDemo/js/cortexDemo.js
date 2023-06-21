@@ -183,8 +183,10 @@ function exprCleaner(e) {
 function truthTable(placeHolders,vals){
     // console.clear();
     // let ce = new ComputeEngine.ComputeEngine();
+    
     const mtt = document.getElementById(placeHolders);
     places = mtt.getPrompts();
+    if (places.length > 0) console.log(vals, mtt.getPromptValue(places[1]));
     for (let i = 0; i < places.length; i++) {
         if (vals[i] == mtt.getPromptValue(places[i])){
             console.log('matches');
