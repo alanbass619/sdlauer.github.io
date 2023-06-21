@@ -11,7 +11,7 @@ for (let i = 1; i <= maxElems; i++) {
         latexField1.value = mfMy1.value;
     }
 
-    mfMy1.addEventListener('input', onMathfieldInput);
+    // mfMy1.addEventListener('input', onMathfieldInput);
     onMathfieldInput;
     var showHideAns = document.getElementById("showHideAns" + i);
     var remove = true;
@@ -165,8 +165,9 @@ function exprCleaner(e) {
 }
 function truthTable(placeHolders){
     // console.clear();
-    let ce = new ComputeEngine.ComputeEngine();
+    // let ce = new ComputeEngine.ComputeEngine();
     const mtt = document.getElementById(placeHolders);
+    console.log(mtt.getPromptValue('tt'))
     mtt.addEventListener('input', (ev) => console.log(mtt.getPrompts()));
 }
 
