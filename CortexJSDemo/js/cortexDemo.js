@@ -1,4 +1,4 @@
-import("https://unpkg.com/mathlive@latest?module"); 
+import("https://unpkg.com/mathlive@latest?module");
 import("https://unpkg.com/@cortex-js/compute-engine");
 // 0.94.5 = latest
 maxElems = numElems
@@ -20,7 +20,7 @@ for (let i = 1; i <= maxElems; i++) {
             this.textContent = "Hide answer";
             $("#bothLatexAns" + i).prop('hidden', false);
             remove = false;
-        } 
+        }
         else {
             this.textContent = "Show answer";
             $("#bothLatexAns" + i).prop('hidden', true);
@@ -59,92 +59,87 @@ function equationAdj(ce, e, tf) {
     return [e, eNeg, hasEqual, tf];
 }
 // add braces to relevant single number entities Ex: sqrt, frac, _, ^
-function addBraces(e,mtch){
+function addBraces(e, mtch) {
     let len = mtch.length;
     let tf = e.includes(mtch);
-    let indx = e.indexOf(mtch, 0) +len;
+    let indx = e.indexOf(mtch, 0) + len;
     cnt = 0;
-    while (tf && cnt < e.length){          
-        if (e.at(indx) != '{'){        
-            if (mtch == 'frac'){
-                e = e.substring(0,indx) + '{' + e.substring(indx, indx+1)+'}{' +  e.substring(indx+1, indx+2)+ '}' +  e.substring(indx+2);
+    while (tf && cnt < e.length) {
+        if (e.at(indx) != '{') {
+            if (mtch == 'frac') {
+                e = e.substring(0, indx) + '{' + e.substring(indx, indx + 1) + '}{' + e.substring(indx + 1, indx + 2) + '}' + e.substring(indx + 2);
             }
             else {
-                e = e.substring(0,indx) + '{' + e.substring(indx, indx+1)+'}';
+                e = e.substring(0, indx) + '{' + e.substring(indx, indx + 1) + '}';
             }
         }
-        indx = indx +2;
+        indx = indx + 2;
         indx = e.indexOf(mtch, indx) + len;
-        if (indx < len || indx >= e.length-1){
+        if (indx < len || indx >= e.length - 1) {
             tf = false
         }
         cnt = cnt + 2;
     }
-    if (mtch == 'frac'){
+    if (mtch == 'frac') {
         e = fracSigns(e);
     }
     return e
 }
 // check for  single number subscripts, superscripts, fracs, sqrt
-function braceAdj(e){
-    let mtches = ['frac','_','^','sqrt']
-    for (const elem of mtches){
-        if (e.indexOf(elem)>0){
+function braceAdj(e) {
+    let mtches = ['frac', '_', '^', 'sqrt']
+    for (const elem of mtches) {
+        if (e.indexOf(elem) > 0) {
             // add braces if missing -- for latex checking
-            e = addBraces(e,elem)
+            e = addBraces(e, elem)
         }
     }
-    e = replaceDoubleSign(e);   
-    console.log(e + '   braces added'); 
+    e = replaceDoubleSign(e);
     return e;
 }
-// Fraction has a negative numeric num and/or den
-function fracSigns(e){ 
+// Check if \frac fraction has a negative numeric num and/or den
+function fracSigns(e) {
     let len = e.length;
     let indxFrac = 0;
     let cnt = 0;
     let sgn = false;
-    while (cnt < len){
-        indxFrac = e.indexOf('\\frac{', indxFrac+1);
-        if (indxFrac > 0){
+    while (cnt < len) {
+        indxFrac = e.indexOf('\\frac{', indxFrac + 1);
+        if (indxFrac > 0) {
             let num1 = e.indexOf('{', indxFrac);
-            let num2 = e.indexOf('}', num1+1);
-            let subNum = e.substring(num1+1, num2);
-            
-            console.log(e + '   num');
-            if (isNumeric(subNum)){
-                console.log('num is number');
+            let num2 = e.indexOf('}', num1 + 1);
+            let subNum = e.substring(num1 + 1, num2);
+            if (isNumeric(subNum)) {
                 let num = parseFloat(subNum);
-                if (num < 0){
+                if (num < 0) {
                     sgn = !sgn;
                     num = -num
                 }
-                e = e.substring(0,num1+1) + num + e.substring(num2);
+                e = e.substring(0, num1 + 1) + num + e.substring(num2);
             }
-            let den1 = e.indexOf('{', num1+1);
-            let den2 = e.indexOf('}', den1+1);
-            let subDen = e.substring(den1+1, den2);
-            console.log(subNum + '   '+ subDen);
+            let den1 = e.indexOf('{', num1 + 1);
+            let den2 = e.indexOf('}', den1 + 1);
+            let subDen = e.substring(den1 + 1, den2);
+            console.log(subNum + '   ' + subDen);
             console.log(e + '   den');
-            if (isNumeric(subDen)){
-                console.log('den is number');
+            if (isNumeric(subDen)) {
                 let den = parseFloat(subDen);
-                if (den < 0){
+                if (den < 0) {
                     den = -den
                     sgn = !sgn;
                 }
-                e = e.substring(0,den1+1) + den + e.substring(den2);
-                den2 = e.indexOf('}', den1+1);
+                e = e.substring(0, den1 + 1) + den + e.substring(den2);
+                den2 = e.indexOf('}', den1 + 1);
             }
-            if (sgn){
-                if (e.charAt(indxFrac -1)== '-'){
-                    e = e.substring(0,indxFrac-1) +'+'+ e.substring(indxFrac);
+            if (sgn) {
+                if (e.charAt(indxFrac - 1) == '-') {
+                    e = e.substring(0, indxFrac - 1) + '+' + e.substring(indxFrac);
                 }
-                else if ((e.charAt(indxFrac -1) == '+')){
-                    e = e.substring(0,indxFrac-1) + '-' + e.substring(indxFrac);
+                else if ((e.charAt(indxFrac - 1) == '+')) {
+                    e = e.substring(0, indxFrac - 1) + '-' + e.substring(indxFrac);
                 }
                 else {
-                    e = e.substring(0,indxFrac-1) + '{-' + e.substring(indxFrac+1, den2+1) + '}' +e.substring(indxFrac+1);
+                    e = e.substring(0, indxFrac - 1) + '{-' + e.substring(indxFrac + 1, den2 + 1) + '}' + e.substring(indxFrac + 1);
                 }
             }
             cnt = cnt + 5;
@@ -153,24 +148,28 @@ function fracSigns(e){
         else {
             cnt = len;
         }
-    }   
+    }
     // Replace any new double signs in expr
     e = replaceDoubleSign(e);
     return e;
 }
 // Replaces double signs with equivalent + or -
-function replaceDoubleSign(e){
-    return e.replaceAll('++','+').replaceAll('-+','-').replaceAll('+-','-').replaceAll('--','+');
+function replaceDoubleSign(e) {
+    return e.replaceAll('++', '+').replaceAll('-+', '-').replaceAll('+-', '-').replaceAll('--', '+');
 }
 // Removes $, rewrites frac with - in num or den, replaces double signs
-function exprCleaner(e){
-    console.log(e + '   1');
+function exprCleaner(e) {
     e = e.replaceAll('$', '');
-    console.log(e + '   2');
     e = replaceDoubleSign(e);
-    console.log(e + '   4');
     return e;
 }
+function truthTable(placeHolders){
+    // console.clear();
+    let ce = new ComputeEngine.ComputeEngine();
+    const mtt = document.getElementById(placeHolders);
+    mtt.addEventListener('input', (ev) => console.log(mtt.getPrompts()));
+}
+
 function approxCE(x, num, sieve, formReq, equationCheck) {
     console.clear();
     let ce = new ComputeEngine.ComputeEngine();
@@ -179,36 +178,39 @@ function approxCE(x, num, sieve, formReq, equationCheck) {
     document.getElementById("latexChkr" + num).value = "";
     let mathFieldUser = document.querySelector('#latexUserAns' + num);
     let textAreaAuthor = document.querySelector('#MyauthorAns' + num);
-    let out1 = "Incorrect";    
+    
+    let out1 = "Incorrect";
     let exprAapprox = '';
     let exprAorig = exprCleaner(textAreaAuthor.value);
     if (mathFieldUser.value == "" || (mathFieldUser.value == '["Sequence"]')) {
         out1 = "Incorrect\nNO USER INPUT";
-    }   
+    }
     else {
         let exprAorig = exprCleaner(textAreaAuthor.value);
-        let exprUorig = exprCleaner(mathFieldUser.value);     
+        let exprUorig = exprCleaner(mathFieldUser.value);
+        console.log(ce.parse(exprAorig).isSame(ce.parse(exprUorig)) + '   '+ exprUorig + '  ' +exprAorig);
         // Set comparison values for author and user input
         let [exprUsimp, unusedVar0, isUequation, isUnumber] = equationAdj(ce, exprUorig, equationCheck);
         let [exprAsimp, exprAsimpNeg, isAequation, isAnumber] = equationAdj(ce, exprAorig, equationCheck);
+        console.log(exprUsimp.isSame(exprAsimp));
         console.log(exprUsimp);
         let [exprAsimp1, exprAsimpNeg1, unusedVar1, unusedVar2] = equationAdj(ce, flipEquation(exprAorig), equationCheck);
         let equivalentExpOrNum = (exprUsimp == exprAsimp || exprUsimp == exprAsimpNeg || exprUsimp == exprAsimp1 || exprUsimp == exprAsimpNeg1);
-        document.getElementById('latexChkr' + num).value = "";       
+        document.getElementById('latexChkr' + num).value = "";
         let exprAvalOf = '';
         let exprUvalOf = '';
         let expected = exprAorig;
         if (!isAequation) {
             if (sieve != 'latex') {
-                exprAvalOf =parseFloat(ce.parse(exprAorig).N().valueOf())
+                exprAvalOf = parseFloat(ce.parse(exprAorig).N().valueOf())
                 expected = exprAvalOf.toFixed(p)
                 exprAapprox = " \\approxeq " + expected;
             }
             else {
                 if (exprAsimp != exprAorig) {
                     exprAapprox = ' \\approxeq ' + exprAsimp;
-    //TODO//////////////   !!!! exprAsimp may not calculate correctly --  
-    ////////////////   !!!! ComputeEngine doesn't actually perform the order of operations consistently
+                    //TODO//////////////   !!!! exprAsimp may not calculate correctly --  
+                    ////////////////   !!!! ComputeEngine doesn't actually perform the order of operations consistently
                 }
             }
         }
@@ -222,13 +224,13 @@ function approxCE(x, num, sieve, formReq, equationCheck) {
 
                 // The expected answer was given
                 if (equivalentExpOrNum) {
-                    if (adjMathFieldUser == adjTextAreaAuthor){
+                    if (adjMathFieldUser == adjTextAreaAuthor) {
                         out1 = "Correct  \nLaTeX: " + exprAorig;
                     }
                     // Answer in a different order or form
-                    else if (isAequation == isUequation && isUnumber == isAnumber){
+                    else if (isAequation == isUequation && isUnumber == isAnumber) {
                         out1 = "Correct, but slightly different than expected.\nExpected input: " + exprAorig;
-                        if (formReq != ''){
+                        if (formReq != '') {
                             out1 += "\nRequired form:  " + formReq;
                         }
                     }
@@ -265,7 +267,7 @@ function approxCE(x, num, sieve, formReq, equationCheck) {
                     // Check for opposite sign
                     else out1 = "Incorrect.  The answer is opposite in sign.\nUser input: " + exprUorig + "    Expected input: " + exprAorig;
                 }
-                else if ((exprAvalOf - 0.001) <= exprUvalOf && exprUvalOf <= (exprAvalOf + 0.001)){
+                else if ((exprAvalOf - 0.001) <= exprUvalOf && exprUvalOf <= (exprAvalOf + 0.001)) {
                     out1 = "The answer " + exprUorig + " is a good numerical approximation, but an exact number or expression is needed.\nUser input: " + exprUorig + "     Expected: " + exprAorig;
                 }
                 else {
