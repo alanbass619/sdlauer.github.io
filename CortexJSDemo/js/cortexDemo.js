@@ -180,10 +180,11 @@ function exprCleaner(e) {
     e = replaceDoubleSign(e);
     return e;
 }
-function truthTable(placeHolders,vals){
+function truthTable(num, placeHolders,vals){
     // console.clear();
     // let ce = new ComputeEngine.ComputeEngine();
-    
+    let wrong = 0;
+    let out1 = ''
     const mtt = document.getElementById(placeHolders);
     places = mtt.getPrompts();
     if (places.length > 0) console.log(vals, mtt.getPromptValue(places[1]));
@@ -191,7 +192,12 @@ function truthTable(placeHolders,vals){
         if (vals[i] == mtt.getPromptValue(places[i])){
             console.log('matches');
         }
+        else{
+            wrong++;
+            out1 += '\nAnswer blank ' + (i+1) + ' is incorrect.'
+        }
     }
+    document.getElementById('latexChkr' + num).value = `${wrong} out of ${places.length} answers are incorrect.  ${out1}`;
     // mtt.addEventListener('input', (ev) => console.log(mtt.getPrompts()));
 }
 
