@@ -18,6 +18,7 @@ document.querySelector('math-field').addEventListener('focus', () => {
     };
     mathVirtualKeyboard.visible = true;
     });
+document.body.style.setProperty("--keyboard-zindex", "50");
 for (let i = 1; i <= maxElems; i++) {
     let mfMy1 = document.querySelector('#formulaApprox' + i);
     let latexField1 = document.querySelector('#latexUserAns' + i);
