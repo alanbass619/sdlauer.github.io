@@ -2,19 +2,22 @@ import("https://unpkg.com/mathlive@latest?module");
 import("https://unpkg.com/@cortex-js/compute-engine");
 // 0.94.5 = latest
 maxElems = numElems // varies for subject matter --  set in script at end of each html page
-// document.querySelector('math-field').addEventListener('focus', () => {
-//     mathVirtualKeyboard.layouts = {
-//     rows: [
-//         [
-//         "p", "q", "r","\\neg","\\lor"
-//         ],
-//         [ 
-//         "\\text{T}", "\\text{F}", "(",")", "\\land"
-//         ]
-//     ]
-//     };
-//     mathVirtualKeyboard.visible = true;
-//     });
+document.querySelector('math-field').addEventListener('focus', () => {
+    mathVirtualKeyboard.layouts = {
+    rows: [
+        [
+        "p", "q", "r","\\neg","\\lor"
+        ],
+        [ 
+        "\\text{T}", "\\text{F}", "(",")", "\\land"
+        ],
+        [
+            '[backspace]','[left]', '[right]'
+        ]
+    ]
+    };
+    mathVirtualKeyboard.visible = true;
+    });
 for (let i = 1; i <= maxElems; i++) {
     let mfMy1 = document.querySelector('#formulaApprox' + i);
     let latexField1 = document.querySelector('#latexUserAns' + i);
