@@ -185,7 +185,7 @@ function truthTable(placeHolders,vals){
     // let ce = new ComputeEngine.ComputeEngine();
     const mtt = document.getElementById(placeHolders);
     places = mtt.getPrompts();
-    for (let i = 1; i <= places.length; i++) {
+    for (let i = 0; i < places.length; i++) {
         if (vals[i] == mtt.getPromptValue(places[i])){
             console.log('matches');
         }
