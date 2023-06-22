@@ -18,7 +18,6 @@ document.querySelector('math-field').addEventListener('focus', () => {
     };
     mathVirtualKeyboard.visible = true;
     });
-document.body.style.setProperty("--keyboard-zindex", "50");
 for (let i = 1; i <= maxElems; i++) {
     let mfMy1 = document.querySelector('#formulaApprox' + i);
     let latexField1 = document.querySelector('#latexUserAns' + i);
@@ -28,7 +27,7 @@ for (let i = 1; i <= maxElems; i++) {
         latexField1.value = mfMy1.value;
     }
 
-    // mfMy1.addEventListener('input', onMathfieldInput);
+    mfMy1.addEventListener('input', onMathfieldInput);
     onMathfieldInput;
     var showHideAns = document.getElementById("showHideAns" + i);
     var remove = true;
@@ -217,8 +216,6 @@ function approxCE(x, num, sieve, formReq, equationCheck) {
         // Set comparison values for author and user input
         let [exprUsimp, unusedVar0, isUequation, isUnumber] = equationAdj(ce, exprUorig, equationCheck);
         let [exprAsimp, exprAsimpNeg, isAequation, isAnumber] = equationAdj(ce, exprAorig, equationCheck);
-        console.log(exprUsimp.isSame(exprAsimp));
-        console.log(exprUsimp);
         let [exprAsimp1, exprAsimpNeg1, unusedVar1, unusedVar2] = equationAdj(ce, flipEquation(exprAorig), equationCheck);
         let equivalentExpOrNum = (exprUsimp == exprAsimp || exprUsimp == exprAsimpNeg || exprUsimp == exprAsimp1 || exprUsimp == exprAsimpNeg1);
         document.getElementById('latexChkr' + num).value = "";

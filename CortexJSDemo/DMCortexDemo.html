@@ -59,7 +59,7 @@
                 <td style="width: 45%; vertical-align: top;">
                     <div>
                         <H4><b>Answer Information</b></H4>
-                        Check result (User input is checked with author's answer.  Order matters.)<br />
+                        Check result (User input is checked with author's answer.)<br />
                         <p id="checker1">
                             <textarea id="latexChkr1" autocapitalize="off" autocomplete="off" autocorrect="off"
                                 spellcheck="false" rows="6" cols="80" style="border:1px solid #000000;"></textarea>
@@ -68,11 +68,12 @@
                             LaTeX
                             answers
                             <br />
-                            &emsp;User answer (in a textarea connected to the answer blank)
+                            &emsp;User answer (user will fill placeholders)
                             &emsp;<textarea id="latexUserAns1" autocapitalize="off" autocomplete="off" autocorrect="off"
                                 spellcheck="false" rows="2" cols="80"></textarea><br />
-                            &emsp;Author answer (expected user input)<br />
+                            
                             &emsp;<textarea id="MyauthorAns1" readonly cols="80" style="background-color:lavender;" cols="80">\begin{array}{c|c|c}p&q&p\wedge q\\\text{T}&\text{T}&\placeholder[tt]{}\\\text{T}&\text{F}&\placeholder[tf]{}\\\text{F}&\text{T}&\placeholder[ft]{}\\\text{F}&\text{F}&\placeholder[ff]{}\end{array}</textarea><br />
+                            &emsp;Author answer<br />
                             &emsp;<math-field style="border:1px solid #000000;" readonly id="MyauthorAnsApprox1" virtual-keyboard-mode="manual">\begin{array}{c|c|c}p&q&p\wedge q\\\text{T}&\text{T}&\text{T}\\\text{T}&\text{F}&\text{F}\\\text{F}&\text{T}&\text{F}\\\text{F}&\text{F}&\text{F}\end{array}</math-field>
 
                         </p>
