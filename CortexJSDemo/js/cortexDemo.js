@@ -6,13 +6,13 @@ document.querySelector('math-field').addEventListener('focus', () => {
     mathVirtualKeyboard.layouts = {
     rows: [
         [
-        "p", "q", "r","\\neg","\\lor"
+        "p", "q", "r", "s", "\\forall", "\\exists", "\\therefore"
         ],
         [ 
-        "\\text{T}", "\\text{F}", "(",")", "\\land"
+            "\\neg","\\lor", "\\land", "\\rightarrow", "\\leftrightarrow", "\\equiv", "\\oplus"
         ],
         [
-            '[left]', '[right]','[backspace]'
+            "\\text{T}", "\\text{F}", "(", ")", '[left]', '[right]', '[backspace]'
         ]
     ]
     };
@@ -181,24 +181,18 @@ function exprCleaner(e) {
     return e;
 }
 function truthTable(num, placeHolders,vals){
-    // console.clear();
-    // let ce = new ComputeEngine.ComputeEngine();
-    let wrong = 0;
+    // console.clear();   
     let out1 = ''
     const mtt = document.getElementById(placeHolders);
     places = mtt.getPrompts();
-    if (places.length > 0) console.log(vals, mtt.getPromptValue(places[1]));
+    let right = places.length;
     for (let i = 0; i < places.length; i++) {
-        if (vals[i] == mtt.getPromptValue(places[i])){
-            console.log('matches');
-        }
-        else{
-            wrong++;
+        if (vals[i] != mtt.getPromptValue(places[i])){
+            right--;
             out1 += '\nAnswer blank ' + (i+1) + ' is incorrect.'
         }
     }
-    document.getElementById('latexChkr' + num).value = `${wrong} out of ${places.length} answers are incorrect.  ${out1}`;
-    // mtt.addEventListener('input', (ev) => console.log(mtt.getPrompts()));
+    document.getElementById('latexChkr' + num).value = `${right} out of ${places.length} answers are correct.  ${out1}`;
 }
 
 function approxCE(x, num, sieve, formReq, equationCheck) {

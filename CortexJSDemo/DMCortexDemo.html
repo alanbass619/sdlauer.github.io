@@ -43,7 +43,7 @@
                         Complete the truth table.
                     </p>
                     <math-field style="border:1px solid #000000; width: 95%;" readonly id="formulaApprox1"
-                        virtual-keyboard-mode="manual">\begin{array}{c|c|c}p & q & p \wedge q \\\text{T} & \text{T} & \placeholder[tt]{}\\\text{T} & \text{F} & \placeholder[tf]{}\\\text{F} & \text{T} & \placeholder[ft]{}\\\text{F} & \text{F} & \placeholder[ff]{}\end{array}</math-field>
+                        virtual-keyboard-mode="manual">\begin{array}{c|c|c}p&q&p\wedge q\\\text{T}&\text{T}&\placeholder[tt]{}\\\text{T}&\text{F}&\placeholder[tf]{}\\\text{F}&\text{T}&\placeholder[ft]{}\\\text{F}&\text{F}&\placeholder[ff]{}\end{array}</math-field>
                     </p>
                     <!-- onclick="showHide()" -->
                     <p> <button type="button" id="chkAns1"
@@ -72,15 +72,8 @@
                             &emsp;<textarea id="latexUserAns1" autocapitalize="off" autocomplete="off" autocorrect="off"
                                 spellcheck="false" rows="2" cols="80"></textarea><br />
                             &emsp;Author answer (expected user input)<br />
-                            &emsp;<textarea id="MyauthorAns1" readonly cols="80"
-                                style="background-color:lavender;" cols="80">\begin{array}{c|c|c}
-                                p & q & p \wedge q \\
-                               \text{T} & \text{T} &  \placeholder[tt1]{}\\
-                               \text{T} & \text{F} &   \placeholder[tf1]{}   \\
-                               \text{F} &   \text{T} & \placeholder[ft1]{} \\
-                                \text{F} & \text{F} &   \placeholder[ff1]{}  
-                              \end{array}</textarea><br />
-                            &emsp;<math-field style="border:1px solid #000000;" id="MyauthorAnsApprox1" readonly>\begin{array}{c|c|c}p & q & p \wedge q \\\text{T} & \text{T} & \placeholder[tt2]{}\\\text{T} & \text{F} & \placeholder[tf2]{}\\\text{F} & \text{T} & \placeholder[ft2]{}\\\text{F} & \text{F} & \placeholder[ff2]{}\end{array}</math-field>
+                            &emsp;<textarea id="MyauthorAns1" readonly cols="80" style="background-color:lavender;" cols="80">\begin{array}{c|c|c}p&q&p\wedge q\\\text{T}&\text{T}&\placeholder[tt]{}\\\text{T}&\text{F}&\placeholder[tf]{}\\\text{F}&\text{T}&\placeholder[ft]{}\\\text{F}&\text{F}&\placeholder[ff]{}\end{array}</textarea><br />
+                            &emsp;<math-field style="border:1px solid #000000;" readonly id="MyauthorAnsApprox1" virtual-keyboard-mode="manual">\begin{array}{c|c|c}p&q&p\wedge q\\\text{T}&\text{T}&\text{T}\\\text{T}&\text{F}&\text{F}\\\text{F}&\text{T}&\text{F}\\\text{F}&\text{F}&\text{F}\end{array}</math-field>
 
                         </p>
                     </div>
