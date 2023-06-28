@@ -2,22 +2,53 @@ import("https://unpkg.com/mathlive@latest?module");
 import("https://unpkg.com/@cortex-js/compute-engine");
 // 0.94.5 = latest
 maxElems = numElems // varies for subject matter --  set in script at end of each html page
-document.querySelector('math-field').addEventListener('focus', () => {
-    mathVirtualKeyboard.layouts = {
-    rows: [
-        [
-        "p", "q", "r", "s", "\\forall", "\\exists", "\\therefore"
-        ],
-        [ 
-            "\\neg","\\lor", "\\land", "\\rightarrow", "\\leftrightarrow", "\\equiv", "\\oplus"
-        ],
-        [
-            "\\text{T}", "\\text{F}", "(", ")", '[left]', '[right]', '[backspace]'
-        ]
-    ]
-    };
-    mathVirtualKeyboard.visible = true;
+// document.body.style.setProperty("--box-placeholder-color", "lightblue");
+if (keyboardType == "truth table") {
+    document.querySelector('math-field').addEventListener('focus', () => {
+        // mathVirtualKeyboard.layouts = [
+        //     {
+        //       label: "minimal",
+        //       toolip: "Only the essential",
+        //       rows: [
+        //         [
+        //           "+", "-", "\\times", "\\frac{#@}{#?}", "=", ".",
+        //           "(", ")", "\\sqrt{#0}", "#@^{#?}",
+        //         ],
+        //         ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+        //       ]
+        //     }, 
+        //     "alphabetic"
+        //   ];
+        mathVirtualKeyboard.layouts = 
+            {layers: [
+                {
+                    rows: [
+                        [
+                            "p", "q", "r", "s", "\\forall", "\\exists", "\\therefore"
+                        ],
+                        [
+                            "\\neg", "\\lor", "\\land", "\\rightarrow", "\\leftrightarrow", "\\equiv", "\\oplus"
+                        ],
+                        [
+                            {class: "tf", latex: "\\text{T}"}, {class: "tf", latex: "\\text{F}"}, "(", ")", '[left]', '[right]', '[backspace]'
+                        ]
+                    ]
+                },
+                {
+                    rows: [
+                        [
+                            "P", "Q", "R", "S", "\\forall", "\\exists", "\\therefore"
+                        ],
+                        [
+                            "(x)", "(y)", "r", "s", '[left]', '[right]', '[backspace]'
+                        ]
+                    ]
+
+                }]
+        };
+        mathVirtualKeyboard.visible = true;
     });
+}
 for (let i = 1; i <= maxElems; i++) {
     let mfMy1 = document.querySelector('#formulaApprox' + i);
     let latexField1 = document.querySelector('#latexUserAns' + i);
@@ -179,16 +210,16 @@ function exprCleaner(e) {
     e = replaceDoubleSign(e);
     return e;
 }
-function truthTable(num, placeHolders,vals){
+function truthTable(num, placeHolders, vals) {
     // console.clear();   
     let out1 = ''
     const mtt = document.getElementById(placeHolders);
     places = mtt.getPrompts();
     let right = places.length;
     for (let i = 0; i < places.length; i++) {
-        if (vals[i] != mtt.getPromptValue(places[i])){
+        if (vals[i] != mtt.getPromptValue(places[i])) {
             right--;
-            out1 += '\nAnswer blank ' + (i+1) + ' is incorrect.'
+            out1 += '\nAnswer blank ' + (i + 1) + ' is incorrect.'
         }
     }
     document.getElementById('latexChkr' + num).value = `${right} out of ${places.length} answers are correct.  ${out1}`;
@@ -202,7 +233,7 @@ function approxCE(x, num, sieve, formReq, equationCheck) {
     document.getElementById("latexChkr" + num).value = "";
     let mathFieldUser = document.querySelector('#latexUserAns' + num);
     let textAreaAuthor = document.querySelector('#MyauthorAns' + num);
-    
+
     let out1 = "Incorrect";
     let exprAapprox = '';
     let exprAorig = exprCleaner(textAreaAuthor.value);
@@ -212,7 +243,7 @@ function approxCE(x, num, sieve, formReq, equationCheck) {
     else {
         let exprAorig = exprCleaner(textAreaAuthor.value);
         let exprUorig = exprCleaner(mathFieldUser.value);
-        console.log(ce.parse(exprAorig).isSame(ce.parse(exprUorig)) + '   '+ exprUorig + '  ' +exprAorig);
+        console.log(ce.parse(exprAorig).isSame(ce.parse(exprUorig)) + '   ' + exprUorig + '  ' + exprAorig);
         // Set comparison values for author and user input
         let [exprUsimp, unusedVar0, isUequation, isUnumber] = equationAdj(ce, exprUorig, equationCheck);
         let [exprAsimp, exprAsimpNeg, isAequation, isAnumber] = equationAdj(ce, exprAorig, equationCheck);
