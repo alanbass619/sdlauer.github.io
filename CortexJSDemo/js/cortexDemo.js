@@ -19,32 +19,52 @@ if (keyboardType == "truth table") {
         //     }, 
         //     "alphabetic"
         //   ];
-        mathVirtualKeyboard.layouts = 
-            {layers: [
+        // mathVirtualKeyboard.layouts = [
+        //     {
+        //       label: "minimal",
+        //       toolip: "Only the essential",
+        //       rows: [
+        //         [
+        //           "+", "-", "\\times", "\\frac{#@}{#?}", "=", ".",
+        //           "(", ")", "\\sqrt{#0}", "#@^{#?}",
+        //         ],
+        //         ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+        //       ]
+        //     }, 
+        //     "alphabetic"
+        //   ];
+        mathVirtualKeyboard.layouts = {
+            layers: [
                 {
+                    label: 'truthTable',
+                    toolip: 'truth table essential',
                     rows: [
                         [
-                            "p", "q", "r", "s", "\\forall", "\\exists", "\\therefore"
+                            'p', 'q', 'r', 's', '\\forall', '\\exists', '\\therefore'
                         ],
                         [
-                            "\\neg", "\\lor", "\\land", "\\rightarrow", "\\leftrightarrow", "\\equiv", "\\oplus"
+                            '\\neg', '\\lor', '\\land', '\\rightarrow', '\\leftrightarrow', '\\equiv', '\\oplus'
                         ],
                         [
-                            {class: "tf", latex: "\\text{T}"}, {class: "tf", latex: "\\text{F}"}, "(", ")", '[left]', '[right]', '[backspace]'
+                            '\\text{T}', '\\text{F}', '(', ')', '[left]', '[right]', '[backspace]'
                         ]
                     ]
                 },
-                {
-                    rows: [
-                        [
-                            "P", "Q", "R", "S", "\\forall", "\\exists", "\\therefore"
-                        ],
-                        [
-                            "(x)", "(y)", "r", "s", '[left]', '[right]', '[backspace]'
-                        ]
-                    ]
+                // {
+                //     label: 'PQexpr',
+                //     toolip: 'logical expression essential',
+                //     rows: [
+                //         [
+                //             'P', 'Q', 'R', 'S', '\\forall', '\\exists', '\\therefore'
+                //         ],
+                //         [
+                //             '(x)', '(y)', 'r', 's', '[left]', '[right]', '[backspace]'
+                //         ]
+                //     ]
 
-                }]
+                // }, 
+                    'alphabetic'
+                ],
         };
         mathVirtualKeyboard.visible = true;
     });
