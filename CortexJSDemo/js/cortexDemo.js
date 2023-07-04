@@ -3,8 +3,7 @@ import("https://unpkg.com/@cortex-js/compute-engine");
 // 0.94.5 = latest
 maxElems = numElems // varies for subject matter --  set in script at end of each html page
 // document.body.style.setProperty("--box-placeholder-color", "lightblue");
-if (keyboardType == "truth table") {
-    document.querySelector('math-field').addEventListener('focus', () => {
+document.querySelector('math-field').addEventListener('focus', () => {
         // mathVirtualKeyboard.layouts = [
         //     {
         //       label: "minimal",
@@ -68,9 +67,30 @@ if (keyboardType == "truth table") {
                 ],
             };
         }
+        else {if (keyboardType == "algebra") {
+            mathVirtualKeyboard.layouts = {
+                layers: [
+                    {
+                        rows: [
+                            [
+                                "+", "-", "\\times", "\\frac{#@}{#?}", "=", ".",
+                                "(", ")", "\\sqrt{#0}", "#@^{#?}",
+                            ],
+                        ]
+                    },
+                    {
+                        rows: [
+                            ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+                        ]
+                    }
+
+                ],
+            };
+        }
+    }
         mathVirtualKeyboard.visible = true;
     });
-}
+
 for (let i = 1; i <= maxElems; i++) {
     let mfMy1 = document.querySelector('#formulaApprox' + i);
     let latexField1 = document.querySelector('#latexUserAns' + i);
