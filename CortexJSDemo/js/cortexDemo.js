@@ -4,34 +4,7 @@ import("https://unpkg.com/@cortex-js/compute-engine");
 maxElems = numElems // varies for subject matter --  set in script at end of each html page
 // document.body.style.setProperty("--box-placeholder-color", "lightblue");
 document.querySelector('math-field').addEventListener('focus', () => {
-        // mathVirtualKeyboard.layouts = [
-        //     {
-        //       label: "minimal",
-        //       toolip: "Only the essential",
-        //       rows: [
-        //         [
-        //           "+", "-", "\\times", "\\frac{#@}{#?}", "=", ".",
-        //           "(", ")", "\\sqrt{#0}", "#@^{#?}",
-        //         ],
-        //         ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-        //       ]
-        //     }, 
-        //     "alphabetic"
-        //   ];
-        // mathVirtualKeyboard.layouts = [
-        //     {
-        //       label: "minimal",
-        //       toolip: "Only the essential",
-        //       rows: [
-        //         [
-        //           "+", "-", "\\times", "\\frac{#@}{#?}", "=", ".",
-        //           "(", ")", "\\sqrt{#0}", "#@^{#?}",
-        //         ],
-        //         ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-        //       ]
-        //     }, 
-        //     "alphabetic"
-        //   ];
+
         if (keyboardType == "truth table") {
             mathVirtualKeyboard.layouts = {
                 layers: [
@@ -40,13 +13,17 @@ document.querySelector('math-field').addEventListener('focus', () => {
                         toolip: 'truth table essential',
                         rows: [
                             [
-                                'p', 'q', 'r', 's', '\\forall', '\\exists', '\\therefore'
+                                'p', 'q', 'r', '\\neg', '\\lor', '\\land','\\rightarrow'
+                            ],
+
+                            [
+                                'x', 'y','z','\\leftrightarrow', '\\forall', '\\exists','\\oplus'
                             ],
                             [
-                                '\\neg', '\\lor', '\\land', '\\rightarrow', '\\leftrightarrow', '\\equiv', '\\oplus'
+                                'P(\\placeholder{})', 'Q(\\placeholder{})', 'R(\\placeholder{})','\\therefore', '\\equiv','(', ')'
                             ],
                             [
-                                '\\text{T}', '\\text{F}', '(', ')', '[left]', '[right]', '[backspace]'
+                                '\\text{T}', '\\text{F}','[left]', '[right]', '[backspace]'
                             ]
                         ]
                     },
@@ -67,27 +44,7 @@ document.querySelector('math-field').addEventListener('focus', () => {
                 ],
             };
         }
-        else {if (keyboardType == "algebra") {
-            mathVirtualKeyboard.layouts = {
-                layers: [
-                    {
-                        rows: [
-                            [
-                                "+", "-", "\\times", "\\frac{#@}{#?}", "=", ".",
-                                "(", ")", "\\sqrt{#0}", "#@^{#?}",
-                            ],
-                        ]
-                    },
-                    {
-                        rows: [
-                            ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-                        ]
-                    }
-
-                ],
-            };
-        }
-    }
+        
         mathVirtualKeyboard.visible = true;
     });
 
@@ -252,7 +209,7 @@ function exprCleaner(e) {
     e = replaceDoubleSign(e);
     return e;
 }
-function truthTable(num, placeHolders, vals) {
+function truthTabler(num, placeHolders, vals) {
     // console.clear();   
     let out1 = ''
     const mtt = document.getElementById(placeHolders);

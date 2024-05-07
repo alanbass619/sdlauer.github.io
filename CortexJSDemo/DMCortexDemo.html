@@ -31,23 +31,25 @@
 </head>
 
 <body>
-    <p><a href="workingCortexDemo.html">To Calc and trig examples</a></p>
-    <p><a href="AlgebraCortexDemo.html">To Algebra examples</a></p>
+    <!-- <p><a href="workingCortexDemo.html">To Calc and trig examples</a></p>
+    <p><a href="AlgebraCortexDemo.html">To Algebra examples</a></p> -->
     <div>
         <table>
-            <!-- First problem --------------------------------------------->
             <tr>
                 <td style="width: 45%; vertical-align: top;">
-                    <h4>Equation equivalence</h4>
+                    <h4>Logical equivalence</h4>
                     <p style="width: 85%">
-                        Complete the truth table.
+                        Apply De Morgan's Law to the expression to obtain an equivalent expression:<br />
+                        \(\neg\forall x (\neg P(x) \lor Q(x)) \)
                     </p>
-                    <math-field class="truthtable" style="border:1px solid #000000; width: 95%;" readonly id="formulaApprox1">\begin{array}{c|c|c}p&q&p\wedge q\\\text{T}&\text{T}&\placeholder[tt]{}\\\text{T}&\text{F}&\placeholder[tf]{}\\\text{F}&\text{T}&\placeholder[ft]{}\\\text{F}&\text{F}&\placeholder[ff]{}\end{array}</math-field>
+                    <math-field style="border:1px solid #000000; width: 95%;" id="formulaApprox1">
+                    </math-field>
                     </p>
                     <!-- onclick="showHide()" -->
-                    <p> <button type="button" id="chkAns1"
+                    <p>
+                        <button type="button" id="chkAns1"
                             style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;"
-                            onclick="truthTable(1,'formulaApprox1',['\\text{T}','\\text{F}','\\text{F}','\\text{F}'])">Check</button>
+                            onclick="approxCE(0,'1', 'latex', '\exists x ( P(x) \land \neg Q(x))', false)">Check</button>
                         &emsp;&emsp;&emsp;&emsp;
                         <button type="button" id="showHideAns1"
                             style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show
@@ -58,7 +60,7 @@
                 <td style="width: 45%; vertical-align: top;">
                     <div>
                         <H4><b>Answer Information</b></H4>
-                        Check result (User input is checked with author's answer.)<br />
+                        Check result (User input is checked with author's answer.  Order matters.)<br />
                         <p id="checker1">
                             <textarea id="latexChkr1" autocapitalize="off" autocomplete="off" autocorrect="off"
                                 spellcheck="false" rows="6" cols="80" style="border:1px solid #000000;"></textarea>
@@ -67,163 +69,25 @@
                             LaTeX
                             answers
                             <br />
-                            &emsp;User answer (user will fill placeholders)
+                            &emsp;User answer (in a textarea connected to the answer blank)
                             &emsp;<textarea id="latexUserAns1" autocapitalize="off" autocomplete="off" autocorrect="off"
                                 spellcheck="false" rows="2" cols="80"></textarea><br />
-                            
-                            &emsp;<textarea id="MyauthorAns1" readonly cols="80" style="background-color:lavender;" cols="80">\begin{array}{c|c|c}p&q&p\wedge q\\\text{T}&\text{T}&\placeholder[tt]{}\\\text{T}&\text{F}&\placeholder[tf]{}\\\text{F}&\text{T}&\placeholder[ft]{}\\\text{F}&\text{F}&\placeholder[ff]{}\end{array}</textarea><br />
-                            &emsp;Author answer<br />
-                            <!-- &emsp;<math-field style="border:1px solid #000000;" readonly id="MyauthorAnsApprox1">\begin{array}{c|c|c}p&q&p\wedge q\\\text{T}&\text{T}&\text{T}\\\text{T}&\text{F}&\text{F}\\\text{F}&\text{T}&\text{F}\\\text{F}&\text{F}&\text{F}\end{array}</math-field> -->
-
-                        </p>
-                    </div>
-                </td>
-            </tr>
-
-
-            <!-- Second problem --------------------------------------------->
-            <tr>
-                <td style="width: 45%; vertical-align: top;">
-                    <h4>Logical equivalence</h4>
-                    <p style="width: 85%">
-                        Apply De Morgan's Law to the expression to obtain an equivalent expression:<br />
-                        \(\neg\forall x (\neg P(x) \lor Q(x)) \)
-                    </p>
-                    <math-field style="border:1px solid #000000; width: 95%;" id="formulaApprox2">
-                    </math-field>
-                    </p>
-                    <!-- onclick="showHide()" -->
-                    <p>
-                        <button type="button" id="chkAns2"
-                            style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;"
-                            onclick="approxCE(0,'2', 'latex', '\exists x ( P(x) \land \neg Q(x))', true)">Check</button>
-                        &emsp;&emsp;&emsp;&emsp;
-                        <button type="button" id="showHideAns2"
-                            style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show
-                            answer</button>
-                    </p>
-
-                </td>
-                <td style="width: 45%; vertical-align: top;">
-                    <div>
-                        <H4><b>Answer Information</b></H4>
-                        Check result (User input is checked with author's answer.  Order matters.)<br />
-                        <p id="checker2">
-                            <textarea id="latexChkr2" autocapitalize="off" autocomplete="off" autocorrect="off"
-                                spellcheck="false" rows="6" cols="80" style="border:1px solid #000000;"></textarea>
-                        </p>
-                        <p id="bothLatexAns2" hidden style="background-color:lightgoldenrodyellow;">
-                            User and author LaTeX answers
-                            <br />
-                            &emsp;User answer (in a textarea connected to the answer blank)
-                            &emsp;<textarea id="latexUserAns2" autocapitalize="off" autocomplete="off" autocorrect="off"
-                                spellcheck="false" rows="2" cols="80"></textarea><br />
                             &emsp;Author answer (expected user input)<br />
-                            &emsp;<textarea id="MyauthorAns2" readonly
+                            &emsp;<textarea id="MyauthorAns1" readonly cols="80"
                                 style="background-color:lavender;" cols="80">\exists x ( P(x) \land \neg Q(x))</textarea><br />
-                            &emsp;<math-field style="border:1px solid #000000;" id="MyauthorAnsApprox2" readonly>\exists x ( P(x) \land \neg Q(x))</math-field>
+                            &emsp;<math-field style="border:1px solid #000000;" id="MyauthorAnsApprox1" readonly>
+                                \exists x ( P(x) \land \neg Q(x))</math-field>
                         </p>
                     </div>
                 </td>
             </tr>
 
-            <tr>
-                <!-- Third problem --------------------------------------------->
-                <td style="width: 45%; vertical-align: top;">
-                    <h4>Equation equivalence</h4>
-                    <p style="width: 85%">
-                        What is the equation of the vertical line through \((7,-6)\)?
-                    </p>
-                    <math-field style="border:1px solid #000000; width: 95%;" id="formulaApprox3">
-                    </math-field>
-                    </p>
-                    <!-- onclick="showHide()" -->
-                    <p>
-                        <button type="button" id="chkAns3"
-                            style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;"
-                            onclick="approxCE(0,'3', 'latex', 'x = a', true)">Check</button>
-                        &emsp;&emsp;&emsp;&emsp;
-                        <button type="button" id="showHideAns3"
-                            style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show
-                            answer</button>
-                    </p>
-
-                </td>
-
-                <td style="width: 45%; vertical-align: top;">
-                    <div>
-                        <H4><b>Answer Information</b></H4>
-                        Check result (User input is checked with author's answer. Order does not matter.)<br />
-                        <p id="checker3">
-                            <textarea id="latexChkr3" autocapitalize="off" autocomplete="off" autocorrect="off"
-                                spellcheck="false" rows="6" cols="80" style="border:1px solid #000000;"></textarea>
-                        </p>
-                        <p id="bothLatexAns3" hidden style="background-color:lightgoldenrodyellow;">User and author
-                            LaTeX
-                            answers
-                            <br />
-                            &emsp;User answer (in a textarea connected to the answer blank)
-                            &emsp;<textarea id="latexUserAns3" autocapitalize="off" autocomplete="off" autocorrect="off"
-                                spellcheck="false" rows="2" cols="80"></textarea><br />
-                            &emsp;Author answer (expected user input)<br />
-                            &emsp;<textarea id="MyauthorAns3" readonly
-                                style="background-color:lavender;">x = 7</textarea><br />
-                            &emsp;<math-field style="border:1px solid #000000;" id="MyauthorAnsApprox3" readonly>x = 7</math-field>
-                        </p>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <!-- Fourth problem --------------------------------------------->
-                <td style="width: 45%; vertical-align: top;">
-                    <h4>Expression equivalence</h4>
-                    <p style="width: 85%">
-                        Simplify:  \(3x +7y - 2xy +8y -4x +5xy\)
-                    </p>
-                    <math-field style="border:1px solid #000000; width: 95%;" id="formulaApprox4">
-                    </math-field>
-                    </p>
-                    <!-- onclick="showHide()" -->
-                    <p>
-                        <button type="button" id="chkAns4"
-                            style="font-size: 16px; background-color:orange; color: white; border:2px solid orange;"
-                            onclick="approxCE(0,'4', 'latex', '', false)">Check</button>
-                        &emsp;&emsp;&emsp;&emsp;
-                        <button type="button" id="showHideAns4"
-                            style="font-size: 16px; background-color:white; color: cornflowerblue; border: none">Show
-                            answer</button>
-                    </p>
-
-                </td>
-
-                <td style="width: 45%; vertical-align: top;">
-                    <div>
-                        <H4><b>Answer Information</b></H4>
-                        Check result (User input is checked with author's answer. Order does not matter.)<br />
-                        <p id="checker4">
-                            <textarea id="latexChkr4" autocapitalize="off" autocomplete="off" autocorrect="off"
-                                spellcheck="false" rows="6" cols="80" style="border:1px solid #000000;"></textarea>
-                        </p>
-                        <p id="bothLatexAns4" hidden style="background-color:lightgoldenrodyellow;">User and author
-                            LaTeX
-                            answers
-                            <br />
-                            &emsp;User answer (in a textarea connected to the answer blank)
-                            &emsp;<textarea id="latexUserAns4" autocapitalize="off" autocomplete="off" autocorrect="off"
-                                spellcheck="false" rows="2" cols="80"></textarea><br />
-                            &emsp;Author answer (expected user input)<br />
-                            &emsp;<textarea id="MyauthorAns4" readonly
-                                style="background-color:lavender;">-x + 3xy +15y</textarea><br />
-                            &emsp;<math-field style="border:1px solid #000000;" id="MyauthorAnsApprox4" readonly>-x + 3xy +15y </math-field>
-                        </p>
-                    </div>
-                </td>
-            </tr>
+           
         </table>
     </div>
     <script defer src="js/cortexDemo.js"></script>
     <script> 
-        var numElems = 4;
+        var numElems = 1;
         var keyboardType = "truth table";
     </script>
 
